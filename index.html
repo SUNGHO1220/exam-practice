@@ -239,6 +239,26 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 #toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 12px; font-size: .92rem; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: calc(100% - 32px); z-index: 40; }
 #toast.show { opacity: 1; }
 
+
+/* 랭킹 */
+.rankcard { display: grid; gap: 8px; }
+.podium { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: .95rem; }
+.podium span { display: inline-flex; align-items: center; gap: 6px; }
+.podium span.me { color: var(--omr); font-weight: 700; }
+.rk { width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center; font-weight: 800; font-size: .9rem; flex: none; font-variant-numeric: tabular-nums; border: 2px solid var(--line); color: var(--ink-soft); }
+.rk1 { background: #f1c24b; border-color: #c8901a; color: #4a3200; }
+.rk2 { background: #d9dde4; border-color: #9aa3b2; color: #2c323d; }
+.rk3 { background: #e6b48a; border-color: #b0703f; color: #3e2410; }
+.rank-list { display: grid; gap: 0; padding-block: 6px; }
+.rankrow { display: flex; align-items: center; gap: 12px; padding: 10px 4px; border-bottom: 1px solid var(--line); }
+.rankrow:last-child { border-bottom: 0; }
+.rankrow.me { background: var(--omr-tint); border-radius: 10px; padding-inline: 10px; }
+.avatar.sm { width: 36px; height: 36px; font-size: 1rem; }
+.rinfo { flex: 1; display: grid; min-width: 0; }
+.rinfo b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rscore { text-align: right; display: grid; font-variant-numeric: tabular-nums; }
+.rscore b { font-family: var(--display); font-weight: 400; font-size: 1.35rem; line-height: 1.1; }
+.chase { background: var(--paper); border: 1.5px dashed var(--omr); border-radius: 12px; padding: 12px 14px; font-weight: 700; }
 /* 과학 그림 */
 .fig { margin: 0; display: flex; justify-content: center; }
 .figsvg { width: 100%; max-width: 440px; height: auto; }
@@ -299,6 +319,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
     <button id="nav-wrong" data-view="wrong">오답노트</button>
     <button id="nav-records" data-view="records">기록</button>
     <button id="nav-stamps" data-view="stamps">도장판</button>
+    <button id="nav-rank" data-view="rank">랭킹</button>
   </nav>
   <main id="app"></main>
 </div>
@@ -2253,12 +2274,7 @@ function stars(d) { return "★".repeat(d) + "☆".repeat(3 - d); }
 function score(r) { return r === "correct" ? 1 : r === "partial" ? 0.5 : 0; }
 function fmtScore(x) { return Number.isInteger(x) ? x : x.toFixed(1); }
 function today() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
-function dayStreak() {
-  const set = new Set(G.days); let n = 0; const d = new Date();
-  if (!set.has(today())) d.setDate(d.getDate() - 1);
-  while (set.has(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`)) { n++; d.setDate(d.getDate() - 1); }
-  return n;
-}
+function dayStreak() { return streakOf(G.days); }
 let toastT;
 function toast(msg) { const el = $("#toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("show"), 2400); }
 
@@ -2331,7 +2347,7 @@ function record(qid, r, opts = {}) {
     G.best = Math.max(G.best, G.combo);
   }
   const before = levelOf(G.xp);
-  G.xp += pts;
+  G.xp += pts; addWeekXp(pts);
   const up = levelOf(G.xp) > before ? levelOf(G.xp) : null;
   const newB = checkBadges();
   save();
@@ -2361,6 +2377,137 @@ function celebrate(res) {
   drawChrome();
 }
 
+/* ═════════════ 랭킹 ═════════════ */
+/* 온라인 랭킹: GitHub Pages 버전에서 web/online-config.json에 Supabase 주소·키·모임 코드를 넣고
+   build-site.mjs를 실행하면 켜집니다. 비어 있으면 '이 기기' 랭킹만 보여 줍니다. */
+const ONLINE = { url: "", key: "", group: "" };
+const onlineOn = () => !!(ONLINE.url && ONLINE.key && ONLINE.group);
+const PTS_PER_Q = 15;   // 문제 하나를 맞히면 받는 평균 점수 (따라잡기 안내용)
+function weekId(d = new Date()) {
+  const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - day);
+  const y = t.getUTCFullYear(), w = Math.ceil(((t - Date.UTC(y, 0, 1)) / 864e5 + 1) / 7);
+  return `${y}-W${String(w).padStart(2, "0")}`;
+}
+function addWeekXp(pts) { const w = weekId(); if (!G.week || G.week.id !== w) G.week = { id: w, xp: 0 }; G.week.xp += pts; }
+function streakOf(days) {
+  const set = new Set(days || []); let n = 0; const d = new Date();
+  if (!set.has(today())) d.setDate(d.getDate() - 1);
+  while (set.has(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`)) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+/* 한 사람의 기록을 랭킹용 숫자로 요약 */
+function summary(db, name) {
+  const g = db.game || {}; let n = 0, c = 0, solved = 0;
+  for (const k in db.subj || {}) {
+    const log = db.subj[k].log || []; n += log.length;
+    c += log.reduce((a, e) => a + score(e.r), 0); solved += new Set(log.map(e => e.q)).size;
+  }
+  return { name, xp: g.xp || 0, week_xp: g.week && g.week.id === weekId() ? g.week.xp : 0, level: levelOf(g.xp || 0) + 1,
+    solved, accuracy: n ? c / n : null, streak: streakOf(g.days) };
+}
+function localBoard() { return profiles.map(p => p.name === who ? summary(DB, who) : summary(readJSON(profileKey(p.name), freshDB()), p.name)); }
+
+let boardCache = { rows: null, at: 0, err: null }, lastPush = 0;
+function apiHeaders(extra) { return Object.assign({ apikey: ONLINE.key, Authorization: `Bearer ${ONLINE.key}` }, extra || {}); }
+async function pushScore(force) {
+  if (!onlineOn() || !who) return;
+  if (!force && Date.now() - lastPush < 20000) return;
+  lastPush = Date.now();
+  const s = summary(DB, who);
+  try {
+    await fetch(`${ONLINE.url}/rest/v1/leaderboard`, {
+      method: "POST",
+      headers: apiHeaders({ "Content-Type": "application/json", Prefer: "resolution=merge-duplicates,return=minimal" }),
+      body: JSON.stringify({ group_code: ONLINE.group, name: who, xp: s.xp, week_id: weekId(), week_xp: s.week_xp, level: s.level,
+        solved: s.solved, accuracy: s.accuracy, streak: s.streak, updated_at: new Date().toISOString() }),
+    });
+  } catch (e) { /* 인터넷이 끊겨도 문제 풀기는 계속됨 */ }
+}
+async function fetchBoard() {
+  const r = await fetch(`${ONLINE.url}/rest/v1/leaderboard?group_code=eq.${encodeURIComponent(ONLINE.group)}&select=*`, { headers: apiHeaders() });
+  if (!r.ok) throw new Error(`랭킹 서버 응답 오류 (${r.status})`);
+  const rows = await r.json();
+  const wk = weekId();
+  boardCache = { rows: rows.map(x => ({ ...x, week_xp: x.week_id === wk ? x.week_xp : 0 })), at: Date.now(), err: null };
+  return boardCache.rows;
+}
+/* 지금 보여 줄 명단: 온라인 명단(있으면) + 이 기기 사람들의 최신 기록 */
+function currentBoard(scope) {
+  const local = localBoard();
+  if (scope !== "online" || !boardCache.rows) return local;
+  const map = new Map(boardCache.rows.map(r => [r.name, { ...r }]));
+  local.forEach(l => { if (l.name === who || map.has(l.name)) map.set(l.name, { ...map.get(l.name), ...l }); });
+  return [...map.values()];
+}
+function ranked(rows, key) {
+  const list = rows.slice().sort((a, b) => (b[key] || 0) - (a[key] || 0) || (b.xp || 0) - (a.xp || 0) || String(a.name).localeCompare(b.name));
+  let prev = null, rank = 0;
+  list.forEach((r, i) => { const v = r[key] || 0; if (v !== prev) { rank = i + 1; prev = v; } r.rank = rank; });
+  return list;
+}
+function myPlace(rows, key) {
+  const list = ranked(rows, key), me = list.find(r => r.name === who);
+  if (!me) return null;
+  const ahead = list.filter(r => (r[key] || 0) > (me[key] || 0)).pop();
+  return { rank: me.rank, total: list.length, me, ahead, gap: ahead ? (ahead[key] || 0) - (me[key] || 0) : 0, list };
+}
+function chaseText(p, unit) {
+  if (!p) return "";
+  if (p.total < 2) return "같이 공부할 가족이나 친구의 이름을 추가하면 순위를 겨룰 수 있어요.";
+  if (p.rank === 1) return `${unit} 1등이에요! 자리를 지키려면 오늘도 몇 문제 풀어 볼까요?`;
+  const k = Math.max(1, Math.ceil((p.gap + 1) / PTS_PER_Q));
+  return `${p.ahead.name}님까지 ${p.gap + 1}점! 약 ${k}문제만 더 맞히면 ${p.rank - 1}등으로 올라가요.`;
+}
+
+let rankTab = "week_xp", rankScope = null;
+function medalHtml(rank) { return `<span class="rk rk${rank <= 3 ? rank : "n"}">${rank}</span>`; }
+async function rankView() {
+  if (!rankScope) rankScope = onlineOn() ? "online" : "local";
+  const draw = () => {
+    const rows = currentBoard(rankScope), p = myPlace(rows, rankTab);
+    const unit = rankTab === "week_xp" ? "이번 주" : "누적";
+    app.innerHTML = `
+    <div class="stack">
+      <section class="hero"><span class="label">랭킹</span><h1>${unit} 랭킹</h1>
+        <p>${rankTab === "week_xp" ? "이번 주(월요일~일요일)에 모은 점수로 겨뤄요. 월요일마다 새로 시작해요." : "지금까지 모은 전체 점수 순위예요."}</p></section>
+      <div class="row">
+        <div class="seg" role="group" aria-label="랭킹 기준"><button data-t="week_xp" class="${rankTab === "week_xp" ? "on" : ""}">이번 주</button><button data-t="xp" class="${rankTab === "xp" ? "on" : ""}">누적</button></div>
+        ${onlineOn() ? `<div class="seg" role="group" aria-label="랭킹 범위"><button data-sc="online" class="${rankScope === "online" ? "on" : ""}">우리 모임 전체</button><button data-sc="local" class="${rankScope === "local" ? "on" : ""}">이 기기</button></div>` : ""}
+      </div>
+      ${p ? `<div class="chase">${esc(chaseText(p, unit))}</div>` : ""}
+      ${rankScope === "online" && boardCache.err ? `<div class="notice">온라인 랭킹을 불러오지 못해 이 기기 기록으로 보여 줘요. (${esc(boardCache.err)})</div>` : ""}
+      <section class="sheet rank-list">
+        ${p ? p.list.map(r => `<div class="rankrow ${r.name === who ? "me" : ""}">
+          ${medalHtml(r.rank)}
+          <span class="avatar sm">${esc([...String(r.name)][0] || "?")}</span>
+          <span class="rinfo"><b>${esc(r.name)}${r.name === who ? " (나)" : ""}</b>
+            <span class="small muted">Lv.${r.level || 1} · 푼 문항 ${r.solved || 0} · 정답률 ${pct(r.accuracy)} · 연속 ${r.streak || 0}일</span></span>
+          <span class="rscore"><b>${(r[rankTab] || 0).toLocaleString()}</b><span class="small muted">점</span></span>
+        </div>`).join("") : `<div class="empty">아직 기록이 없어요.</div>`}
+      </section>
+      <p class="small muted" style="margin:0">문제를 맞히면 10~20점, 3연속부터 콤보 +5점, 틀려도 도전 점수 2점을 받아요.
+        ${onlineOn() ? "" : "지금은 이 기기에서 공부한 사람들끼리 순위를 보여 줘요."}</p>
+    </div>`;
+    $$("[data-t]").forEach(b => b.onclick = () => { rankTab = b.dataset.t; draw(); });
+    $$("[data-sc]").forEach(b => b.onclick = () => { rankScope = b.dataset.sc; draw(); });
+  };
+  draw();
+  if (onlineOn() && rankScope === "online") {
+    try { await pushScore(true); await fetchBoard(); } catch (e) { boardCache.err = e.message; }
+    if (view === "rank") draw();
+  }
+}
+/* 결과 화면·첫 화면용 한 줄 요약. 순위가 오르면 배너로 축하 */
+function rankLine() {
+  const p = myPlace(currentBoard(onlineOn() ? "online" : "local"), "week_xp");
+  if (!p || p.total < 2) return "";
+  const before = G.lastWeekRank && G.lastWeekRank.week === weekId() ? G.lastWeekRank.rank : null;
+  G.lastWeekRank = { week: weekId(), rank: p.rank }; save();
+  if (before && p.rank < before) setTimeout(() => { sfx("up"); confetti(); banner(`순위 상승! ${p.rank}위`, `이번 주 ${p.total}명 중 ${p.rank}위가 되었어요`, `${p.rank}위`); }, 900);
+  return `이번 주 랭킹 <b>${p.rank}위</b> / ${p.total}명${p.rank > 1 ? ` · ${esc(p.ahead.name)}님까지 ${p.gap + 1}점` : " · 1등!"}`;
+}
+
 /* ═════════════ 화면 전환 ═════════════ */
 let view = "hub", viewArg = null, timerId;
 function go(v, arg) { view = v; viewArg = arg; render(); window.scrollTo(0, 0); }
@@ -2385,7 +2532,7 @@ function render() {
   const inSubject = !["hub", "soon", "profile"].includes(view);
   $("#subnav").hidden = !inSubject;
   $$(".subnav button").forEach(b => b.classList.toggle("on", b.dataset.view === view));
-  ({ profile, hub, soon, home, quiz, result, wrong: wrongView, records, stamps })[view](viewArg);
+  ({ profile, hub, soon, home, quiz, result, wrong: wrongView, records, stamps, rank: rankView })[view](viewArg);
 }
 
 /* ═════════════ 누가 공부할까요? (이름 고르기) ═════════════ */
@@ -2473,6 +2620,7 @@ function hub() {
         <div class="stats3"><span>연속 공부 <b>${streak}일</b></span><span>최고 콤보 <b>${G.best}</b></span><span>모은 도장 <b>${nb} / ${BADGES.length}</b></span></div>
       </div>
     </section>
+    <section class="sheet rankcard" id="rankcard">${hubRankCard()}</section>
     <div class="subjects">
       ${SUBJECTS.map(s => `<button class="subj ${s.open ? "open" : "soon"}" data-s="${s.code}" style="--c:var(${s.c})">
         ${s.open ? `<span class="ribbon">열림</span>` : ""}
@@ -2485,6 +2633,16 @@ function hub() {
     const s = SUBJECTS.find(x => x.code === b.dataset.s);
     if (s.open) { useSubject(s.code); go("home"); } else go("soon", s.code);
   });
+  const bindCard = () => { const b = $("#to-rank"); if (b) b.onclick = () => go("rank"); };
+  bindCard();
+  if (onlineOn()) pushScore().then(fetchBoard).then(() => { if (view === "hub" && $("#rankcard")) { $("#rankcard").innerHTML = hubRankCard(); bindCard(); } }).catch(e => { boardCache.err = e.message; });
+}
+function hubRankCard() {
+  const p = myPlace(currentBoard(onlineOn() ? "online" : "local"), "week_xp");
+  const top = p ? p.list.slice(0, 3) : [];
+  return `<div class="row"><b>이번 주 랭킹</b>${p && p.total > 1 ? `<span class="tag" style="color:var(--omr)">내 순위 ${p.rank}위 / ${p.total}명</span>` : ""}<span class="spacer"></span><button class="btn small" id="to-rank">랭킹 보기</button></div>
+    ${top.length ? `<div class="podium">${top.map(r => `<span class="${r.name === who ? "me" : ""}">${medalHtml(r.rank)} ${esc(r.name)} <b>${r.week_xp || 0}</b>점</span>`).join("")}</div>` : ""}
+    <div class="small muted">${esc(chaseText(p, "이번 주"))}</div>`;
 }
 function soon(code) {
   const s = SUBJECTS.find(x => x.code === code);
@@ -2697,7 +2855,7 @@ function showFeedback(s, q, res) {
     a.r = "correct";
     const log = S().log;
     for (let i = log.length - 1; i >= 0; i--) if (log[i].q === q.id) { log[i].r = "correct"; break; }
-    const bonus = 10 + (q.d - 1) * 5 - 2; G.xp += bonus; s.xp += bonus;
+    const bonus = 10 + (q.d - 1) * 5 - 2; G.xp += bonus; addWeekXp(bonus); s.xp += bonus;
     save(); showFeedback(s, q, { pts: bonus, combo: G.combo, up: null, newB: checkBadges() }); toast("정답으로 바꿨어요.");
   };
   const last = s.idx === s.qids.length - 1;
@@ -2768,7 +2926,7 @@ function finish() {
   }
   s.end = Date.now();
   st.sessions.unshift(s); st.sessions = st.sessions.slice(0, 60);
-  st.current = null; save();
+  st.current = null; save(); pushScore(true);
   const up = levelOf(G.xp) > before ? levelOf(G.xp) : null;
   go("result", s.id);
   if (up != null || gotB.length) celebrate({ up, newB: gotB });
@@ -2794,6 +2952,7 @@ function result(sid) {
       ${s.mode === "mock" ? `<div class="big"><em>${hundred}</em>점</div><div class="muted">${fmtScore(sc)} / ${n}문항</div>` : `<div class="big"><em>${fmtScore(sc)}</em> / ${n}</div>`}
       <div><b>${msg}</b></div>
       <div class="muted small">정답률 ${hundred}% · 걸린 시간 ${fmtDur(s.end - s.start)} · 이번에 얻은 점수 <span class="gain">+${s.xp || 0}</span></div>
+      ${(rl => rl ? `<div class="small">${rl}</div>` : "")(rankLine())}
       ${pending ? `<div class="notice" style="margin-top:6px">서술형 ${pending}문항은 아래에서 모범답안과 비교해 스스로 채점해 주세요.</div>` : ""}
       <div class="row" style="justify-content:center;margin-top:8px">
         ${notRight.length ? `<button class="btn primary" id="retry">틀린 문제 다시 풀기 (${notRight.length})</button>` : ""}
