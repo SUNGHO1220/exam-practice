@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#d2473f">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='none' stroke='%23d2473f' stroke-width='6'/%3E%3Ctext x='32' y='42' font-size='28' text-anchor='middle' fill='%23d2473f' font-family='sans-serif' font-weight='bold'%3EO%3C/text%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>시험 연습장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
+<style>
+:root {
+  --ground: #f3f5f8;
+  --paper: #ffffff;
+  --ink: #1d2433;
+  --ink-soft: #5d6677;
+  --line: #dfe3ea;
+  --omr: #d2473f;          /* OMR 답안지·채점 도장의 붉은색 */
+  --omr-tint: #fbeceb;
+  --omr-line: #f0c3bf;
+  --ok: #1d8a5a;
+  --ok-tint: #e3f4ec;
+  --warn: #b7791f;
+  --warn-tint: #fbf1de;
+  --bad: #c43a33;
+  --bad-tint: #fbe7e5;
+  --focus: #2d6cdf;
+  --gold: #c8901a;
+  --s-kor: #b5523b; --s-eng: #2e6fb0; --s-math: #6a4fb3; --s-soc: #d2473f; --s-sci: #1f8a6d; --s-eth: #9a6a1f;
+  --display: "Black Han Sans", "IBM Plex Sans KR", "Malgun Gothic", sans-serif;
+  --body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --ground: #151922; --paper: #1f2430; --ink: #e8ebf1; --ink-soft: #a1a9b8; --line: #343b4a;
+    --omr: #f07a70; --omr-tint: #3a2527; --omr-line: #6b3a37;
+    --ok: #5cc995; --ok-tint: #1c3429; --warn: #e4b35c; --warn-tint: #3a3020;
+    --bad: #f07a70; --bad-tint: #3a2527; --focus: #7aa7ff; --gold: #e8b64a;
+    --s-kor: #e08a74; --s-eng: #79a9e0; --s-math: #a893e6; --s-soc: #f07a70; --s-sci: #5cc9a6; --s-eth: #d9a65a;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ground: #151922; --paper: #1f2430; --ink: #e8ebf1; --ink-soft: #a1a9b8; --line: #343b4a;
+  --omr: #f07a70; --omr-tint: #3a2527; --omr-line: #6b3a37;
+  --ok: #5cc995; --ok-tint: #1c3429; --warn: #e4b35c; --warn-tint: #3a3020;
+  --bad: #f07a70; --bad-tint: #3a2527; --focus: #7aa7ff; --gold: #e8b64a;
+  --s-kor: #e08a74; --s-eng: #79a9e0; --s-math: #a893e6; --s-soc: #f07a70; --s-sci: #5cc9a6; --s-eth: #d9a65a;
+}
+* { box-sizing: border-box; }
+body { background: var(--ground); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.65; }
+.wrap { max-width: 760px; margin: 0 auto; padding-inline: 16px; padding-block: 0 72px; }
+.wrap > *, .stack > *, .sheet { min-width: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+
+/* 상단 */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--ground); display: flex; align-items: center; gap: 10px; padding-block: 12px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+.brand { font-family: var(--display); font-size: 1.3rem; background: none; border: 0; padding: 0; white-space: nowrap; }
+.brand .sub { color: var(--omr); }
+.lvchip { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: .82rem; font-weight: 700; background: var(--paper); border: 1px solid var(--line); border-radius: 99px; padding: 4px 6px 4px 12px; white-space: nowrap; }
+.lvchip .xpbar { width: 54px; height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.lvchip .xpbar i { display: block; height: 100%; background: var(--gold); }
+.whochip { border: 1px solid var(--line); background: var(--paper); border-radius: 99px; height: 38px; padding: 0 12px; font-weight: 700; font-size: .85rem; max-width: 7.5em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: none; }
+.people { display: grid; gap: 10px; }
+.person { display: flex; align-items: center; gap: 8px; background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 8px 10px 8px 8px; }
+.person.me { border-color: var(--omr); }
+.person .pick { flex: 1; display: flex; align-items: center; gap: 12px; border: 0; background: none; text-align: left; min-height: 56px; padding: 0; min-width: 0; }
+.avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--omr); color: #fff; display: grid; place-items: center; font-family: var(--display); font-size: 1.3rem; flex: none; }
+.pinfo { display: grid; min-width: 0; }
+.pinfo b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.icon-btn { border: 1px solid var(--line); background: var(--paper); border-radius: 99px; width: 38px; height: 38px; display: grid; place-items: center; font-size: .8rem; font-weight: 700; flex: none; }
+.subnav { display: flex; gap: 4px; margin: -6px 0 16px; overflow-x: auto; }
+.subnav button { border: 1px solid var(--line); background: var(--paper); padding: 6px 14px; border-radius: 99px; color: var(--ink-soft); font-weight: 500; min-height: 42px; white-space: nowrap; }
+.subnav button.on { color: #fff; background: var(--omr); border-color: var(--omr); }
+
+/* 공통 */
+.sheet { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+.stack { display: grid; gap: 14px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.muted { color: var(--ink-soft); }
+.small { font-size: .86rem; }
+.label { font-size: .78rem; letter-spacing: .08em; color: var(--omr); font-weight: 700; }
+.btn { border: 1px solid var(--line); background: var(--paper); border-radius: 12px; padding: 10px 18px; min-height: 48px; font-weight: 500; }
+.btn:disabled { opacity: .45; cursor: default; }
+.btn.primary { background: var(--omr); border-color: var(--omr); color: #fff; font-weight: 700; }
+.btn.ghost { background: transparent; }
+.btn.big { min-height: 58px; font-size: 1.08rem; padding-inline: 24px; }
+.btn.block { width: 100%; }
+.btn.small { min-height: 38px; padding: 4px 12px; font-size: .88rem; }
+.spacer { flex: 1; }
+.tag { display: inline-block; font-size: .76rem; font-weight: 700; padding: 2px 9px; border-radius: 99px; background: var(--ground); color: var(--ink-soft); border: 1px solid var(--line); white-space: nowrap; }
+.tag.mc { color: var(--focus); }
+.tag.short { color: var(--warn); }
+.tag.essay { color: var(--omr); }
+.tag.hard { color: var(--omr); border-color: var(--omr-line); }
+
+/* 허브 */
+.hero { display: grid; gap: 6px; padding-block: 6px 4px; }
+.hero h1 { font-family: var(--display); font-size: clamp(1.7rem, 5.5vw, 2.3rem); font-weight: 400; line-height: 1.25; }
+.hero p { margin: 0; color: var(--ink-soft); }
+.player { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+.medal { width: 76px; height: 76px; border-radius: 50%; border: 3px double var(--gold); display: grid; place-items: center; text-align: center; font-family: var(--display); color: var(--gold); line-height: 1.05; font-size: 1.05rem; }
+.medal small { display: block; font-family: var(--body); font-size: .62rem; font-weight: 700; letter-spacing: .1em; }
+.bigbar { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bigbar i { display: block; height: 100%; background: var(--gold); transition: width .5s; }
+.stats3 { display: flex; gap: 16px; flex-wrap: wrap; font-size: .86rem; color: var(--ink-soft); }
+.stats3 b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.subjects { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.subj { border: 1.5px solid var(--line); background: var(--paper); border-radius: 18px; padding: 16px 12px; min-height: 132px; display: grid; justify-items: center; align-content: center; gap: 6px; text-align: center; position: relative; }
+.subj .glyph { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; font-family: var(--display); font-size: 1.6rem; color: #fff; background: var(--c); }
+.subj .nm { font-weight: 700; font-size: 1.05rem; }
+.subj .st { font-size: .76rem; color: var(--ink-soft); }
+.subj.open { border-color: var(--c); }
+.subj.soon .glyph { opacity: .4; }
+.subj .ribbon { position: absolute; top: 8px; right: 8px; font-size: .66rem; font-weight: 700; color: #fff; background: var(--c); padding: 1px 7px; border-radius: 99px; }
+
+/* 과목 첫 화면 */
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.tile { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; }
+.tile b { display: block; font-family: var(--display); font-weight: 400; font-size: 1.55rem; font-variant-numeric: tabular-nums; line-height: 1.2; }
+.tile span { font-size: .82rem; color: var(--ink-soft); }
+.units { display: grid; gap: 8px; }
+.unit { display: flex; gap: 12px; align-items: center; text-align: left; border: 1.5px solid var(--line); background: var(--paper); border-radius: 12px; padding: 10px 14px; min-height: 56px; width: 100%; }
+.unit .roman { font-family: var(--display); color: var(--ink-soft); width: 1.6em; flex: none; }
+.unit .nm { flex: 1; font-weight: 500; overflow-wrap: anywhere; }
+.unit .pg { font-size: .78rem; color: var(--ink-soft); font-variant-numeric: tabular-nums; text-align: right; }
+.unit .box { width: 24px; height: 24px; border-radius: 7px; border: 2px solid var(--line); flex: none; display: grid; place-items: center; font-size: .8rem; color: transparent; }
+.unit.on { border-color: var(--omr); background: var(--omr-tint); }
+.unit.on .box { background: var(--omr); border-color: var(--omr); color: #fff; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper); flex-wrap: wrap; }
+.seg button { border: 0; background: none; padding: 10px 16px; min-height: 46px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button.on { background: var(--ink); color: var(--paper); }
+.modes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.mode { text-align: left; border: 1px solid var(--line); background: var(--paper); border-radius: var(--radius); padding: 16px; min-height: 108px; display: grid; gap: 4px; align-content: start; }
+.mode strong { font-size: 1.05rem; }
+.mode span { font-size: .86rem; color: var(--ink-soft); }
+.resume { border: 1.5px dashed var(--omr); background: var(--omr-tint); border-radius: var(--radius); padding: 14px 16px; }
+
+/* 문제 */
+.progress { display: flex; align-items: center; gap: 12px; }
+.bar { flex: 1; height: 8px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--omr); transition: width .25s; }
+.count { font-variant-numeric: tabular-nums; font-weight: 700; min-width: 4.5em; text-align: right; }
+.combo { font-weight: 700; color: var(--omr); font-size: .9rem; white-space: nowrap; }
+.timer { font-variant-numeric: tabular-nums; font-weight: 700; padding: 4px 10px; border-radius: 8px; background: var(--paper); border: 1px solid var(--line); }
+.timer.low { color: var(--bad); border-color: var(--bad); }
+.qno { font-family: var(--display); font-size: 1.5rem; font-weight: 400; color: var(--omr); line-height: 1; }
+.qcard { position: relative; }
+.passage { border: 1px solid var(--line); background: var(--ground); border-radius: 10px; padding: 12px 14px; white-space: pre-wrap; font-size: .96rem; overflow-wrap: anywhere; }
+.bogi { border: 1.5px solid var(--ink); border-radius: 8px; padding: 16px 14px 10px; position: relative; margin-top: 6px; }
+.bogi .bl { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); background: var(--paper); padding: 0 10px; font-weight: 700; font-size: .86rem; }
+.bogi ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px; font-size: .96rem; }
+.stem { font-weight: 700; font-size: 1.08rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.choices { display: grid; gap: 8px; }
+.choice { display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%; border: 1.5px solid var(--line); background: var(--paper); border-radius: 12px; padding: 12px 14px; min-height: 54px; }
+.choice > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+.bubble { flex: none; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--omr-line); color: var(--omr); display: grid; place-items: center; font-weight: 700; font-size: .9rem; font-variant-numeric: tabular-nums; margin-top: -1px; }
+.choice.sel { border-color: var(--ink); }
+.choice.sel .bubble { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.choice.right { border-color: var(--ok); background: var(--ok-tint); }
+.choice.right .bubble { background: var(--ok); border-color: var(--ok); color: #fff; }
+.choice.wrong { border-color: var(--bad); background: var(--bad-tint); }
+.choice.wrong .bubble { background: var(--bad); border-color: var(--bad); color: #fff; }
+.choice:disabled { cursor: default; }
+input.answer, textarea.answer { width: 100%; font: inherit; color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; min-height: 52px; }
+textarea.answer { min-height: 140px; resize: vertical; }
+.fb { border-radius: 12px; padding: 14px 16px; display: grid; gap: 8px; position: relative; }
+.fb.correct { background: var(--ok-tint); }
+.fb.wrong { background: var(--bad-tint); }
+.fb.partial, .fb.pending { background: var(--warn-tint); }
+.fb .mark { font-family: var(--display); font-size: 1.5rem; font-weight: 400; line-height: 1; }
+.fb.correct .mark { color: var(--ok); }
+.fb.wrong .mark { color: var(--bad); }
+.fb.partial .mark, .fb.pending .mark { color: var(--warn); }
+.gain { font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: .95rem; margin: 0; }
+.kv dt { color: var(--ink-soft); font-weight: 500; }
+.kv dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.self { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.self button { border: 1.5px solid var(--line); background: var(--paper); border-radius: 12px; min-height: 52px; font-weight: 700; }
+.palette { display: flex; flex-wrap: wrap; gap: 6px; }
+.palette button { width: 42px; height: 42px; border-radius: 10px; border: 1.5px solid var(--line); background: var(--paper); font-variant-numeric: tabular-nums; font-weight: 500; }
+.palette button.done { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.palette button.cur { outline: 3px solid var(--omr); outline-offset: 1px; }
+
+/* 채점 도장 · 효과 */
+.stamp { position: absolute; top: -18px; right: 10px; width: 92px; height: 92px; border-radius: 50%; border: 3px solid var(--omr); color: var(--omr); display: grid; place-items: center; text-align: center; font-family: var(--display); font-size: .8rem; line-height: 1.2; padding: 10px; word-break: keep-all; transform: rotate(-14deg); background: color-mix(in srgb, var(--paper) 70%, transparent); animation: stampIn .38s cubic-bezier(.2, 1.6, .4, 1) both; pointer-events: none; }
+.stamp::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; border: 1.5px solid var(--omr); }
+@keyframes stampIn { from { transform: rotate(-14deg) scale(2.2); opacity: 0; } to { transform: rotate(-14deg) scale(1); opacity: .92; } }
+.shake { animation: shake .42s; }
+@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-7px); } 40% { transform: translateX(6px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(3px); } }
+.confetti { position: fixed; inset: 0; pointer-events: none; z-index: 30; overflow: hidden; }
+.confetti i { position: absolute; width: 9px; height: 13px; border-radius: 2px; animation: fall 1.1s ease-out forwards; }
+@keyframes fall { from { transform: translate(0, 0) rotate(0); opacity: 1; } to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; } }
+.banner { position: fixed; left: 50%; top: calc(76px + env(safe-area-inset-top, 0px)); transform: translateX(-50%); z-index: 25; background: var(--paper); border: 2px solid var(--gold); border-radius: 16px; padding: 12px 18px; display: flex; gap: 12px; align-items: center; box-shadow: 0 10px 30px rgba(0, 0, 0, .15); animation: drop .4s ease-out both; max-width: calc(100% - 32px); }
+.banner .medal { width: 52px; height: 52px; font-size: .8rem; flex: none; }
+@keyframes drop { from { transform: translate(-50%, -20px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+
+/* 결과 · 기록 · 도장판 */
+.score { text-align: center; display: grid; gap: 6px; padding-block: 8px; }
+.score .big { font-family: var(--display); font-size: clamp(2.6rem, 10vw, 3.6rem); font-weight: 400; line-height: 1; font-variant-numeric: tabular-nums; }
+.score .big em { font-style: normal; color: var(--omr); }
+.item { border-left: 5px solid var(--line); }
+.item.correct { border-left-color: var(--ok); }
+.item.wrong { border-left-color: var(--bad); }
+.item.partial, .item.pending { border-left-color: var(--warn); }
+.ox { font-family: var(--display); font-size: 1.3rem; font-weight: 400; width: 1.2em; }
+.ox.correct { color: var(--ok); } .ox.wrong { color: var(--bad); } .ox.partial, .ox.pending { color: var(--warn); }
+details summary { cursor: pointer; color: var(--omr); font-weight: 700; min-height: 40px; display: flex; align-items: center; }
+.choice-list { list-style: none; padding: 0; margin: 0; font-size: .92rem; color: var(--ink-soft); }
+.choice-list li.ans { color: var(--ok); font-weight: 700; }
+table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+th { color: var(--ink-soft); font-weight: 500; font-size: .82rem; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.scroll { overflow-x: auto; }
+.meter { height: 6px; background: var(--line); border-radius: 99px; overflow: hidden; min-width: 60px; }
+.meter i { display: block; height: 100%; background: var(--ok); }
+.stamps { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+.badge { display: grid; justify-items: center; gap: 6px; text-align: center; }
+.badge .seal { width: 88px; height: 88px; border-radius: 50%; border: 3px solid var(--omr); color: var(--omr); display: grid; place-items: center; font-family: var(--display); font-size: .92rem; line-height: 1.15; transform: rotate(-10deg); position: relative; padding: 8px; }
+.badge .seal::before { content: ""; position: absolute; inset: 5px; border-radius: 50%; border: 1.5px solid var(--omr); }
+.badge.locked .seal { border-color: var(--line); color: var(--ink-soft); transform: none; border-style: dashed; }
+.badge.locked .seal::before { border-color: transparent; }
+.badge b { font-size: .9rem; }
+.badge span { font-size: .78rem; color: var(--ink-soft); }
+.notice { font-size: .86rem; background: var(--warn-tint); border-radius: 10px; padding: 10px 14px; }
+.empty { text-align: center; color: var(--ink-soft); padding: 32px 10px; }
+#toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 10px 18px; border-radius: 12px; font-size: .92rem; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: calc(100% - 32px); z-index: 40; }
+#toast.show { opacity: 1; }
+@media (max-width: 560px) {
+  .tile { padding: 10px; }
+  .tile b { font-size: 1.25rem; }
+  .modes { grid-template-columns: 1fr; }
+  .subjects { gap: 8px; }
+  .subj { min-height: 118px; padding: 12px 6px; }
+  .lvchip .xpbar { display: none; }
+  .stamp { width: 76px; height: 76px; font-size: .8rem; }
+}
+@media (max-width: 440px) {
+  .lvchip .lvname { display: none; }
+  .brand { font-size: 1.1rem; }
+  .top { gap: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <button class="brand" id="go-hub" aria-label="과목 선택 화면으로">시험 <span class="sub">연습장</span></button>
+    <div class="lvchip" id="lvchip" aria-label="레벨"></div>
+    <button class="whochip" id="who" aria-label="사용자 바꾸기"></button>
+    <button class="icon-btn" id="sound" aria-label="소리 켜기/끄기"></button>
+  </header>
+  <nav class="subnav" id="subnav" aria-label="과목 메뉴" hidden>
+    <button id="nav-home" data-view="home">문제 풀기</button>
+    <button id="nav-wrong" data-view="wrong">오답노트</button>
+    <button id="nav-records" data-view="records">기록</button>
+    <button id="nav-stamps" data-view="stamps">도장판</button>
+  </nav>
+  <main id="app"></main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ═════════════ 과목 ═════════════ */
+const SUBJECTS = [
+  { code: "kor",  name: "국어", g: "국", c: "--s-kor",  open: false },
+  { code: "eng",  name: "영어", g: "영", c: "--s-eng",  open: false },
+  { code: "math", name: "수학", g: "수", c: "--s-math", open: false },
+  { code: "soc",  name: "사회", g: "사", c: "--s-soc",  open: true, book: "중학 사회① (비상교육)", range: "교과서 126~167쪽" },
+  { code: "sci",  name: "과학", g: "과", c: "--s-sci",  open: false },
+  { code: "eth",  name: "도덕", g: "도", c: "--s-eth",  open: false },
+];
+
+/* ═════════════ 사회: 교과서 126~167쪽 ═════════════ */
+const UNITS = {
+  A: { big: "Ⅶ", name: "사회화와 자아 정체성", pages: "128~131" },
+  B: { big: "Ⅶ", name: "사회적 지위와 역할", pages: "132~135" },
+  C: { big: "Ⅶ", name: "우리 사회의 갈등과 차별", pages: "136~141" },
+  D: { big: "Ⅷ", name: "문화의 의미와 특징", pages: "146~150" },
+  E: { big: "Ⅷ", name: "미디어와 문화", pages: "151~155" },
+  F: { big: "Ⅷ", name: "문화를 이해하는 태도", pages: "156~159" },
+  G: { big: "Ⅸ", name: "정치와 민주주의", pages: "164~167" },
+};
+const BG4 = ["ㄱ, ㄴ", "ㄱ, ㄷ", "ㄴ, ㄷ", "ㄴ, ㄹ", "ㄷ, ㄹ"];   // 〈보기〉형 선택지
+const UL5 = ["㉠", "㉡", "㉢", "㉣", "㉤"];
+
+/* t: mc 객관식 / short 단답형 / essay 서술형 · d: 1 기본, 2 보통, 3 심화
+   ps: 제시문 · bg: 〈보기〉 · c/a: 선택지와 정답 번호(1~5) · fixed: 선택지 순서를 섞지 않음 */
+const QS = [
+/* ── Ⅶ-1 사회화와 자아 정체성 ── */
+{ id:"A1", u:"A", p:"129", t:"mc", d:1, tag:"사회화의 의미",
+  q:"한 개인이 다른 사람들과 상호 작용하며 사회 구성원으로 살아가는 데 필요한 언어, 규범, 지식, 가치관 등을 배워 나가는 과정을 무엇이라고 하는가?",
+  c:["사회화","사회적 역할","자아 정체성","역할 갈등","사회적 지위"], a:1,
+  ex:"사회화는 사회 구성원으로 살아가는 데 필요한 언어, 규범, 지식, 가치관을 배워 나가는 과정이다. (교과서 129쪽)" },
+{ id:"A2", u:"A", p:"128-129", t:"mc", d:1, tag:"사회화의 의미",
+  q:"다음 중 사회화를 통해 배운 행동으로 보기 어려운 것은?",
+  c:["수저를 사용해 밥을 먹는다.","신호등이 초록 불일 때 횡단보도를 건넌다.","이웃 어른을 만나면 인사를 한다.","졸릴 때 하품을 한다.","버스를 탈 때 줄을 서서 차례대로 탄다."], a:4,
+  ex:"졸릴 때 하품을 하는 것은 본능에 따른 행동이다. 나머지는 배워서 알게 된 행동이다. (교과서 128~129쪽)" },
+{ id:"A21", u:"A", p:"129", t:"mc", d:2, tag:"사회화의 의미", fixed:true,
+  q:"사회화를 통해 학습된 행동으로 적절한 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 매운 음식을 먹었더니 땀이 났다.","ㄴ. 설날에 집안 어른께 세배를 드렸다.","ㄷ. 추운 날 밖에 나가니 몸이 떨렸다.","ㄹ. 도서관에 들어가면서 휴대 전화를 무음으로 바꾸었다."],
+  c:BG4, a:4,
+  ex:"ㄱ, ㄷ은 몸의 자연스러운 반응(본능)이다. ㄴ, ㄹ은 사회에서 익힌 관습과 규범을 따른 행동이므로 사회화로 학습된 것이다. (교과서 129쪽)" },
+{ id:"A3", u:"A", p:"129", t:"mc", d:2, tag:"사회화의 기능",
+  q:"사회화의 기능에 대한 설명으로 옳지 않은 것은?",
+  c:["사회생활에 필요한 행동 양식과 규범을 익혀 사회 구성원으로 성장하게 한다.","자신만의 독특한 개성과 자아를 형성하게 한다.","사회의 규범과 가치를 다음 세대에 전달한다.","사회를 유지하고 발전시키는 기능을 한다.","어느 사회에서 성장하든 모든 사람이 똑같은 특성을 갖게 한다."], a:5,
+  ex:"사회화 과정에서 개성과 자아가 형성되므로, 어느 사회에서 성장하였느냐에 따라 사람의 특성은 달라질 수 있다. (교과서 129쪽)" },
+{ id:"A4", u:"A", p:"129", t:"mc", d:2, tag:"사회화의 기능",
+  q:"사회화의 기능 중 ‘사회적 차원’의 기능에 해당하는 것은?",
+  c:["수저 사용법을 익혀 혼자 식사할 수 있게 된다.","자신의 성격과 관심 분야를 알게 된다.","구성원이 사회의 규범과 가치를 공유하고 이를 다음 세대에 전달한다.","친구와 어울리며 자신만의 개성을 만든다.","새 직장에서 업무 기술을 배워 적응한다."], a:3,
+  ex:"사회적 차원에서 사회화는 규범과 가치를 공유·전달하여 사회를 유지하고 발전시킨다. 나머지는 개인적 차원의 기능이다. (교과서 129쪽)" },
+{ id:"A22", u:"A", p:"129", t:"mc", d:2, tag:"사회화의 기능",
+  ps:"태어나자마자 서로 다른 나라로 입양된 쌍둥이 자매가 25년 만에 만났다. 두 사람은 얼굴이 거의 똑같았지만, 오빠가 둘 있는 시끌벅적한 집에서 자란 언니는 외향적이었고, 형제 없이 혼자 자란 동생은 조용하고 내향적이었다.",
+  q:"이 사례를 통해 알 수 있는 내용으로 가장 적절한 것은?",
+  c:["사람의 성격은 모두 유전으로 정해진다.","어떤 환경에서 사회화되었느냐에 따라 사람의 특성이 달라질 수 있다.","사회화는 성인이 된 뒤에야 시작된다.","생김새가 같으면 성격도 반드시 같다.","가정은 사회화 기관에 해당하지 않는다."], a:2,
+  ex:"사회화 과정에서 개인은 자신만의 개성과 자아를 형성하므로, 어느 사회(환경)에서 성장하였느냐에 따라 특성이 달라질 수 있다. (교과서 129쪽)" },
+{ id:"A6", u:"A", p:"130", t:"mc", d:2, tag:"사회화 기관",
+  q:"시기별 사회화 기관과 배우는 내용의 연결로 옳지 않은 것은?",
+  c:["유아기 - 학교 - 사회생활에 필요한 지식과 규범을 체계적으로 배운다.","아동기 - 또래 집단 - 함께 생활하는 데 필요한 태도와 규칙을 익힌다.","청소년기 - 학교 - 지식, 기술, 규범과 가치를 체계적으로 배운다.","성인기 - 직장 - 새로운 지식과 기술, 삶의 태도를 배운다.","전 생애 - 미디어 - 생활에 필요한 지식과 정보를 얻는다."], a:1,
+  ex:"유아기에는 가정에서 언어와 기초 생활 습관을 배운다. 학교에서 체계적으로 배우는 시기는 청소년기이다. (교과서 130쪽)" },
+{ id:"A23", u:"A", p:"130", t:"mc", d:2, tag:"사회화 기관", fixed:true,
+  ps:"민서의 하루\n(가) 아침에 할머니께 존댓말을 쓰는 법을 다시 배웠다.\n(나) 방과 후 동네 친구들과 놀이를 하며 순서를 지키는 법을 익혔다.\n(다) 동영상 공유 플랫폼에서 요리 영상을 보고 새로운 요리법을 알게 되었다.",
+  q:"(가)~(다)에 영향을 준 사회화 기관을 순서대로 옳게 짝지은 것은?",
+  c:["가정 - 또래 집단 - 미디어","가정 - 학교 - 미디어","학교 - 또래 집단 - 가정","또래 집단 - 가정 - 미디어","가정 - 또래 집단 - 직장"], a:1,
+  ex:"(가)는 가정, (나)는 또래 집단, (다)는 미디어의 영향이다. 사회화는 다양한 사회화 기관의 영향을 받으며 일생에 걸쳐 이루어진다. (교과서 130쪽)" },
+{ id:"A24", u:"A", p:"130", t:"mc", d:3, tag:"사회화 과정", fixed:true,
+  ps:"사회화는 ㉠ 특정 시기에만 이루어지는 것이 아니라 일생에 걸쳐 이루어진다. ㉡ 유아기에는 가정에서 언어와 기초적인 생활 습관을 배우고, ㉢ 청소년기에는 학교에서 지식과 규범을 체계적으로 배운다. 성인이 되면 ㉣ 사회화가 모두 끝나 더 이상 새로운 것을 배우지 않는다. 또한 ㉤ 미디어에서 얻는 지식과 정보도 사회화에 영향을 준다.",
+  q:"밑줄 친 ㉠~㉤ 중 옳지 않은 것은?",
+  c:UL5, a:4,
+  ex:"성인이 되어도 직장 등 다양한 사회화 기관에서 새로운 지식과 기술, 삶의 태도를 배워 나간다. (교과서 130쪽)" },
+{ id:"A7", u:"A", p:"130", t:"mc", d:2, tag:"미디어와 자아 정체성",
+  q:"미디어와 자아 정체성에 대한 설명으로 가장 적절한 것은?",
+  c:["미디어는 사회화 기관에 포함되지 않는다.","미디어는 자아 정체성 형성에 긍정적인 영향만 준다.","오늘날 미디어가 자아 정체성 형성에 미치는 영향은 줄어들고 있다.","미디어가 전달하는 정보를 비판적으로 검토하려고 노력해야 한다.","미디어 속 인물의 모습은 모두 본보기로 삼아야 한다."], a:4,
+  ex:"자아 정체성 형성에서 미디어의 영향력이 커지고 있으므로 미디어의 정보를 비판적으로 검토해야 한다. (교과서 130쪽)" },
+{ id:"A8", u:"A", p:"130", t:"short", d:1, tag:"자아 정체성",
+  q:"다양한 사회적 관계에서 다른 사람들과 구별되는 자신만의 고유성을 깨닫고, 자신의 성격·가치관·관심 영역 등을 분명하게 이해한 상태를 무엇이라고 하는지 쓰시오.",
+  a:"자아 정체성", acc:["자아정체성"],
+  ex:"자아 정체성은 사회화 과정을 거치며 형성된다. (교과서 130쪽)" },
+{ id:"A9", u:"A", p:"130", t:"mc", d:2, tag:"미디어와 자아 정체성",
+  ps:"일부 청소년들이 미디어에 자주 등장하는 마른 체형의 사람을 이상적인 미의 기준으로 삼아 먹는 것을 거부하기도 한다. 이들은 사회 관계망 서비스(SNS)에 과도한 체중 감량을 위한 식습관과 사진 등을 공유한다.",
+  q:"윗글에서 알 수 있는 내용으로 가장 적절한 것은?",
+  c:["미디어는 자아 정체성 형성에 부정적인 영향을 미치기도 한다.","미디어는 사회화 기관이 아니다.","청소년기에는 사회화가 이루어지지 않는다.","미디어의 정보는 그대로 받아들이는 것이 바람직하다.","자아 정체성은 태어날 때부터 정해져 있다."], a:1,
+  ex:"미디어는 좋은 본보기가 되기도 하지만 이 사례처럼 부정적인 영향을 미치기도 한다. (교과서 130쪽)" },
+{ id:"A25", u:"A", p:"130", t:"mc", d:2, tag:"자아 정체성", fixed:true,
+  ps:"선생님: 건전한 자아 정체성을 형성하려면 어떤 노력을 해야 할까요?\n지유: 인기 있는 모델의 체형을 제 몸의 기준으로 삼을 거예요.\n은우: 앞으로 어떤 삶을 살고 싶은지 계속 탐색해 볼래요.\n하준: 지금 제 모습이 어떤지 먼저 점검해 볼게요.\n서아: 미디어에 나오는 정보는 모두 사실이니까 그대로 따를래요.",
+  q:"선생님의 질문에 옳게 대답한 학생만을 고른 것은?",
+  c:["지유, 은우","지유, 서아","은우, 하준","은우, 서아","하준, 서아"], a:3,
+  ex:"건전한 자아 정체성을 위해서는 현재 모습을 점검하고 앞으로의 삶을 탐색해야 하며, 미디어 정보는 비판적으로 검토해야 한다. (교과서 130쪽)" },
+{ id:"A10", u:"A", p:"130", t:"mc", d:2, tag:"자아 정체성",
+  q:"건전한 자아 정체성을 형성하기 위한 노력으로 적절하지 않은 것은?",
+  c:["자신의 현재 모습을 점검한다.","앞으로 어떤 삶을 살고 싶은지 끊임없이 탐색한다.","미디어가 전달하는 정보를 비판적으로 검토한다.","주변 사람들이 생각하는 나의 모습도 들어 본다.","인기 있는 유명인의 생활 방식을 그대로 따라 한다."], a:5,
+  ex:"유명인을 그대로 따라 하는 것은 주체적인 자아 정체성 형성에 바람직하지 않다. (교과서 130~131쪽)" },
+{ id:"A11", u:"A", p:"129", t:"short", d:2, tag:"사회화의 의미",
+  ps:"1920년 인도, 2007년 러시아에서 고립된 정글에서 늑대와 함께 자란 아이가 발견되었다. 이들은 언어를 배우지 못해 사람과 대화할 수 없었고, 늑대처럼 울부짖으며 네 발로 걸었다. 이처럼 인간은 (    ) 과정을 거치지 않으면 다른 사람과 상호 작용하는 데 필요한 언어, 규범, 가치관 등을 배우기 어렵다.",
+  q:"괄호 안에 들어갈 알맞은 용어를 쓰시오.",
+  a:"사회화", acc:[],
+  ex:"사회화를 거치지 못하면 사회 구성원으로 살아가기 어렵다. (교과서 129쪽)" },
+{ id:"A12", u:"A", p:"130", t:"essay", d:2, tag:"자아 정체성",
+  q:"건전한 자아 정체성을 형성하기 위해 우리가 해야 할 노력을 두 가지 서술하시오.",
+  a:"자신의 현재 모습을 점검하고, 앞으로 어떤 삶을 살고 싶은지 끊임없이 탐색한다. 또 미디어가 전달하는 정보를 비판적으로 검토하려고 노력한다.",
+  rb:"① 자신의 현재 모습 점검 또는 앞으로의 삶 탐색\n② 미디어가 전달하는 정보를 비판적으로 검토",
+  ex:"(교과서 130쪽)" },
+{ id:"A26", u:"A", p:"130", t:"essay", d:3, tag:"미디어와 자아 정체성",
+  ps:"○○ 나라는 지나치게 마른 모델이 패션쇼와 광고에 나오지 못하게 하는 법을 만들었다. 정부는 “어린이와 청소년이 비현실적인 몸매를 계속 보게 되면 스스로를 낮게 평가하게 되고 건강까지 해칠 수 있다.”라고 법을 만든 이유를 밝혔다.",
+  q:"이 법이 만들어진 까닭을 ‘미디어’와 ‘자아 정체성’ 두 낱말을 넣어 서술하시오.",
+  a:"미디어는 많은 정보를 주는 사회화 기관으로, 청소년의 자아 정체성 형성에 큰 영향을 미친다. 비현실적인 몸매를 계속 보여 주면 자아 정체성 형성과 건강에 나쁜 영향을 줄 수 있으므로 이를 막기 위해서이다.",
+  rb:"① 미디어가 자아 정체성 형성에 큰 영향을 준다는 내용 (두 낱말 모두 사용)\n② 부정적 영향(비현실적 기준, 건강 악화)을 막기 위해서라는 내용",
+  ex:"오늘날 미디어가 자아 정체성 형성에 미치는 영향이 커지고 있으며, 부정적인 영향을 미치기도 한다. (교과서 130쪽)" },
+
+/* ── Ⅶ-2 사회적 지위와 역할 ── */
+{ id:"B1", u:"B", p:"133", t:"short", d:1, tag:"사회적 지위",
+  q:"한 개인이 자신이 속한 사회나 집단 내에서 가지는 위치를 무엇이라고 하는지 쓰시오.",
+  a:"사회적 지위", acc:["지위","사회적지위"],
+  ex:"사회적 지위는 크게 귀속 지위와 성취 지위로 나눈다. (교과서 133쪽)" },
+{ id:"B2", u:"B", p:"133", t:"mc", d:1, tag:"귀속 지위와 성취 지위",
+  q:"다음 중 귀속 지위에 해당하는 것은?",
+  c:["학생 회장","의사","딸","축구부 주장","대학교수"], a:3,
+  ex:"딸은 태어나면서 갖게 되는 귀속 지위이고, 나머지는 노력이나 선택으로 얻은 성취 지위이다. (교과서 133쪽)" },
+{ id:"B3", u:"B", p:"133", t:"mc", d:2, tag:"귀속 지위와 성취 지위",
+  q:"성취 지위로만 짝지어진 것은?",
+  c:["아들, 교사","오빠, 학생","손녀, 회사원","변호사, 학급 반장","딸, 동아리 부장"], a:4,
+  ex:"변호사와 학급 반장은 모두 성취 지위이다. 아들, 오빠, 손녀, 딸은 귀속 지위이다. (교과서 133쪽)" },
+{ id:"B21", u:"B", p:"133", t:"mc", d:2, tag:"귀속 지위와 성취 지위", fixed:true,
+  ps:"저는 ㉠ 사회 선생님이에요. 우리 부모님께는 ㉡ 막내딸이지요. 주말에는 ㉢ 동네 배드민턴 동호회 회장을 맡고 있어요. 저는 ㉣ 여성이고, ㉤ ○○ 대학교 졸업생이기도 합니다.",
+  q:"밑줄 친 ㉠~㉤의 사회적 지위를 옳게 연결한 것은?",
+  c:["㉠ - 귀속 지위","㉡ - 성취 지위","㉢ - 성취 지위","㉣ - 성취 지위","㉤ - 귀속 지위"], a:3,
+  ex:"㉠ 선생님, ㉢ 동호회 회장, ㉤ 대학교 졸업생은 노력이나 선택으로 얻은 성취 지위이고, ㉡ 딸, ㉣ 여성은 태어나면서 갖게 되는 귀속 지위이다. (교과서 133쪽)" },
+{ id:"B4", u:"B", p:"133", t:"mc", d:2, tag:"귀속 지위와 성취 지위",
+  q:"사회적 지위에 대한 설명으로 옳은 것은?",
+  c:["현대 사회에서는 직업과 같은 성취 지위의 중요성이 커지고 있다.","귀속 지위는 개인의 노력으로 얻는 지위이다.","성취 지위는 태어나면서부터 갖게 되는 지위이다.","전통 사회에서는 성취 지위의 영향력이 귀속 지위보다 컸다.","한 사람은 하나의 사회적 지위만 가질 수 있다."], a:1,
+  ex:"전통 사회에서는 신분 같은 귀속 지위의 영향력이 컸지만, 현대 사회에서는 직업 같은 성취 지위의 중요성이 커지고 있다. (교과서 133쪽)" },
+{ id:"B5", u:"B", p:"133", t:"short", d:1, tag:"사회적 역할",
+  q:"사회적 지위에 따라 사회적으로 기대되는 행동 양식을 무엇이라고 하는지 쓰시오.",
+  a:"사회적 역할", acc:["역할","사회적역할"],
+  ex:"예를 들어 ‘학생’이라는 지위에는 공부를 열심히 하는 역할이 기대된다. (교과서 133쪽)" },
+{ id:"B22", u:"B", p:"133", t:"mc", d:2, tag:"사회적 역할", fixed:true,
+  q:"사회적 역할에 대한 설명으로 옳은 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 사회적 지위에 따라 기대되는 행동 양식이다.","ㄴ. 같은 역할이라면 개인마다 수행하는 방식도 모두 같다.","ㄷ. 역할을 제대로 수행하지 못하면 비난이나 처벌을 받기도 한다.","ㄹ. 사회가 변해도 지위에 기대되는 역할의 내용은 변하지 않는다."],
+  c:BG4, a:2,
+  ex:"ㄴ. 역할이 같아도 수행 방식은 개인마다 다를 수 있다. ㄹ. 사회 변화에 따라 기대되는 역할이 변하기도 한다. (교과서 133쪽)" },
+{ id:"B6", u:"B", p:"133", t:"mc", d:3, tag:"사회적 역할",
+  q:"사회적 역할에 대한 설명으로 옳지 않은 것은?",
+  c:["같은 역할이라도 실제로 수행하는 방식은 개인마다 다를 수 있다.","역할을 충실히 수행하면 보상을 받을 수 있다.","역할을 제대로 수행하지 못하면 비난이나 처벌을 받기도 한다.","사회 변화에 따라 지위에 기대되는 역할의 내용이 변하기도 한다.","속한 사회가 달라도 같은 지위에 기대되는 역할은 언제나 똑같다."], a:5,
+  ex:"사회적 역할은 개인이 속한 사회의 특성에 따라 차이가 나타난다. (교과서 133쪽)" },
+{ id:"B7", u:"B", p:"133", t:"mc", d:2, tag:"사회적 역할",
+  ps:"과거에는 엄격한 아버지로서의 역할을 강조하였지만, 오늘날에는 자녀들과 가깝게 지내는 아버지의 역할이 강조되고 있다.",
+  q:"윗글에서 알 수 있는 사실로 가장 적절한 것은?",
+  c:["사회 변화에 따라 같은 지위에 기대되는 역할이 변하기도 한다.","아버지는 성취 지위에 해당한다.","역할은 개인이 마음대로 정할 수 있다.","역할 갈등은 가정에서만 나타난다.","사회적 지위는 시대가 바뀌면 사라진다."], a:1,
+  ex:"사회 변화에 따라 기존 지위에 기대되는 역할의 내용이 변하기도 한다. (교과서 133쪽)" },
+{ id:"B8", u:"B", p:"134", t:"short", d:1, tag:"역할 갈등",
+  q:"개인이 수행해야 하는 다양한 역할들이 서로 충돌하여, 어떤 역할을 우선적으로 수행해야 할지 갈등을 겪는 것을 무엇이라고 하는지 쓰시오.",
+  a:"역할 갈등", acc:["역할갈등"],
+  ex:"(교과서 134쪽)" },
+{ id:"B23", u:"B", p:"134", t:"mc", d:2, tag:"역할 갈등",
+  ps:"소방관인 김 씨는 오늘 딸의 초등학교 졸업식에 꼭 가겠다고 약속했다. 그런데 출근길에 큰 화재가 일어나 모든 대원은 즉시 출동하라는 연락을 받았다.",
+  q:"김 씨가 처한 상황에 대한 설명으로 가장 적절한 것은?",
+  c:["두 귀속 지위 사이에서 생긴 편견이다.","소방관이라는 지위와 아버지라는 지위에 따른 역할이 서로 충돌하는 역할 갈등이다.","사회화가 제대로 이루어지지 않아 생긴 문제이다.","한 가지 지위만 가진 사람에게 나타나는 문제이다.","역할 갈등은 개인이 해결할 수 없으므로 고민할 필요가 없다."], a:2,
+  ex:"여러 지위에 따른 역할이 동시에 충돌해 어떤 역할을 먼저 할지 갈등하는 것이 역할 갈등이다. 원인을 파악하고 우선순위를 따져 중요한 것부터 수행해야 한다. (교과서 134쪽)" },
+{ id:"B9", u:"B", p:"134", t:"mc", d:2, tag:"역할 갈등 대응",
+  q:"역할 갈등을 원만하게 해결하는 방법으로 적절하지 않은 것은?",
+  c:["갈등의 원인이 무엇인지 명확히 한다.","여러 역할 중 우선순위를 고려한다.","중요하지 않은 역할부터 먼저 수행한다.","관련된 사람들과 충분히 대화하여 이해를 구한다.","많은 사람이 공통으로 겪는 역할 갈등은 사회 제도를 마련해 해결한다."], a:3,
+  ex:"우선순위를 고려하여 ‘중요한 것부터’ 수행해야 한다. (교과서 134~135쪽)" },
+{ id:"B24", u:"B", p:"134", t:"mc", d:3, tag:"역할 갈등 대응", fixed:true,
+  q:"역할 갈등에 대한 대응 방안 중 ‘개인적 차원’의 방안만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 갈등의 원인이 무엇인지 명확히 한다.","ㄴ. 직장 내 보육 시설을 늘린다.","ㄷ. 여러 역할의 우선순위를 따져 중요한 것부터 수행한다.","ㄹ. 일하는 부모를 위한 돌봄 제도를 만든다."],
+  c:BG4, a:2,
+  ex:"ㄱ, ㄷ은 개인이 할 수 있는 대응이다. ㄴ, ㄹ처럼 많은 사람이 비슷한 역할 갈등을 겪을 때는 사회적 차원의 제도 마련이 필요하다. (교과서 134쪽)" },
+{ id:"B10", u:"B", p:"134", t:"mc", d:2, tag:"역할 갈등 대응",
+  q:"육아와 직장 일을 함께 해야 하는 많은 부모가 겪는 역할 갈등을 해결하기 위한 ‘사회적 차원’의 노력으로 가장 적절한 것은?",
+  c:["직장 내 보육 시설을 늘린다.","한 사람이 하나의 지위만 갖도록 법으로 정한다.","각자 알아서 해결하도록 둔다.","부모가 직장을 그만두도록 권한다.","자녀 돌봄을 모두 조부모에게 맡기도록 한다."], a:1,
+  ex:"여러 사람이 비슷한 역할 갈등을 겪으면 직장 내 보육 시설 확충 같은 사회적 제도가 필요하다. (교과서 134쪽)" },
+{ id:"B11", u:"B", p:"134", t:"mc", d:2, tag:"역할 갈등",
+  q:"역할 갈등에 대한 설명으로 옳은 것은?",
+  c:["일부 특정 개인에게만 나타나는 현상이다.","사회가 복잡해질수록 역할 갈등은 줄어든다.","한 사람이 가진 여러 역할이 서로 충돌할 때 나타난다.","원만하게 해결하지 못해도 사회적 관계에는 영향이 없다.","한 가지 지위만 가진 사람에게 주로 나타난다."], a:3,
+  ex:"사회가 복잡해지며 사람들은 많은 지위를 갖게 되었고 그만큼 역할 갈등도 많아졌다. 해결하지 못하면 심리적 불안과 관계 악화가 생길 수 있다. (교과서 134쪽)" },
+{ id:"B12", u:"B", p:"143", t:"mc", d:3, tag:"사회적 지위와 역할",
+  ps:"대학교수인 ○○ 씨는 자신의 전문 분야에 관한 생방송 온라인 인터뷰 중에 두 자녀가 놀아 달라며 방으로 들어오자 당황하였다.",
+  q:"○○ 씨가 이 상황에서 가진 사회적 지위와 그에 따른 역할을 옳게 연결한 것은?",
+  c:["대학교수 - 자녀 돌보기","아버지 - 전문 분야에 관한 인터뷰하기","대학교수 - 전문 분야에 관한 인터뷰하기","아버지 - 학생 가르치기","대학교수 - 가족과 놀아 주기"], a:3,
+  ex:"‘대학교수’에는 전문 분야 활동이, ‘아버지’에는 자녀를 돌보는 역할이 기대된다. (교과서 143쪽)" },
+{ id:"B25", u:"B", p:"134-135", t:"essay", d:3, tag:"역할 갈등 대응",
+  ps:"“나는 학교 합창단 단장이야. 그런데 합창 대회 전 마지막 연습 날이 사촌 동생 돌잔치와 겹쳤어. 어떻게 하지?”",
+  q:"(1) 이 학생의 상황을 ‘지위’와 ‘역할’이라는 낱말을 넣어 설명하고, (2) 개인적 차원에서 할 수 있는 대응 방안을 서술하시오.",
+  a:"(1) 합창단 단장이라는 지위에 따라 마지막 연습에 참여해야 하는 역할과, 사촌(가족)이라는 지위에 따라 돌잔치에 참석해야 하는 역할이 충돌하는 역할 갈등을 겪고 있다.\n(2) 갈등의 원인을 명확히 하고, 여러 역할의 우선순위를 따져 중요한 것부터 수행한다. 참석하지 못하는 쪽에는 사정을 설명해 이해를 구한다.",
+  rb:"① 두 지위와 각각의 역할이 충돌한다는 설명 (역할 갈등)\n② 원인 파악, 우선순위를 따져 중요한 것부터 수행\n③ (더 좋음) 관련된 사람과 대화하여 이해 구하기",
+  ex:"(교과서 134~135쪽)" },
+
+/* ── Ⅶ-3 우리 사회의 갈등과 차별 ── */
+{ id:"C1", u:"C", p:"137", t:"mc", d:1, tag:"내집단과 외집단",
+  q:"자신이 그 집단에 속해 있으면서 소속감과 안정감을 느끼는 집단을 무엇이라고 하는가?",
+  c:["외집단","내집단","사회화 기관","사회적 지위","문화 집단"], a:2,
+  ex:"내집단은 소속감과 안정감을 느끼는 집단, 외집단은 소속되어 있지 않고 소속감을 느끼지 않는 집단이다. (교과서 137쪽)" },
+{ id:"C2", u:"C", p:"137", t:"short", d:1, tag:"내집단과 외집단",
+  q:"자신이 소속되어 있지 않으며 소속감을 느끼지 않는 집단을 무엇이라고 하는지 쓰시오.",
+  a:"외집단", acc:[],
+  ex:"(교과서 137쪽)" },
+{ id:"C24", u:"C", p:"137", t:"mc", d:3, tag:"편견과 차별",
+  ps:"체육 대회 날, 3반 학생들은 우리 반을 목이 터져라 응원하며 뿌듯함을 느꼈다. 결승에서 5반과 만나자 3반 몇몇 학생들 사이에서 “5반은 원래 반칙을 잘해.”라는 말이 돌았다. 하지만 5반이 반칙을 한 적은 한 번도 없었다.",
+  q:"이 사례에 대한 설명으로 옳은 것은?",
+  c:["3반 학생들에게 3반은 외집단이다.","3반 학생들에게 5반은 내집단이다.","“5반은 원래 반칙을 잘해.”는 부족한 정보로 판단한 편견이다.","사람들은 보통 외집단 구성원에게 더 긍정적인 감정을 느낀다.","편견은 차별로 이어질 가능성이 전혀 없다."], a:3,
+  ex:"3반 학생에게 3반은 내집단, 5반은 외집단이다. 외집단을 부족한 정보로 판단하면서 편견이 생기고, 편견은 차별로 이어지기 쉽다. (교과서 137쪽)" },
+{ id:"C3", u:"C", p:"137", t:"mc", d:2, tag:"편견과 차별",
+  q:"편견과 차별에 대한 설명으로 옳은 것은?",
+  c:["편견은 충분한 정보를 바탕으로 한 공정한 생각이다.","사람들은 내집단보다 외집단 구성원에게 더 긍정적인 감정을 느낀다.","부족한 정보로 외집단 구성원을 판단하는 과정에서 편견이 생기기도 한다.","편견과 차별은 서로 아무 관련이 없다.","차별은 그 사람의 능력이 부족할 때에만 나타난다."], a:3,
+  ex:"부정적인 편견은 그 집단에 속한다는 이유만으로 개인을 부당하게 대우하는 차별로 이어질 수 있다. (교과서 137쪽)" },
+{ id:"C4", u:"C", p:"137", t:"short", d:1, tag:"편견과 차별",
+  q:"어떤 사회 집단에 속한다는 이유만으로 어떤 개인을 부정적으로 평가하며 부당하게 대우하는 것을 무엇이라고 하는지 쓰시오.",
+  a:"차별", acc:[],
+  ex:"(교과서 137쪽)" },
+{ id:"C5", u:"C", p:"137", t:"mc", d:2, tag:"편견과 차별",
+  ps:"인형을 만드는 ‘○○ 회사’는 과거에 금발과 파란 눈의 백인 인형만 만들어 왔다. 그러나 비판을 받은 뒤 휠체어에 앉아 있는 인형, 의족을 한 인형, 다양한 인종의 인형 등을 만들었다.",
+  q:"○○ 회사가 이러한 노력을 한 까닭으로 가장 적절한 것은?",
+  c:["인형 제작 비용을 줄이기 위해","‘백인만 아름답다’는 편견을 줄이고 다양성을 존중하게 하기 위해","특정 인종의 인형만 많이 팔기 위해","전통 인형 문화를 지키기 위해","다른 나라 회사를 그대로 따라 하기 위해"], a:2,
+  ex:"다양한 인형은 세상에 다양한 사람이 있고 각자 매력적이라는 것을 알려 준다. (교과서 137쪽)" },
+{ id:"C21", u:"C", p:"137-138", t:"mc", d:2, tag:"사회적 갈등", fixed:true,
+  q:"갈등과 차별에 대한 설명으로 옳은 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 구성원을 차별하는 행위는 구성원 간 신뢰를 강화한다.","ㄴ. 어떤 집단에 대한 부정적인 편견은 차별로 이어지기 쉽다.","ㄷ. 사회는 갈등을 합리적으로 조정하고 해결하는 과정에서 발전한다.","ㄹ. 우리 사회의 차별 문제는 외국인에게만 나타난다."],
+  c:BG4, a:3,
+  ex:"ㄱ. 차별은 신뢰를 약화하고 소통을 어렵게 한다. ㄹ. 외국인 차별, 성차별, 장애인 차별, 지역 차별 등 다양한 차별이 있다. (교과서 137~138쪽)" },
+{ id:"C6", u:"C", p:"138", t:"mc", d:2, tag:"사회적 갈등",
+  q:"우리 사회의 갈등에 대한 설명으로 가장 적절한 것은?",
+  c:["갈등은 어떤 경우에도 사회 발전을 막는다.","여러 집단은 서로 다른 가치를 추구하거나 경쟁하는 과정에서 갈등을 겪을 수 있다.","갈등은 같은 사회 안에서는 생기지 않는다.","차별로 인한 갈등은 구성원 간 신뢰를 높인다.","갈등을 조정하는 과정은 사회에 필요 없다."], a:2,
+  ex:"사회는 갈등을 합리적으로 조정·해결하는 과정에서 발전한다. (교과서 138쪽)" },
+{ id:"C7", u:"C", p:"138", t:"mc", d:2, tag:"차별 사례",
+  q:"다음 중 우리 사회에서 나타나는 차별의 사례로 보기 어려운 것은?",
+  c:["같은 일을 하는데 외국인이라는 이유로 임금을 더 적게 준다.","채용 공고에 성별에 따라 임금을 다르게 적는다.","인도가 좁아 휠체어를 탄 장애인이 차도로 다녀야 한다.","장애인이 쉽게 탈 수 있도록 저상 버스를 늘린다.","특정 지역 출신이라는 이유로 채용에서 불리하게 대우한다."], a:4,
+  ex:"저상 버스를 늘리는 것은 차별을 해결하기 위한 노력이다. (교과서 138~139쪽)" },
+{ id:"C8", u:"C", p:"138", t:"short", d:2, tag:"편견과 차별",
+  q:"잘 변하지 않는 의식, 혹은 어떤 집단의 사람들에 대한 지나치게 일반화된 생각을 무엇이라고 하는지 쓰시오.",
+  a:"고정 관념", acc:["고정관념"],
+  ex:"성 역할에 대한 고정 관념이 차별로 이어지기도 한다. (교과서 138쪽)" },
+{ id:"C25", u:"C", p:"138", t:"mc", d:2, tag:"편견과 차별",
+  ps:"“요리와 청소는 여자가, 무거운 짐 옮기기는 남자가 해야 해.”",
+  q:"위와 같은 생각에 대한 설명으로 가장 적절한 것은?",
+  c:["성 역할에 대한 고정 관념으로, 성차별로 이어질 수 있다.","모든 사회가 공유하는 문화의 보편성이다.","사람마다 다른 성취 지위에 대한 설명이다.","역할 갈등을 해결하는 좋은 방법이다.","사실에 근거한 공정한 판단이다."], a:1,
+  ex:"성 역할에 대한 편견이나 잘못된 고정 관념은 성차별로 나타나기도 하고, 성별 갈등을 조장해 사회 혼란을 일으킬 수 있다. (교과서 138쪽)" },
+{ id:"C9", u:"C", p:"138", t:"mc", d:2, tag:"편견과 차별",
+  ps:"코로나바이러스 감염증 19가 세계적으로 유행하자 일부 해외에서 아시아인에 대한 증오 범죄가 늘었다. 우리나라 유학생이 아시아인이라는 이유로 모욕과 폭행을 당하는 사건도 일어났다.",
+  q:"이 사례가 보여 주는 사실로 가장 적절한 것은?",
+  c:["편견과 차별이 나타나는 곳에서는 누구도 자유와 안전을 보장받기 어렵다.","차별은 우리나라 사람과는 관계없는 문제이다.","감염병은 차별을 줄이는 계기가 된다.","해외에서는 인종 차별이 일어나지 않는다.","편견은 외국에 나가면 저절로 사라진다."], a:1,
+  ex:"편견과 차별의 피해는 누구나 입을 수 있다. (교과서 138쪽)" },
+{ id:"C23", u:"C", p:"138-140", t:"mc", d:2, tag:"차별 사례",
+  ps:"○○ 씨는 한 회사의 서류 전형에 합격했지만, 회사는 뒤늦게 ○○ 씨가 청각 장애인이라는 것을 알고 면접 기회를 주지 않았다. ○○ 씨는 보청기를 사용해 업무에 전혀 지장이 없다고 설명하였다.",
+  q:"이 사례에 대한 분석으로 가장 적절한 것은?",
+  c:["능력이 부족한 지원자를 걸러 낸 정당한 결정이다.","장애가 있다는 이유만으로 부당하게 대우한 장애인 차별이다.","한 사람의 여러 역할이 충돌한 역할 갈등의 사례이다.","다른 나라 문화를 동경하는 문화 사대주의의 사례이다.","회사 내부의 일이므로 시민이 관심을 가질 필요가 없다."], a:2,
+  ex:"어떤 집단에 속한다는 이유만으로 개인을 부당하게 대우하는 것이 차별이다. 차별에 무관심한 사회에서는 누구나 피해를 입을 수 있다. (교과서 138~140쪽)" },
+{ id:"C10", u:"C", p:"139", t:"short", d:2, tag:"차별 해결 노력",
+  q:"성별, 연령, 국적, 장애의 유무에 상관없이 누구나 손쉽게 쓸 수 있는 제품과 사용 환경을 만드는 디자인을 무엇이라고 하는지 쓰시오.",
+  a:"범용 디자인", acc:["범용디자인","유니버설 디자인","유니버설디자인"],
+  ex:"버스에 경사판을 설치하는 것이 한 예이다. (교과서 139쪽)" },
+{ id:"C22", u:"C", p:"139", t:"mc", d:2, tag:"차별 해결 노력", fixed:true,
+  ps:"선생님: 우리 사회의 차별을 해결하기 위한 노력을 이야기해 볼까요?\n하린: 휠체어 이용자를 위해 버스에 경사판을 설치했어요.\n도현: 키가 172cm 이상인 사람만 뽑는다고 채용 공고를 냈어요.\n서윤: 인종 차별을 반대하는 캠페인에 시민들이 참여했어요.\n민재: 외국인이라는 이유로 같은 일을 해도 임금을 적게 줬어요.",
+  q:"선생님의 질문에 알맞게 대답한 학생만을 고른 것은?",
+  c:["하린, 도현","하린, 서윤","도현, 서윤","도현, 민재","서윤, 민재"], a:2,
+  ex:"하린(장애인 차별 해결), 서윤(외국인·인종 차별 해결)은 노력 사례이다. 도현과 민재는 차별 사례를 말했다. (교과서 138~139쪽)" },
+{ id:"C11", u:"C", p:"139", t:"mc", d:2, tag:"차별 해결 노력",
+  q:"차별 문제와 이를 해결하기 위한 노력의 연결로 옳지 않은 것은?",
+  c:["장애인 차별 - 버스에 경사판 설치","성차별 - 직장 내 성차별적 언행 예방 교육","외국인 차별 - 인종 차별을 반대하는 캠페인","장애인 차별 - 범용 디자인이 적용된 공공시설 확대","성차별 - 채용 공고에 원하는 성별과 외모 조건 적기"], a:5,
+  ex:"채용 공고에 성별이나 신체 조건을 요구하는 것은 성차별의 사례이다. (교과서 138~139쪽)" },
+{ id:"C12", u:"C", p:"139", t:"mc", d:2, tag:"시민의 자질",
+  q:"갈등과 차별에 대처하는 시민의 자세로 적절하지 않은 것은?",
+  c:["내가 속하지 않은 집단의 구성원과 대화하고 협력해 본다.","다른 사람의 삶을 다룬 책이나 영화를 보며 이해의 폭을 넓힌다.","서로의 차이를 존중하면서 갈등을 조정한다.","나와 관계없는 차별에는 관심을 두지 않는다.","일상에서 차별을 찾아내고 문제를 제기한다."], a:4,
+  ex:"나와 관계없는 차별이라도 관심을 두고 문제를 제기할 수 있는 시민 의식이 필요하다. (교과서 139쪽, 141쪽)" },
+{ id:"C13", u:"C", p:"139", t:"essay", d:2, tag:"시민의 자질",
+  ps:"숙박 시설의 세탁 업무를 하는 한 업체가 난민 자격으로 우리나라에 머무르는 외국인 □□ 씨를 피부색을 이유로 채용하지 않았다. 국가 인권 위원회는 이를 불합리한 차별이라고 판단하였다.",
+  q:"이와 같은 차별 문제에 대처하기 위해 시민으로서 지녀야 할 자세를 두 가지 서술하시오.",
+  a:"내가 속하지 않은 집단의 구성원과 만나 대화하고 협력하며 차이를 이해한다. 서로의 차이를 존중하며 갈등을 조정해 나가고, 일상에서 나타나는 차별을 찾아내 문제를 제기할 수 있는 시민 의식을 지닌다.",
+  rb:"① 다른 집단을 이해하려는 노력 (대화·협력, 책·영화 등)\n② 차이를 존중하며 갈등 조정, 또는 차별에 문제를 제기하는 시민 의식",
+  ex:"(교과서 139쪽)" },
+{ id:"C26", u:"C", p:"138-139", t:"essay", d:3, tag:"사회적 갈등",
+  ps:"(가) 부당한 근로 조건을 고쳐 달라고 요구하는 외국인 근로자들\n(나) 좁은 인도 때문에 차도로 이동하는 휠체어 이용자",
+  q:"(가), (나)와 같은 차별이 사회에 미치는 영향을 서술하고, 이를 해결하기 위한 사회적 노력을 한 가지 쓰시오.",
+  a:"서로 다른 사회 구성원을 차별하는 행위나 이로 인한 갈등은 구성원 간 신뢰를 약화하고 소통을 어렵게 한다. 해결 노력으로는 범용 디자인이 적용된 공공시설을 늘리거나, 인종 차별을 반대하는 캠페인을 벌이는 것 등이 있다.",
+  rb:"① 구성원 간 신뢰 약화, 소통이 어려워짐\n② 알맞은 사회적 노력 한 가지 (경사판·범용 디자인, 인종 차별 반대 활동 등)",
+  ex:"(교과서 138~139쪽)" },
+
+/* ── Ⅷ-1 문화의 의미와 특징 ── */
+{ id:"D1", u:"D", p:"147", t:"mc", d:2, tag:"문화의 의미",
+  q:"다음 중 ‘문화’가 넓은 의미로 쓰인 것은?",
+  c:["줄을 서서 입장하는 모습이 문화 시민답다.","신문의 문화면에서 새 전시회 소식을 읽었다.","주말에 공연을 보며 문화생활을 즐겼다.","영화관에서 팝콘과 음료를 사 먹는 것도 우리의 문화이다.","구청에서 문화 행사로 음악회를 열었다."], a:4,
+  ex:"넓은 의미의 문화는 구성원이 환경에 적응하며 공유하게 된 생활양식이다. 나머지는 교양이나 예술을 뜻하는 좁은 의미이다. (교과서 147쪽)" },
+{ id:"D21", u:"D", p:"147", t:"mc", d:3, tag:"문화의 의미", fixed:true,
+  q:"‘문화’가 넓은 의미로 쓰인 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 명절에 가족이 모여 차례를 지내는 것은 우리의 문화이다.","ㄴ. 구민 회관 문화 강좌에서 수채화 수강생을 모집한다.","ㄷ. 식사 전에 ‘잘 먹겠습니다’라고 말하는 것도 식사 문화이다.","ㄹ. 그는 공연과 전시를 즐기는 교양 있는 문화인이다."],
+  c:BG4, a:2,
+  ex:"ㄱ, ㄷ은 구성원이 공유하는 생활양식(넓은 의미)이다. ㄴ은 예술, ㄹ은 교양 있는 모습을 가리키므로 좁은 의미이다. (교과서 147쪽)" },
+{ id:"D2", u:"D", p:"147", t:"short", d:1, tag:"문화의 의미",
+  q:"한 사회의 구성원이 주어진 환경에 적응하는 과정에서 공유하게 된 생활양식을 넓은 의미의 무엇이라고 하는지 쓰시오.",
+  a:"문화", acc:[],
+  ex:"(교과서 147쪽)" },
+{ id:"D3", u:"D", p:"147", t:"mc", d:2, tag:"문화가 아닌 것", fixed:true,
+  ps:"(가) 너무 긴장이 되어 다리를 떨었다.\n(나) 점심 식사 후 수업을 들으니 졸려서 하품이 나왔다.\n(다) 무더위에 지친 몸을 회복하고자 복날에는 삼계탕을 즐겨 먹는다.",
+  q:"(가)~(다) 중 문화에 해당하는 것만을 있는 대로 고른 것은?",
+  c:["(가)","(나)","(다)","(가), (나)","(나), (다)"], a:3,
+  ex:"(가)는 개인의 버릇, (나)는 본능이므로 문화가 아니다. (교과서 147쪽)" },
+{ id:"D25", u:"D", p:"147", t:"mc", d:2, tag:"문화가 아닌 것", fixed:true,
+  q:"문화에 해당하는 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 긴장하면 손톱을 깨무는 버릇이 있다.","ㄴ. 결혼식에 가서 신랑 신부에게 축하 인사를 건넨다.","ㄷ. 뜨거운 냄비를 만지자 손을 급히 뗐다.","ㄹ. 설날에 떡국을 먹으며 한 살 더 먹었다고 말한다."],
+  c:BG4, a:4,
+  ex:"ㄱ은 개인의 습관, ㄷ은 본능적인 반응이므로 문화가 아니다. ㄴ, ㄹ은 구성원이 공유하는 생활양식이다. (교과서 147쪽)" },
+{ id:"D4", u:"D", p:"147", t:"mc", d:2, tag:"문화의 의미",
+  q:"넓은 의미의 문화에 대한 설명으로 옳지 않은 것은?",
+  c:["의식주와 같은 물질문화를 포함한다.","신앙, 도덕, 관습 같은 비물질문화를 포함한다.","사회 구성원이 환경에 적응하며 공유한 생활양식이다.","개인의 버릇이나 습관도 문화에 포함된다.","교양 있는 모습만을 가리키는 것은 아니다."], a:4,
+  ex:"개인의 버릇·습관, 유전·본능에 따른 행동은 문화가 아니다. (교과서 147쪽)" },
+{ id:"D5", u:"D", p:"148", t:"mc", d:2, tag:"문화의 보편성과 특수성",
+  q:"어느 사회에서나 춤과 노래를 즐기고, 결혼식이나 장례식 같은 의식을 치른다. 이와 관련된 문화의 특징은?",
+  c:["문화의 특수성","문화의 보편성","문화의 축적성","문화의 학습성","문화의 변동성"], a:2,
+  ex:"모든 사회의 문화에 공통된 특성이 나타나는 것은 보편성이다. 축적성·학습성·변동성은 ‘특징’이 아니라 ‘속성’이다. (교과서 148쪽)" },
+{ id:"D6", u:"D", p:"148", t:"mc", d:2, tag:"문화의 보편성과 특수성",
+  q:"민속춤이 우리나라에서는 강강술래, 필리핀에서는 티니클링, 에스파냐에서는 플라멩코처럼 사회마다 다르게 나타나는 것과 관련된 문화의 특징은?",
+  c:["보편성","공유성","특수성","전체성","축적성"], a:3,
+  ex:"각 사회의 문화가 고유한 특성을 지니며 다르게 나타나는 것은 특수성이다. (교과서 148쪽)" },
+{ id:"D22", u:"D", p:"148-149", t:"mc", d:3, tag:"문화의 보편성과 특수성",
+  q:"강강술래, 티니클링, 플라멩코 같은 여러 나라의 민속춤을 문화적 측면에서 분석한 내용으로 옳은 것은?",
+  c:["민속춤의 표현이 제각기 다른 것은 문화의 보편성을 보여 준다.","어느 사회에나 민속춤이 있는 것은 문화의 특수성을 보여 준다.","요즘 강강술래를 추는 모습을 보기 어려워진 것은 문화의 축적성과 관련된다.","그 사회 구성원들이 함께 민속춤을 즐기고 동작을 맞출 수 있는 것은 문화의 공유성과 관련된다.","민속춤은 각 지역의 환경이나 생활과 관련이 없다."], a:4,
+  ex:"① 특수성, ② 보편성에 해당한다. ③은 시간이 지나며 변하는 것이므로 변동성과 관련된다. (교과서 148~149쪽)" },
+{ id:"D7", u:"D", p:"148", t:"mc", d:3, tag:"문화의 보편성과 특수성", fixed:true,
+  ps:"(가) 벼농사를 짓는 우리나라 사람들은 초가집을 짓고 정착 생활을 하였지만, 순록을 키우는 차탄족은 천막 형태의 집인 오르츠를 짓고 이동 생활을 한다.\n(나) 차탄족이 오르츠 벽면에 천 조각을 걸어 나쁜 운을 쫓는다고 믿는 것은, 우리 조상이 마을 수호신이라고 믿는 나무에 천을 걸어 놓은 것과 비슷하다.",
+  q:"(가), (나)에서 알 수 있는 문화의 특징을 옳게 짝지은 것은?",
+  c:["(가) 보편성 - (나) 특수성","(가) 특수성 - (나) 보편성","(가) 특수성 - (나) 특수성","(가) 보편성 - (나) 보편성","(가) 변동성 - (나) 공유성"], a:2,
+  ex:"(가)는 환경에 따라 다른 주거 문화이므로 특수성, (나)는 어느 사회에나 종교적인 모습이 나타나므로 보편성이다. (교과서 148쪽)" },
+{ id:"D8", u:"D", p:"149", t:"mc", d:1, tag:"문화의 속성",
+  q:"문화의 속성에 해당하지 않는 것은?",
+  c:["공유성","학습성","축적성","변동성","본능성"], a:5,
+  ex:"문화의 속성은 공유성, 학습성, 축적성, 변동성, 전체성(총체성)이다. (교과서 149쪽)" },
+{ id:"D9", u:"D", p:"149", t:"mc", d:2, tag:"문화의 속성",
+  q:"한 사회의 구성원들이 서로 언어나 몸짓으로 의사소통하고 상대방이 어떻게 행동할지 예측할 수 있는 것과 가장 관련 깊은 문화의 속성은?",
+  c:["공유성","학습성","축적성","변동성","전체성(총체성)"], a:1,
+  ex:"(교과서 149쪽)" },
+{ id:"D10", u:"D", p:"149", t:"mc", d:2, tag:"문화의 속성",
+  q:"우리나라에서 태어났지만 외국에서 자란 사람이 우리 문화를 어색해하는 것과 가장 관련 깊은 문화의 속성은?",
+  c:["전체성(총체성)","학습성","변동성","축적성","공유성"], a:2,
+  ex:"문화는 유전이나 본능이 아니라 성장하며 학습되는 것이다. (교과서 149쪽)" },
+{ id:"D24", u:"D", p:"149", t:"mc", d:2, tag:"문화의 속성",
+  ps:"우리나라에서는 예로부터 머리를 숙여 인사해 왔다. 그런데 서양에서 전해진 악수로 인사하는 사람도 많아졌고, 인터넷이 발달하면서 새로운 인사말과 온라인 인사 예절도 생겨났다.",
+  q:"윗글과 가장 관련 깊은 문화의 속성은?",
+  c:["공유성","학습성","축적성","변동성","보편성"], a:4,
+  ex:"문화는 고정된 것이 아니라 새로운 적응 방식이나 다른 문화와의 교류로 시간이 지나며 변화한다. (교과서 149쪽)" },
+{ id:"D23", u:"D", p:"149-150", t:"mc", d:3, tag:"문화의 속성", fixed:true,
+  ps:"(가) 김치는 맛이 강해 처음엔 먹기 힘들지만, 어릴 때부터 먹다 보면 즐기게 된다.\n(나) 겨울이 오기 전 우리나라의 많은 가정에서 김장을 한다.\n(다) 아파트에서는 김치를 땅에 묻을 수 없어 김치냉장고를 쓰게 되었다.\n(라) 김치 담그는 법이 문헌에 기록되어 전해지고, 이를 바탕으로 새로운 김치도 나오고 있다.",
+  q:"(가)~(라)와 가장 관련 깊은 문화의 속성을 옳게 연결한 것은?",
+  c:["(가) - 공유성","(나) - 학습성","(다) - 전체성(총체성)","(라) - 변동성","(가) - 축적성"], a:3,
+  ex:"(가) 학습성, (나) 공유성, (다) 주거 형태 변화가 보관 방식 변화로 이어졌으므로 전체성, (라) 축적성이다. (교과서 149~150쪽)" },
+{ id:"D11", u:"D", p:"150", t:"mc", d:3, tag:"문화의 속성",
+  q:"아파트에서는 김치를 땅에 묻어 보관할 수 없어 김치냉장고를 사용하게 되었다. 이처럼 주거 형태의 변화가 음식 보관 방식의 변화로 이어진 것과 가장 관련 깊은 문화의 속성은?",
+  c:["공유성","학습성","축적성","전체성(총체성)","보편성"], a:4,
+  ex:"문화 요소들은 서로 연결되어 있어 한 부분이 변하면 다른 부분도 변한다. (교과서 149~150쪽)" },
+{ id:"D12", u:"D", p:"150", t:"mc", d:2, tag:"문화의 속성",
+  q:"김치 담그는 법이 오래전부터 문헌에 기록되어 전해 내려왔고, 이 기록을 토대로 새로운 김치도 등장하고 있다. 이와 가장 관련 깊은 문화의 속성은?",
+  c:["변동성","축적성","전체성(총체성)","공유성","보편성"], a:2,
+  ex:"문화는 말이나 글로 다음 세대에 전달되며 새로운 지식이 더해져 풍부해진다. (교과서 149~150쪽)" },
+{ id:"D13", u:"D", p:"150", t:"mc", d:2, tag:"문화의 속성",
+  q:"오늘날에는 김장을 하지 않고 공장에서 생산한 김치를 사 먹는 가정이 늘어나고 있다. 이와 가장 관련 깊은 문화의 속성은?",
+  c:["공유성","학습성","축적성","전체성(총체성)","변동성"], a:5,
+  ex:"(교과서 149~150쪽)" },
+{ id:"D14", u:"D", p:"148-149", t:"mc", d:3, tag:"문화의 속성",
+  q:"문화의 특징과 속성에 대한 설명으로 옳은 것은?",
+  c:["보편성과 특수성은 문화의 다섯 가지 속성에 포함된다.","문화는 공유성, 학습성, 축적성, 변동성, 전체성의 속성을 지닌다.","문화의 각 속성은 서로 관련 없이 따로따로 나타난다.","문화는 한번 형성되면 절대 변하지 않는다.","문화의 특수성은 모든 사회의 문화에 공통된 특성이 나타나는 것이다."], a:2,
+  ex:"보편성·특수성은 ‘특징’, 공유성 등 다섯 가지는 ‘속성’이다. 속성들은 서로 긴밀하게 연결되어 있다. (교과서 148~149쪽)" },
+{ id:"D15", u:"D", p:"147", t:"essay", d:2, tag:"문화의 의미",
+  q:"‘구성원, 환경, 공유, 생활양식’을 모두 사용하여 넓은 의미의 문화를 한 문장으로 서술하시오.",
+  a:"문화란 한 사회의 구성원이 주어진 환경에 적응하는 과정에서 공유하게 된 생활양식을 말한다.",
+  rb:"① 네 낱말을 모두 사용\n② ‘구성원이 환경에 적응하며 공유한 생활양식’이라는 뜻이 드러남",
+  ex:"(교과서 147쪽, 150쪽)" },
+{ id:"D26", u:"D", p:"148, 150", t:"essay", d:3, tag:"문화의 보편성과 특수성",
+  ps:"“채소를 절여 발효한 음식이 여러 나라에 있습니다. 독일에는 사우어크라우트, 미국에는 피클, 우리나라에는 김치가 있죠.”",
+  q:"윗글에서 알 수 있는 문화의 특징 두 가지를 근거를 들어 서술하시오.",
+  a:"여러 나라에 채소를 절여 발효한 음식이 있다는 점에서 모든 사회의 문화에 공통된 특성이 나타나는 문화의 보편성을 알 수 있다. 그러나 음식의 이름과 만드는 방식이 나라마다 다르다는 점에서 각 사회의 문화가 고유한 특성을 지니는 문화의 특수성을 알 수 있다.",
+  rb:"① 보편성 + 근거(여러 나라에 채소 발효 음식이 있음)\n② 특수성 + 근거(이름·방식이 나라마다 다름)",
+  ex:"(교과서 148쪽, 150쪽)" },
+
+/* ── Ⅷ-2 미디어와 문화 ── */
+{ id:"E1", u:"E", p:"152", t:"short", d:1, tag:"미디어의 의미",
+  q:"우편, 책, 텔레비전, 사회 관계망 서비스(SNS) 등 지식과 정보를 주고받을 때 사용하는 수단을 무엇이라고 하는지 쓰시오.",
+  a:"미디어", acc:["매체"],
+  ex:"(교과서 152쪽)" },
+{ id:"E2", u:"E", p:"152", t:"mc", d:2, tag:"다양한 미디어",
+  q:"오늘날 미디어의 변화에 대한 설명으로 옳지 않은 것은?",
+  c:["인터넷, 스마트폰 등으로 디지털 정보를 전송할 수 있게 되었다.","전 세계 사람들과 쌍방향 소통이 가능해졌다.","누구나 영상이나 게시물을 만들 수 있게 되었다.","정보의 생산자와 소비자의 경계가 무너지고 있다.","소수의 생산자가 만든 정보를 대중에게 일방향으로만 전달한다."], a:5,
+  ex:"일방향 전달은 과거 인쇄·음성·영상 매체의 특징이다. (교과서 152쪽)" },
+{ id:"E21", u:"E", p:"152", t:"mc", d:2, tag:"다양한 미디어", fixed:true,
+  q:"디지털 정보를 전송해 전 세계 사람들과 쌍방향 소통이 가능하고, 누구나 게시물을 만들 수 있는 미디어만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 종이 신문","ㄴ. 라디오","ㄷ. 사회 관계망 서비스(SNS)","ㄹ. 동영상 공유 플랫폼"],
+  c:BG4, a:5,
+  ex:"신문과 라디오는 소수의 생산자가 대중에게 일방향으로 전달하던 매체이다. (교과서 152쪽)" },
+{ id:"E3", u:"E", p:"153", t:"mc", d:2, tag:"미디어 속 문화와 정보",
+  q:"미디어 속 문화와 정보의 특징으로 옳지 않은 것은?",
+  c:["기업이 소유한 미디어가 많아 문화 콘텐츠가 상품의 성격을 띠기도 한다.","대중의 흥미를 끌기 위해 자극적이고 선정적으로 제작되기도 한다.","많은 사람이 콘텐츠를 만들면서 문화의 다양성이 확대되고 있다.","사용자 맞춤형 서비스 때문에 편향된 관점을 갖게 될 수 있다.","정보가 많아질수록 필요한 정보를 찾기가 언제나 쉬워진다."], a:5,
+  ex:"정보가 범람하여 오히려 필요한 정보를 찾기 어려워졌다. (교과서 153쪽)" },
+{ id:"E4", u:"E", p:"153", t:"mc", d:3, tag:"미디어 속 문화와 정보",
+  ps:"민재가 동영상 공유 플랫폼에서 한 가지 주장을 담은 영상을 몇 번 보았더니, 그 뒤로는 같은 주장을 담은 영상만 계속 추천되었다.",
+  q:"이 사례에서 나타날 수 있는 문제점으로 가장 적절한 것은?",
+  c:["정보의 생산자가 될 수 없게 된다.","제한된 정보만 얻게 되어 편향된 관점을 가질 수 있다.","미디어를 전혀 이용할 수 없게 된다.","문화의 보편성이 사라진다.","광고가 모두 사라진다."], a:2,
+  ex:"사용자 맞춤형 서비스로 제한된 정보만 얻으면 편향된 관점을 갖거나 다른 생각을 가진 사람과 소통하기 어려워진다. (교과서 153쪽)" },
+{ id:"E25", u:"E", p:"153", t:"mc", d:2, tag:"광고 분석",
+  ps:"드라마 속 주인공이 외출 준비를 하는 장면에서 화장품 상표가 화면 가득 크게 보인다. 유명인의 일상을 보여 주는 예능 프로그램에 나오는 생활용품도 사실은 광고인 경우가 있다.",
+  q:"윗글에서 알 수 있는 미디어 속 문화와 정보의 특징으로 가장 적절한 것은?",
+  c:["상업적 성격을 지니기도 한다.","언제나 공정한 정보만 제공한다.","청소년에게는 아무 영향을 주지 않는다.","광고와 정보는 항상 쉽게 구분된다.","소수만 콘텐츠를 만들 수 있다."], a:1,
+  ex:"미디어는 기업이 소유하는 경우가 많아 콘텐츠가 상품의 성격을 지니고, 광고 과정에서 상업적 문화가 만들어지기도 한다. (교과서 153쪽)" },
+{ id:"E5", u:"E", p:"153", t:"mc", d:2, tag:"광고 분석",
+  q:"광고에 유명인이나 전문가를 모델로 쓰는 까닭으로 가장 적절한 것은?",
+  c:["사람들이 유명인이나 전문가의 말을 더 쉽게 신뢰하는 경향이 있어서","광고 제작비를 줄이기 위해서","광고에는 반드시 전문가가 나와야 한다고 법으로 정해져 있어서","상품의 단점을 정확하게 알리기 위해서","광고에는 설득하는 요소가 없기 때문에"], a:1,
+  ex:"광고는 정보와 설득으로 이루어진다. (교과서 153쪽)" },
+{ id:"E6", u:"E", p:"153", t:"mc", d:1, tag:"광고 분석",
+  q:"광고를 이루는 두 가지 요소로 옳게 짝지은 것은?",
+  c:["정보, 설득","오락, 휴식","편견, 차별","공유, 학습","비판, 타협"], a:1,
+  ex:"(교과서 153쪽)" },
+{ id:"E7", u:"E", p:"154", t:"short", d:1, tag:"미디어 리터러시",
+  q:"미디어에서 접하는 정보를 분석하여 평가하고 활용하며, 나아가 정보를 창조하고 소통하는 능력을 무엇이라고 하는지 쓰시오.",
+  a:"미디어 리터러시", acc:["미디어리터러시","media literacy","medialiteracy"],
+  ex:"(교과서 154쪽)" },
+{ id:"E8", u:"E", p:"154", t:"mc", d:3, tag:"잘못된 정보와 허위 정보", fixed:true,
+  q:"사용자가 사실이라고 믿고 공유하지만 틀린 정보를 ( ㉠ ), 경제적 이익을 얻거나 대중을 속이려고 만들어진 진실이 아닌 정보를 ( ㉡ )(이)라고 한다. ㉠, ㉡에 들어갈 말로 옳은 것은?",
+  c:["㉠ 허위 정보 - ㉡ 잘못된 정보","㉠ 잘못된 정보 - ㉡ 허위 정보","㉠ 광고 - ㉡ 허위 정보","㉠ 잘못된 정보 - ㉡ 광고","㉠ 편견 - ㉡ 고정 관념"], a:2,
+  ex:"(교과서 154쪽)" },
+{ id:"E24", u:"E", p:"154", t:"mc", d:3, tag:"잘못된 정보와 허위 정보", fixed:true,
+  ps:"한 SNS 계정이 판매 링크와 함께 ‘○○ 음료를 마시면 시험 점수가 오른다’는 ㉠ 글을 올렸다. 이 글을 본 지훈이는 진짜라고 믿고 반 친구들에게 ㉡ 그 내용을 전달하였다.",
+  q:"㉠, ㉡을 교과서의 용어로 옳게 짝지은 것은?",
+  c:["㉠ 허위 정보 - ㉡ 잘못된 정보","㉠ 잘못된 정보 - ㉡ 허위 정보","㉠ 허위 정보 - ㉡ 허위 정보","㉠ 광고 - ㉡ 미디어 리터러시","㉠ 편견 - ㉡ 고정 관념"], a:1,
+  ex:"㉠은 물건을 팔아 이익을 얻으려고 일부러 만든 진실이 아닌 정보(허위 정보), ㉡은 지훈이가 사실이라고 믿고 공유한 틀린 정보(잘못된 정보)이다. (교과서 154쪽)" },
+{ id:"E9", u:"E", p:"154", t:"mc", d:2, tag:"미디어 올바로 이용하기",
+  q:"미디어를 올바로 이용하는 방법으로 적절하지 않은 것은?",
+  c:["제목과 사진만 보지 말고 내용 전체를 자세히 읽는다.","같은 정보를 다룬 다른 미디어의 자료를 찾아본다.","사실 여부를 확인한 뒤 다른 사람과 공유한다.","사진과 영상이 왜곡되지 않았는지 검증한다.","많은 사람이 공유한 정보는 확인하지 않고 바로 퍼뜨린다."], a:5,
+  ex:"(교과서 154쪽)" },
+{ id:"E23", u:"E", p:"154", t:"mc", d:2, tag:"미디어 올바로 이용하기", fixed:true,
+  q:"미디어 속 정보를 대하는 올바른 자세만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 제목만 보고 바로 친구들에게 공유한다.","ㄴ. 사진과 영상이 왜곡되지 않았는지 검증해 본다.","ㄷ. 친한 친구가 보낸 정보는 확인하지 않고 믿는다.","ㄹ. 같은 정보를 다룬 다른 미디어의 자료와 비교해 본다."],
+  c:BG4, a:4,
+  ex:"(교과서 154쪽)" },
+{ id:"E10", u:"E", p:"154", t:"mc", d:3, tag:"미디어 올바로 이용하기",
+  q:"미디어가 보여 주는 사실에 대한 설명으로 가장 적절한 것은?",
+  c:["미디어는 일어난 모든 사실을 빠짐없이 보여 준다.","언론은 어떤 사실을 비중 있게 보도하여 사람들이 중요한 문제로 여기게 할 수 있다.","SNS는 기존 미디어보다 잘못된 정보가 퍼질 위험이 적다.","미디어는 사실만 전달할 뿐 해석을 덧붙이지 않는다.","같은 사진은 누가 보아도 똑같이 해석된다."], a:2,
+  ex:"미디어는 알리고 싶은 일부를 선택하여 보여 주고 해석을 덧붙이기도 한다. (교과서 154쪽)" },
+{ id:"E22", u:"E", p:"154", t:"mc", d:3, tag:"미디어 올바로 이용하기",
+  ps:"같은 사진을 두 신문이 다르게 잘라 실었다.\n(가) 병사가 포로에게 물병을 건네는 부분만 보여 주며 ‘포로에게 물을 주는 병사’\n(나) 다른 병사가 포로에게 총을 겨누는 부분만 보여 주며 ‘포로를 위협하는 병사’",
+  q:"이 자료에서 알 수 있는 내용으로 적절하지 않은 것은?",
+  c:["미디어는 알리고 싶은 부분을 선택하여 보여 준다.","미디어가 보여 주는 사실이 진실이 아닐 수 있다.","같은 사실도 다른 시각으로 해석될 수 있다.","전체 내용을 확인하고 다른 미디어와 비교해 보아야 한다.","신문 보도는 언제나 공정하므로 비판 없이 받아들여야 한다."], a:5,
+  ex:"미디어는 사실의 일부를 선택하고 해석을 덧붙이므로 비판적으로 살펴보아야 한다. (교과서 154쪽)" },
+{ id:"E12", u:"E", p:"153", t:"essay", d:3, tag:"미디어 속 문화와 정보",
+  ps:"기업의 협찬을 대가로 영화나 방송에 상품이나 상표 이미지를 끼워 넣는 간접 광고를 흔히 볼 수 있다. 방송 통신 심의 위원회는 출연자가 특정 음료수를 마시며 상표를 확대하여 보여 주고 맛을 설명한 방송에 제재를 가하기도 하였다.",
+  q:"미디어 속 문화를 접할 때 지녀야 할 바람직한 태도를 윗글과 관련지어 서술하시오.",
+  a:"미디어는 기업이 소유하는 경우가 많아 문화 콘텐츠가 상품의 성격을 지니고, 광고 과정에서 상업적 문화가 만들어질 수 있다. 따라서 이를 이해하고 비판적인 시각으로 바라보아야 한다.",
+  rb:"① 상업적 성격(간접 광고, 상품의 성격) 언급\n② 비판적으로 바라보아야 한다는 태도",
+  ex:"(교과서 153쪽)" },
+{ id:"E26", u:"E", p:"154", t:"essay", d:2, tag:"미디어 리터러시",
+  q:"미디어 리터러시의 의미를 쓰고, 이를 기르기 위해 지녀야 할 자세를 두 가지 서술하시오.",
+  a:"미디어 리터러시는 미디어에서 접하는 정보를 분석하여 평가하고 활용하며, 나아가 정보를 창조하고 소통하는 능력이다. 이를 기르려면 같은 정보를 다룬 다양한 미디어를 비교하며 살펴보고, 정보의 사실 여부를 확인한 뒤 공유해야 한다.",
+  rb:"① 의미: 정보를 분석·평가·활용하고 창조·소통하는 능력\n② 자세 두 가지: 여러 미디어 비교, 사실 확인 후 공유, 믿을 만한지 스스로 조사 등",
+  ex:"(교과서 154쪽)" },
+
+/* ── Ⅷ-3 문화를 이해하는 태도 ── */
+{ id:"F1", u:"F", p:"156-157", t:"mc", d:2, tag:"문화의 다양성",
+  q:"이슬람교를 믿는 사람은 돼지고기를, 힌두교를 믿는 사람은 소고기를 먹지 않는다. 이처럼 문화를 이루는 요소가 사회나 집단마다 제각기 다른 모습을 하고 있는 것을 무엇이라고 하는가?",
+  c:["문화의 다양성","문화 사대주의","자문화 중심주의","문화의 축적성","문화의 공유성"], a:1,
+  ex:"(교과서 157쪽)" },
+{ id:"F2", u:"F", p:"157", t:"mc", d:3, tag:"문화의 다양성",
+  q:"교과서에서 설명한, 이슬람교에서 돼지고기를 먹지 않게 된 배경으로 가장 적절한 것은?",
+  c:["돼지를 신성한 동물로 여겼기 때문이다.","건조한 지역에서 물이 많이 필요한 돼지를 키우면 사람이 마실 물이 부족해지기 때문이다.","돼지가 농사에 꼭 필요한 동물이었기 때문이다.","돼지고기가 너무 비쌌기 때문이다.","돼지를 키울 넓은 초원이 많았기 때문이다."], a:2,
+  ex:"③은 인도에서 소고기를 먹지 않는 배경과 관련된다. (교과서 157쪽)" },
+{ id:"F3", u:"F", p:"157", t:"mc", d:2, tag:"문화의 다양성",
+  q:"교과서에서 설명한, 힌두교에서 소고기를 먹는 것을 금기로 정한 배경으로 가장 적절한 것은?",
+  c:["소가 농사와 일상생활에 꼭 필요한 동물이어서, 잡아먹으면 생계가 어려워지기 때문이다.","인도에는 소가 살지 않기 때문이다.","건조한 기후에서 소가 물을 너무 많이 마시기 때문이다.","소고기가 건강에 해롭다는 연구 결과 때문이다.","다른 나라의 음식 문화를 따라 하기 위해서이다."], a:1,
+  ex:"(교과서 157쪽)" },
+{ id:"F4", u:"F", p:"157", t:"mc", d:2, tag:"문화의 다양성",
+  ps:"우리나라에 거주하는 외국인 인구 (행정 안전부, 2023)\n2010년 114만 명 (2.3%)\n2015년 171만 명 (3.4%)\n2020년 216만 명 (4.2%)\n2022년 226만 명 (4.4%)",
+  q:"이 자료를 바탕으로 한 설명으로 옳은 것은?",
+  c:["우리나라에 사는 외국인 수는 줄어들고 있다.","2022년 외국인 인구 비율은 10%를 넘는다.","다양한 문화적 배경을 지닌 구성원이 늘어 서로 다른 문화를 어떤 태도로 바라볼지 고민할 필요성이 커지고 있다.","외국인이 늘면서 익숙하지 않은 문화를 접할 기회가 줄어들고 있다.","2010년부터 2022년까지 외국인 수는 변하지 않았다."], a:3,
+  ex:"(교과서 157쪽)" },
+{ id:"F24", u:"F", p:"157", t:"mc", d:2, tag:"문화의 다양성", fixed:true,
+  ps:"우리나라에 거주하는 외국인 인구 (행정 안전부, 2023)\n2010년 114만 명 → 2022년 226만 명",
+  q:"2010년과 비교했을 때 2022년 우리나라에 거주하는 외국인 인구는 약 몇 배가 되었는가?",
+  c:["약 1.5배","약 2배","약 3배","약 4배","거의 변화 없음"], a:2,
+  ex:"226만 ÷ 114만 ≈ 2. 약 2배로 늘어 익숙하지 않은 문화를 접할 기회가 늘고 있다. (교과서 157쪽)" },
+{ id:"F5", u:"F", p:"158", t:"mc", d:1, tag:"자문화 중심주의",
+  q:"자신의 문화만 우수하고 올바르며 다른 문화는 열등하고 잘못된 것으로 여기는 태도는?",
+  c:["자문화 중심주의","문화 사대주의","문화 상대주의","문화의 보편성","문화의 다양성"], a:1,
+  ex:"(교과서 158쪽)" },
+{ id:"F6", u:"F", p:"158", t:"mc", d:2, tag:"문화 사대주의",
+  ps:"“간판에 외국어를 쓴 가게가 세련되어 보이고, 요즘 유행하는 상품을 팔 것 같아!”",
+  q:"이 말에 나타난 문화 이해 태도는?",
+  c:["자문화 중심주의","문화 사대주의","문화 상대주의","문화의 보편성","문화의 축적성"], a:2,
+  ex:"(교과서 158쪽)" },
+{ id:"F22", u:"F", p:"158", t:"mc", d:2, tag:"문화 이해 태도 비교", fixed:true,
+  ps:"(가) “우리 음식이 세계 최고야. 다른 나라 음식은 다 이상해.”\n(나) “우리 전통 옷은 촌스러워. 외국 상표 옷만 멋져 보여.”\n(다) “그 나라 날씨를 생각하면 그런 옷을 입는 이유를 알 것 같아.”",
+  q:"(가)~(다)에 나타난 문화 이해 태도를 순서대로 옳게 짝지은 것은?",
+  c:["자문화 중심주의 - 문화 사대주의 - 문화 상대주의","문화 사대주의 - 자문화 중심주의 - 문화 상대주의","자문화 중심주의 - 문화 상대주의 - 문화 사대주의","문화 상대주의 - 문화 사대주의 - 자문화 중심주의","문화 사대주의 - 문화 상대주의 - 자문화 중심주의"], a:1,
+  ex:"(가) 자기 문화만 우수, (나) 다른 문화 동경·자기 문화 열등, (다) 그 사회의 환경 속에서 이해하는 태도이다. (교과서 158쪽)" },
+{ id:"F7", u:"F", p:"158", t:"mc", d:2, tag:"자문화 중심주의",
+  ps:"존 가스트의 그림 「미국의 전진」(1872년)은 미국인들이 원주민의 땅을 빼앗으면서도 자신들이 아메리카를 문명화하고 있다고 생각한 모습을 보여 준다.",
+  q:"그림 속 미국인들에게 나타난 문화 이해 태도는?",
+  c:["문화 상대주의","문화 사대주의","자문화 중심주의","문화의 다양성 존중","보편 윤리"], a:3,
+  ex:"(교과서 158쪽)" },
+{ id:"F23", u:"F", p:"158", t:"mc", d:3, tag:"문화 이해 태도 비교", fixed:true,
+  q:"자문화 중심주의에 대한 설명으로 옳은 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 구성원의 결속력을 강화하여 사회 통합에 도움이 될 수 있다.","ㄴ. 자기 문화의 주체성을 잃게 할 수 있다.","ㄷ. 다른 문화권 사람들을 차별하고 무시하여 갈등을 빚을 수 있다.","ㄹ. 문화를 있는 그대로 존중하여 문화의 다양성을 보존하도록 돕는다."],
+  c:BG4, a:2,
+  ex:"ㄴ은 문화 사대주의, ㄹ은 문화 상대주의에 대한 설명이다. (교과서 158쪽)" },
+{ id:"F8", u:"F", p:"158", t:"mc", d:3, tag:"문화 이해 태도 비교",
+  q:"문화 이해 태도와 그 특징의 연결로 옳은 것은?",
+  c:["자문화 중심주의 - 자기 문화의 주체성을 잃을 수 있다.","문화 사대주의 - 구성원의 결속력을 강화하여 사회 통합에 도움이 된다.","자문화 중심주의 - 다른 문화권의 사람들을 차별하고 무시하여 갈등을 빚을 수 있다.","문화 사대주의 - 다른 문화를 열등한 것으로 여긴다.","문화 상대주의 - 인류의 보편적 가치를 무시하는 관습도 모두 인정한다."], a:3,
+  ex:"(교과서 158쪽)" },
+{ id:"F9", u:"F", p:"158", t:"mc", d:2, tag:"문화 사대주의",
+  q:"문화 사대주의의 긍정적인 측면으로 가장 적절한 것은?",
+  c:["다른 문화의 장점을 쉽게 받아들여 자기 문화 발전에 도움이 되기도 한다.","자기 문화에 대한 자부심을 키운다.","구성원의 결속력을 강화한다.","고유문화를 지키는 데 도움이 된다.","문화의 주체성을 높인다."], a:1,
+  ex:"(교과서 158쪽)" },
+{ id:"F10", u:"F", p:"158", t:"short", d:1, tag:"문화 상대주의",
+  q:"문화의 상대성을 인정하고, 그 사회의 환경과 사회적 맥락 속에서 문화를 이해하려는 태도를 무엇이라고 하는지 쓰시오.",
+  a:"문화 상대주의", acc:["문화상대주의"],
+  ex:"(교과서 158쪽)" },
+{ id:"F11", u:"F", p:"158", t:"mc", d:2, tag:"문화 상대주의",
+  ps:"(SNS 게시글) “네팔에서는 손으로 음식을 먹어요. 손으로 먹으면 음식의 질감과 향을 모두 느낄 수 있고, 먹기도 더 편리해요!”\n(댓글) “손으로 음식을 먹는 데는 여러 이유가 있군요.”",
+  q:"댓글을 쓴 사람에게 나타난 문화 이해 태도는?",
+  c:["자문화 중심주의","문화 사대주의","문화 상대주의","문화의 획일성","문화 제국주의"], a:3,
+  ex:"(교과서 158쪽)" },
+{ id:"F12", u:"F", p:"158", t:"mc", d:3, tag:"자문화 중심주의",
+  ps:"강경 이슬람 정권인 탈레반은 다른 종교의 문화유산인 바미안 석불(불교 유적)을 파괴하였다. 지금은 거대한 석불이 사라지고 빈 곳만 남아 있다.",
+  q:"이 사례에 나타난 문화 이해 태도의 문제점으로 가장 적절한 것은?",
+  c:["자기 문화의 주체성을 잃을 수 있다.","자기 문화를 강요하여 다른 문화권 사람들과 갈등을 빚을 수 있다.","고유문화가 사라질 수 있다.","다른 문화의 장점을 너무 쉽게 받아들인다.","인류의 보편적 가치를 무시하는 관습까지 인정하게 된다."], a:2,
+  ex:"다른 문화를 인정하지 않는 자문화 중심주의의 사례이다. ①, ③은 문화 사대주의의 문제점이다. (교과서 158쪽, 161쪽)" },
+{ id:"F21", u:"F", p:"159", t:"mc", d:3, tag:"문화 상대주의", fixed:true,
+  ps:"문화는 구성원들이 환경에 적응하면서 형성되므로 ㉠ 문화를 이루는 요소들은 서로 밀접한 관계를 맺는다. 따라서 ㉡ 한 사회의 문화는 그 사회의 전체적인 맥락 속에서 이해해야 한다. 특히 ㉢ 문화의 상대성을 인정하는 태도가 중요하다. 오늘날에는 ㉣ 서로 다른 문화 지역과의 교류가 활발해지면서, ㉤ 각 문화의 우열을 가려 더 뛰어난 문화만 남기려는 태도가 필요해지고 있다.",
+  q:"밑줄 친 ㉠~㉤ 중 옳지 않은 것은?",
+  c:UL5, a:5,
+  ex:"교류가 활발해질수록 문화의 상대성을 인정하고 문화의 다양성을 지키려는 태도가 더욱 중요해진다. 문화의 우열을 가리는 것은 바람직하지 않다. (교과서 159쪽)" },
+{ id:"F13", u:"F", p:"158-159", t:"mc", d:3, tag:"문화 상대주의",
+  q:"문화 상대주의에 대한 설명으로 옳지 않은 것은?",
+  c:["문화의 상대성을 인정한다.","그 사회의 환경과 맥락 속에서 문화를 이해하려 한다.","문화의 다양성을 보존하도록 돕는다.","다른 사회의 문화를 제대로 이해할 수 있게 한다.","인간의 존엄성을 해치는 관습이라도 그 사회의 문화이므로 존중해야 한다."], a:5,
+  ex:"인류의 보편적 가치를 무시하는 관습까지 인정해야 하는 것은 아니다. (교과서 158~159쪽)" },
+{ id:"F25", u:"F", p:"158", t:"essay", d:3, tag:"문화 상대주의",
+  ps:"(게시글) “네팔에서는 손으로 음식을 먹어요. 음식을 온전히 느낄 수 있어서 좋아요.”\n(댓글) “손으로 음식을 먹는 데는 그럴 만한 이유가 있었군요.”",
+  q:"(1) 댓글을 단 사람의 문화 이해 태도가 무엇인지 쓰고, (2) 그 태도의 장점을 두 가지 서술하시오.",
+  a:"(1) 문화 상대주의\n(2) 다른 사회의 문화를 그 사회의 환경과 맥락 속에서 제대로 이해하게 한다. 문화를 있는 그대로 존중하기 때문에 문화의 다양성을 보존하는 데 도움이 된다.",
+  rb:"① 문화 상대주의라고 씀\n② 장점 두 가지: 다른 문화를 제대로 이해, 문화의 다양성 보존",
+  ex:"(교과서 158쪽)" },
+{ id:"F26", u:"F", p:"157", t:"essay", d:2, tag:"문화의 다양성",
+  ps:"힌두교에서는 소고기를, 이슬람교에서는 돼지고기를 먹지 않는다. 소는 인도에서 농사와 생활에 꼭 필요한 동물이고, 이슬람교가 생긴 건조한 지역에서 돼지를 키우면 마실 물이 부족해지기 때문이다.",
+  q:"이처럼 사회나 집단마다 문화가 다양하게 나타나는 까닭을 서술하시오.",
+  a:"인간은 자신이 처한 환경과 상황에 적응하면서 독특한 생활 방식과 가치관을 형성해 왔기 때문이다.",
+  rb:"① 서로 다른 환경과 상황에 적응했다는 내용\n② 그 결과 독특한 생활 방식과 가치관이 만들어졌다는 내용",
+  ex:"(교과서 157쪽)" },
+{ id:"F14", u:"F", p:"159", t:"essay", d:3, tag:"문화 상대주의",
+  ps:"아시아와 아프리카 일부 국가에는 법적으로 허용된 연령보다 어린 나이에 결혼하는 조혼 풍습이 남아 있는 지역이 많다. 결혼 후 소녀들은 임신과 출산 과정에서 건강을 잃기도 하고, 학교를 그만두게 되어 미래를 설계할 기회를 빼앗기고 있다.",
+  q:"이 풍습을 문화 상대주의 관점에서 인정하기 어려운 까닭을 서술하시오.",
+  a:"조혼 풍습은 소녀들의 건강과 교육 기회를 빼앗아 인간의 생명과 존엄성, 인권과 같은 인류의 보편적 가치를 훼손한다. 문화 상대주의라도 인류의 보편적 가치를 무시하는 관습까지 인정해야 하는 것은 아니기 때문이다.",
+  rb:"① 인류의 보편적 가치(생명, 존엄성, 인권) 훼손\n② 보편적 가치를 무시하는 문화까지 인정할 수는 없음",
+  ex:"(교과서 158~160쪽)" },
+
+/* ── Ⅸ-1 정치와 민주주의 ── */
+{ id:"G1", u:"G", p:"164", t:"mc", d:1, tag:"정치의 의미",
+  q:"다음 중 정치에 해당하지 않는 것은?",
+  c:["국회 의원 선거에서 투표한다.","학급 회의에서 체육 대회 티셔츠 색을 정한다.","가족이 의견을 나누어 여행지를 정한다.","혼자 수학 과제를 한다.","시민 토론회에서 지역 문제를 논의한다."], a:4,
+  ex:"(교과서 164쪽)" },
+{ id:"G2", u:"G", p:"165", t:"mc", d:2, tag:"정치의 의미",
+  q:"넓은 의미의 정치에 해당하는 사례는?",
+  c:["국회에서 법률을 만든다.","정부가 정책을 마련하여 집행한다.","가족회의로 여행지를 정한다.","선거에서 이겨 정치권력을 얻는다.","국무 회의에서 국가의 주요 정책을 논의한다."], a:3,
+  ex:"넓은 의미의 정치는 구성원 간의 대립과 갈등을 조정하여 합의를 이루는 과정이다. (교과서 165쪽)" },
+{ id:"G21", u:"G", p:"165", t:"mc", d:2, tag:"정치의 의미", fixed:true,
+  q:"좁은 의미의 정치에 해당하는 것만을 〈보기〉에서 고른 것은?",
+  bg:["ㄱ. 국회가 법률을 고친다.","ㄴ. 학급 회의로 청소 당번을 정한다.","ㄷ. 정부가 새로운 정책을 마련하여 집행한다.","ㄹ. 아파트 주민 회의에서 주차 문제를 논의한다."],
+  c:BG4, a:2,
+  ex:"좁은 의미의 정치는 정치권력을 획득하고 행사하는 활동이다. ㄴ, ㄹ은 넓은 의미의 정치이다. (교과서 165쪽)" },
+{ id:"G3", u:"G", p:"165", t:"short", d:1, tag:"정치의 의미",
+  q:"정치권력을 획득하고 행사하는 활동은 (좁은 / 넓은) 의미의 정치이다. 알맞은 말을 쓰시오.",
+  a:"좁은", acc:["좁은의미","좁은 의미"],
+  ex:"(교과서 165쪽)" },
+{ id:"G4", u:"G", p:"165", t:"mc", d:2, tag:"정치의 역할",
+  q:"정치의 역할로 가장 적절한 것은?",
+  c:["공동체 구성원 간의 대립과 갈등을 조정하여 합리적으로 해결한다.","사람들이 원하는 것을 무한히 늘려 준다.","소수의 의견을 무시하고 빠르게 결정한다.","모든 사람이 같은 가치를 추구하게 만든다.","개인이 사회화되는 것을 막는다."], a:1,
+  ex:"(교과서 165쪽)" },
+{ id:"G24", u:"G", p:"165", t:"mc", d:2, tag:"정치의 역할",
+  ps:"교직원 회의에서 학교에 자판기를 두지 않기로 하자, 학생들은 체육 활동 후 목이 마르다며 불만을 나타냈다. 학생, 선생님, 학부모가 함께 모여 논의한 끝에 자판기 대신 식수대를 더 설치하기로 하였다.",
+  q:"이 사례에서 알 수 있는 정치의 역할로 가장 적절한 것은?",
+  c:["구성원 간의 대립과 갈등을 조정하여 합리적으로 해결한다.","정치권력을 가진 사람이 혼자 결정하게 한다.","학생들의 의견은 반영하지 않는다.","갈등이 생기지 않도록 논의 자체를 막는다.","모든 사람이 원하는 것을 충분히 갖게 한다."], a:1,
+  ex:"정치는 대립과 갈등을 조정해 합리적으로 해결함으로써 사회를 통합하고 질서를 유지한다. (교과서 165쪽)" },
+{ id:"G5", u:"G", p:"165", t:"mc", d:2, tag:"정치의 역할",
+  q:"사회에서 대립과 갈등이 생기는 까닭으로 가장 적절한 것은?",
+  c:["사람들이 가지고 싶어 하는 것은 충분하지 않고, 중요하게 여기는 가치도 서로 다르기 때문이다.","모든 사람이 같은 가치를 중요하게 여기기 때문이다.","사회적 자원이 무한하기 때문이다.","정치가 존재하기 때문이다.","사람들이 서로 상호 작용하지 않기 때문이다."], a:1,
+  ex:"(교과서 165쪽)" },
+{ id:"G6", u:"G", p:"166", t:"mc", d:2, tag:"민주주의의 의미",
+  q:"민주주의에 대한 설명으로 옳지 않은 것은?",
+  c:["모든 국민이 국가의 주인으로서 권리를 갖고 나라를 다스리는 정치 형태이다.","일상의 문제를 자유롭고 평등한 입장에서 민주적으로 해결하려는 생활 방식이기도 하다.","공동체 문제를 해결할 때 관용, 비판, 타협의 태도가 필요하다.","다수결의 원칙으로 결정할 때에도 소수의 의견을 존중해야 한다.","권력을 가진 소수가 국가의 중요한 일을 결정하는 것이다."], a:5,
+  ex:"(교과서 166쪽)" },
+{ id:"G23", u:"G", p:"166", t:"mc", d:3, tag:"민주주의의 의미",
+  ps:"(가) 모든 국민이 국가의 주인으로서 권리를 갖고 나라를 다스리는 정치 형태\n(나) 일상생활의 문제를 모든 사람이 자유롭고 평등한 입장에서 민주적으로 해결하려는 생활 방식",
+  q:"(나)의 의미로 쓰인 민주주의의 사례로 가장 적절한 것은?",
+  c:["국회 의원 선거에서 투표한다.","대통령 선거에 후보로 나선다.","가족이 모두 동등하게 의견을 내어 휴가 계획을 정한다.","헌법을 고칠 때 국민 투표를 한다.","국무 회의에서 국가 정책을 논의한다."], a:3,
+  ex:"(나)는 생활 방식으로서의 민주주의이다. 가족·학급처럼 일상에서 자유롭고 평등하게 문제를 해결하는 모습이 해당한다. (교과서 166쪽)" },
+{ id:"G7", u:"G", p:"166", t:"short", d:1, tag:"민주적 태도",
+  q:"자신과 다른 가치관이나 사고방식을 인정하고 포용하는 태도를 무엇이라고 하는지 쓰시오.",
+  a:"관용", acc:[],
+  ex:"(교과서 166쪽)" },
+{ id:"G8", u:"G", p:"166", t:"mc", d:3, tag:"민주적 태도",
+  ps:"마을이 ‘주민 생활 환경 개선 사업’ 대상이 되어 예산을 어디에 쓸지 주민 회의를 열었다.\n갑: 마을로 들어가는 길을 넓혔으면 좋겠습니다.\n을: 저는 오래된 주택을 수리해야 한다고 생각해요. 하지만 길을 넓히는 공사도 필요해 보입니다.\n병: 예산을 한 가지 일에만 써야 하나요? 일의 중요도에 따라 나누었으면 합니다.\n정: 그렇다면 길 공사를 합리적으로 진행해 비용을 아끼고, 남은 예산으로 오래된 주택을 고치면 어떨까요?",
+  q:"정의 발언에 가장 잘 나타난 민주적 태도는?",
+  c:["관용","비판","타협","편견","다수결"], a:3,
+  ex:"정은 서로 다른 의견을 절충해 양쪽이 받아들일 수 있는 방안을 제시했다(타협). (교과서 166쪽)" },
+{ id:"G22", u:"G", p:"167", t:"mc", d:2, tag:"민주적 태도",
+  ps:"휴대 전화 사용 규칙을 정하는 학급 회의\n가은: 쉬는 시간에만 사용하면 어떨까요?\n나래: 급한 연락이 있을 수 있으니 점심시간도 넣자는 의견도 좋네요.\n두리: 제 의견이 뽑히지 않으면, 정해진 규칙은 따르지 않을 거예요.\n라온: 두 의견을 합쳐 쉬는 시간과 점심시간에 쓰기로 하면 어떨까요?\n마루: 다수결로 정하되, 반대한 친구들 의견도 규칙에 반영하면 좋겠어요.",
+  q:"바람직하지 못한 태도로 회의에 참여한 학생은?",
+  c:["가은","나래","두리","라온","마루"], a:3,
+  ex:"함께 토의해 결정한 사항을 합리적인 근거 없이 무조건 따르지 않겠다는 것은 민주적인 태도가 아니다. (교과서 166~167쪽)" },
+{ id:"G9", u:"G", p:"166-167", t:"mc", d:2, tag:"다수결의 원칙",
+  ps:"“다수결의 원칙에 따라 문제를 해결할 때에는 소수의 의견은 신경 쓰지 않아도 돼.”",
+  q:"이 말을 옳게 고친 것은?",
+  c:["다수결의 원칙에 따라 결정하더라도 소수의 의견을 존중해야 해.","다수결의 원칙은 민주주의와 관계없어.","언제나 소수의 의견에 따라 결정해야 해.","중요한 결정은 한 사람이 내려야 해.","다수결로 결정한 뒤에는 토론할 필요가 없어."], a:1,
+  ex:"(교과서 166쪽)" },
+{ id:"G10", u:"G", p:"166", t:"essay", d:2, tag:"민주주의의 필요성",
+  q:"민주주의가 필요한 까닭을 서술하시오.",
+  a:"권력이 소수에게 집중되면 다수의 권리가 침해될 수 있다. 국민이 국가의 중요한 의사 결정에 참여하면 국민의 뜻에 따른 정치를 실현할 수 있고, 구성원이 일상의 문제를 직접 해결하며 모두가 주인으로서의 삶을 누릴 수 있기 때문이다.",
+  rb:"① 국민의 뜻에 따른 정치 실현 (소수 권력 집중 시 권리 침해)\n② 모두가 주인으로서의 삶, 인간답고 행복한 삶 보장",
+  ex:"(교과서 166쪽)" },
+{ id:"G25", u:"G", p:"165", t:"essay", d:2, tag:"정치의 의미",
+  q:"좁은 의미의 정치와 넓은 의미의 정치의 뜻을 비교하여 쓰고, 각각의 사례를 한 가지씩 서술하시오.",
+  a:"좁은 의미의 정치는 정치권력을 획득하고 행사하는 활동으로, 국회에서 법률을 만드는 것이 그 예이다. 넓은 의미의 정치는 사회 구성원 간의 대립과 갈등을 조정하여 합의를 이루는 과정으로, 학급 회의로 문제를 해결하는 것이 그 예이다.",
+  rb:"① 좁은 의미: 정치권력 획득·행사 + 사례 (법률 제정, 정책 집행 등)\n② 넓은 의미: 대립과 갈등을 조정해 합의 + 사례 (가족회의, 학급 회의 등)",
+  ex:"(교과서 165쪽)" },
+];
+const QMAP = Object.fromEntries(QS.map(q => [q.id, q]));
+const TYPE = { mc: "객관식", short: "단답형", essay: "서술형" };
+function kind(q) { return q.t === "essay" ? "서술형" : q.bg ? "〈보기〉형" : q.ps ? "사례·자료" : q.t === "short" ? "단답형" : "개념"; }
+function isApplied(q) { return q.t === "essay" || !!q.bg || !!q.ps || q.d === 3; }
+const MARK = { correct: "O", wrong: "X", partial: "△", pending: "?" };
+const RES = { correct: "정답", wrong: "오답", partial: "부분 정답", pending: "채점 전" };
+const MODE = { normal: "연습", wrong: "오답 복습", mock: "모의고사", retry: "다시 풀기" };
+const NUM = ["①", "②", "③", "④", "⑤"];
+const MOCK_SEC = 45 * 60;
+
+/* ═════════════ 레벨 · 도장 ═════════════ */
+const LEVELS = [
+  { xp: 0, name: "새싹 탐구자" }, { xp: 100, name: "호기심 탐험가" }, { xp: 250, name: "개념 수집가" },
+  { xp: 450, name: "사례 분석가" }, { xp: 700, name: "토론 달인" }, { xp: 1000, name: "사회 박사" },
+  { xp: 1400, name: "시험 정복자" }, { xp: 1900, name: "전설의 수험생" },
+];
+const BADGES = [
+  { id: "first", name: "첫걸음", seal: "첫걸음", desc: "첫 문제를 풀었어요" },
+  { id: "combo5", name: "5연속 정답", seal: "5연속", desc: "한 번도 안 틀리고 5문제" },
+  { id: "combo10", name: "10연속 정답", seal: "10연속", desc: "한 번도 안 틀리고 10문제" },
+  { id: "hard10", name: "심화 도전자", seal: "심화\n10", desc: "어려운(★★★) 문제 10개 정답" },
+  { id: "bogi10", name: "〈보기〉 달인", seal: "보기\n달인", desc: "〈보기〉형·사례형 20개 정답" },
+  { id: "essay5", name: "서술형 작가", seal: "서술\n5", desc: "서술형 5개 다 쓰기(O)" },
+  { id: "redeem10", name: "오답 정복", seal: "오답\n정복", desc: "틀렸던 문제 10개를 다 익힘" },
+  { id: "mock80", name: "모의고사 80점", seal: "80점\n돌파", desc: "모의고사 80점 이상" },
+  { id: "mock100", name: "만점", seal: "만점", desc: "모의고사 100점" },
+  { id: "unit", name: "단원 정복", seal: "단원\n정복", desc: "한 단원의 모든 문제를 한 번 이상 맞힘" },
+  { id: "all", name: "완주", seal: "완주", desc: "모든 문제를 한 번 이상 풀어 봄" },
+  { id: "days3", name: "3일 연속", seal: "3일\n연속", desc: "3일 연속으로 공부함" },
+  { id: "days7", name: "일주일 개근", seal: "7일\n개근", desc: "7일 연속으로 공부함" },
+];
+const BMAP = Object.fromEntries(BADGES.map(b => [b.id, b]));
+function levelOf(xp) { let i = 0; LEVELS.forEach((l, k) => { if (xp >= l.xp) i = k; }); return i; }
+function levelProgress(xp) {
+  const i = levelOf(xp), cur = LEVELS[i].xp, next = LEVELS[i + 1]?.xp;
+  return { i, name: LEVELS[i].name, frac: next ? (xp - cur) / (next - cur) : 1, toNext: next ? next - xp : 0 };
+}
+
+/* ═════════════ 저장: 이름(프로필)별로 이 기기의 브라우저에 ═════════════ */
+const PROFILES_KEY = "exam-practice-profiles", CURRENT_KEY = "exam-practice-current";
+const profileKey = name => "exam-practice-v3:" + name;
+let storageOK = true;
+function freshDB() { return { game: { xp: 0, combo: 0, best: 0, days: [], badges: {}, sound: true }, subj: { soc: { log: [], sessions: [], current: null } } }; }
+function readJSON(k, fallback) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : fallback; } catch (e) { storageOK = false; return fallback; } }
+function writeJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); storageOK = true; } catch (e) { storageOK = false; } }
+let profiles = readJSON(PROFILES_KEY, []);           // [{ name, created }]
+let who = readJSON(CURRENT_KEY, null);
+if (who && !profiles.some(p => p.name === who)) who = null;
+let DB = freshDB(), G = DB.game;
+function loadProfile(name) {
+  DB = Object.assign(freshDB(), readJSON(profileKey(name), {}));
+  G = DB.game; who = name; writeJSON(CURRENT_KEY, name);
+}
+/* 이름 기능이 생기기 전의 기록 (첫 번째로 만드는 이름에 옮겨 줌) */
+function legacyDB() {
+  const v2 = readJSON("exam-practice-v2", null);
+  if (v2) return v2;
+  const v1 = readJSON("soc1-126-167-v1", null);
+  if (v1) { const d = freshDB(); d.subj.soc.log = (v1.log || []).filter(e => QMAP[e.q]); d.game.xp = d.subj.soc.log.length * 8; return d; }
+  return null;
+}
+function createProfile(name) {
+  profiles.push({ name, created: Date.now() }); writeJSON(PROFILES_KEY, profiles);
+  const legacy = profiles.length === 1 ? legacyDB() : null;
+  writeJSON(profileKey(name), legacy || freshDB());
+  if (legacy) { try { localStorage.removeItem("exam-practice-v2"); localStorage.removeItem("soc1-126-167-v1"); } catch (e) { /* 무시 */ } }
+  loadProfile(name);
+  return !!legacy;
+}
+function deleteProfile(name) {
+  profiles = profiles.filter(p => p.name !== name); writeJSON(PROFILES_KEY, profiles);
+  try { localStorage.removeItem(profileKey(name)); } catch (e) { /* 무시 */ }
+  if (who === name) { who = null; writeJSON(CURRENT_KEY, null); }
+}
+if (who) loadProfile(who);
+function S() { return DB.subj[subject] || (DB.subj[subject] = { log: [], sessions: [], current: null }); }
+function save() { if (who) writeJSON(profileKey(who), DB); }
+
+/* ═════════════ 도우미 ═════════════ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const app = $("#app");
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]); }
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function norm(s) { return String(s || "").toLowerCase().replace(/[\s.,·!?~'"‘’“”()\-]/g, ""); }
+function pct(x) { return x == null ? "-" : Math.round(x * 100) + "%"; }
+function fmtDur(ms) { const s = Math.max(0, Math.round(ms / 1000)); const m = Math.floor(s / 60); return m ? `${m}분 ${s % 60}초` : `${s}초`; }
+function fmtDate(t) { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, "0")}:${String(d.getMinutes()).padStart(2, "0")}`; }
+function stars(d) { return "★".repeat(d) + "☆".repeat(3 - d); }
+function score(r) { return r === "correct" ? 1 : r === "partial" ? 0.5 : 0; }
+function fmtScore(x) { return Number.isInteger(x) ? x : x.toFixed(1); }
+function today() { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; }
+function dayStreak() {
+  const set = new Set(G.days); let n = 0; const d = new Date();
+  if (!set.has(today())) d.setDate(d.getDate() - 1);
+  while (set.has(`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`)) { n++; d.setDate(d.getDate() - 1); }
+  return n;
+}
+let toastT;
+function toast(msg) { const el = $("#toast"); el.textContent = msg; el.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("show"), 2400); }
+
+/* 효과음 (소리 버튼으로 끄고 켤 수 있음) */
+let actx;
+function sfx(kind) {
+  if (!G.sound) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const notes = { ok: [660, 880], bad: [220, 180], up: [523, 659, 784, 1047] }[kind];
+    notes.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime + i * 0.09;
+      o.type = kind === "bad" ? "triangle" : "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t + 0.25);
+    });
+  } catch (e) { /* 소리를 못 내는 환경 */ }
+}
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function confetti() {
+  if (reduced) return;
+  const box = document.createElement("div"); box.className = "confetti";
+  const colors = ["var(--omr)", "var(--gold)", "var(--ok)", "var(--focus)", "var(--s-math)"];
+  for (let i = 0; i < 26; i++) {
+    const p = document.createElement("i");
+    p.style.left = 50 + (Math.random() * 20 - 10) + "%"; p.style.top = "45%";
+    p.style.background = colors[i % colors.length];
+    p.style.setProperty("--dx", (Math.random() * 520 - 260) + "px");
+    p.style.setProperty("--dy", (Math.random() * 420 - 300) + "px");
+    p.style.setProperty("--rot", (Math.random() * 720 - 360) + "deg");
+    box.appendChild(p);
+  }
+  document.body.appendChild(box); setTimeout(() => box.remove(), 1200);
+}
+function banner(title, sub, seal) {
+  $$(".banner").forEach(b => b.remove());
+  const b = document.createElement("div"); b.className = "banner"; b.setAttribute("role", "status");
+  b.innerHTML = `<div class="medal">${seal}</div><div><b>${esc(title)}</b><div class="small muted">${esc(sub)}</div></div>`;
+  document.body.appendChild(b); setTimeout(() => b.remove(), 3200);
+}
+
+/* ═════════════ 기록 · 점수 ═════════════ */
+function qStats() {
+  const m = {};
+  for (const e of S().log) {
+    const s = m[e.q] || (m[e.q] = { tries: 0, correct: 0, wrong: 0, streak: 0, last: 0 });
+    s.tries++; s.last = e.t;
+    if (e.r === "correct") { s.correct++; s.streak++; } else { s.wrong++; s.streak = 0; }
+  }
+  return m;
+}
+function wrongList(includeMastered) {
+  return Object.entries(qStats()).filter(([id, s]) => QMAP[id] && s.wrong > 0 && (includeMastered || s.streak < 2))
+    .map(([id, s]) => ({ id, ...s, mastered: s.streak >= 2 })).sort((a, b) => b.wrong - a.wrong || b.last - a.last);
+}
+function groupStats(keyFn) {
+  const m = {};
+  for (const e of S().log) { const q = QMAP[e.q]; if (!q) continue; const k = keyFn(q); const s = m[k] || (m[k] = { k, n: 0, c: 0 }); s.n++; s.c += score(e.r); }
+  return Object.values(m).map(s => ({ ...s, rate: s.c / s.n }));
+}
+
+/* 문제 한 개를 채점 기록하고 점수·콤보·도장을 계산 */
+function record(qid, r, opts = {}) {
+  const q = QMAP[qid];
+  S().log.push({ q: qid, r, t: Date.now() });
+  if (!G.days.includes(today())) G.days.push(today());
+  let pts = r === "correct" ? 10 + (q.d - 1) * 5 : r === "partial" ? 5 : 2;
+  if (!opts.silentCombo) {
+    if (r === "correct") { G.combo++; if (G.combo >= 3) pts += 5; } else G.combo = 0;
+    G.best = Math.max(G.best, G.combo);
+  }
+  const before = levelOf(G.xp);
+  G.xp += pts;
+  const up = levelOf(G.xp) > before ? levelOf(G.xp) : null;
+  const newB = checkBadges();
+  save();
+  return { pts, combo: G.combo, up, newB };
+}
+function checkBadges(extra = []) {
+  const got = [];
+  const give = id => { if (!G.badges[id]) { G.badges[id] = Date.now(); got.push(id); } };
+  const log = S().log, st = qStats();
+  if (log.length) give("first");
+  if (G.best >= 5) give("combo5");
+  if (G.best >= 10) give("combo10");
+  if (log.filter(e => e.r === "correct" && QMAP[e.q]?.d === 3).length >= 10) give("hard10");
+  if (log.filter(e => e.r === "correct" && QMAP[e.q] && (QMAP[e.q].bg || QMAP[e.q].ps)).length >= 20) give("bogi10");
+  if (log.filter(e => e.r === "correct" && QMAP[e.q]?.t === "essay").length >= 5) give("essay5");
+  if (wrongList(true).filter(w => w.mastered).length >= 10) give("redeem10");
+  if (Object.keys(UNITS).some(u => QS.filter(q => q.u === u).every(q => st[q.id]?.correct))) give("unit");
+  if (QS.every(q => st[q.id])) give("all");
+  if (dayStreak() >= 3) give("days3");
+  if (dayStreak() >= 7) give("days7");
+  extra.forEach(give);
+  return got;
+}
+function celebrate(res) {
+  if (res.up != null) { sfx("up"); confetti(); banner(`레벨 업! Lv.${res.up + 1}`, LEVELS[res.up].name, `Lv.${res.up + 1}`); }
+  res.newB.forEach((id, i) => setTimeout(() => banner(`새 도장: ${BMAP[id].name}`, BMAP[id].desc, BMAP[id].seal.replace("\n", "<br>")), 600 + i * 1400));
+  drawChrome();
+}
+
+/* ═════════════ 화면 전환 ═════════════ */
+let subject = "soc", view = "hub", viewArg = null, timerId;
+function go(v, arg) { view = v; viewArg = arg; render(); window.scrollTo(0, 0); }
+$$(".subnav button").forEach(b => b.addEventListener("click", () => go(b.dataset.view)));
+$("#go-hub").addEventListener("click", () => go("hub"));
+$("#sound").addEventListener("click", () => { G.sound = !G.sound; save(); drawChrome(); if (G.sound) sfx("ok"); });
+$("#who").addEventListener("click", () => go("profile"));
+function drawChrome() {
+  const lp = levelProgress(G.xp);
+  const on = !!who && view !== "profile";
+  $("#lvchip").hidden = $("#sound").hidden = $("#who").hidden = !on;
+  if (!on) return;
+  $("#who").textContent = who;
+  $("#lvchip").innerHTML = `Lv.${lp.i + 1} <span class="lvname">${esc(lp.name)}</span> <span class="xpbar"><i style="width:${lp.frac * 100}%"></i></span>`;
+  $("#sound").textContent = G.sound ? "소리" : "무음";
+  $("#sound").setAttribute("aria-pressed", String(G.sound));
+}
+function render() {
+  clearInterval(timerId);
+  if (!who) view = "profile";
+  drawChrome();
+  const inSubject = !["hub", "soon", "profile"].includes(view);
+  $("#subnav").hidden = !inSubject;
+  $$(".subnav button").forEach(b => b.classList.toggle("on", b.dataset.view === view));
+  ({ profile, hub, soon, home, quiz, result, wrong: wrongView, records, stamps })[view](viewArg);
+}
+
+/* ═════════════ 누가 공부할까요? (이름 고르기) ═════════════ */
+function b64enc(s) { return btoa(unescape(encodeURIComponent(s))); }
+function b64dec(s) { return decodeURIComponent(escape(atob(s.trim()))); }
+function profile() {
+  const hasLegacy = !profiles.length && !!legacyDB();
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero"><span class="label">시험 연습장</span><h1>누가 공부할까요?</h1>
+      <p>이름을 고르면 그 사람의 점수, 오답노트, 도장을 이어서 할 수 있어요.</p></section>
+    ${storageOK ? "" : `<div class="notice">이 브라우저에서는 기록을 저장할 수 없어요. (사생활 보호 모드인지 확인해 주세요)</div>`}
+    ${profiles.length ? `<div class="people">${profiles.map(p => {
+      const d = readJSON(profileKey(p.name), freshDB()); const lp = levelProgress(d.game?.xp || 0);
+      const done = new Set((d.subj?.soc?.log || []).map(e => e.q)).size;
+      return `<div class="person ${p.name === who ? "me" : ""}">
+        <button class="pick" data-name="${esc(p.name)}"><span class="avatar">${esc([...p.name][0])}</span>
+          <span class="pinfo"><b>${esc(p.name)}</b><span class="small muted">Lv.${lp.i + 1} ${esc(lp.name)} · 사회 ${done}문항</span></span></button>
+        <button class="btn ghost small del" data-name="${esc(p.name)}" aria-label="${esc(p.name)} 기록 지우기">지우기</button></div>`; }).join("")}</div>` : ""}
+    <section class="sheet stack">
+      <label for="new-name"><b>${profiles.length ? "새 이름 추가" : "이름을 입력하세요"}</b></label>
+      <div class="row"><input class="answer" id="new-name" maxlength="12" autocomplete="off" placeholder="예: 소율" style="flex:1;min-width:0">
+        <button class="btn primary" id="add">시작하기</button></div>
+      ${hasLegacy ? `<p class="small muted" style="margin:0">이 기기에 이름 없이 풀던 기록이 있어요. 처음 만드는 이름으로 옮겨 드려요.</p>` : ""}
+    </section>
+    <details class="sheet"><summary>다른 기기로 기록 옮기기</summary>
+      <div class="stack" style="margin-top:8px">
+        <p class="small muted" style="margin:0">기록은 이 기기의 브라우저에만 저장돼요. 태블릿에서 풀던 것을 컴퓨터에서 이어 하려면, 여기서 ‘기록 코드’를 복사해 다른 기기의 같은 화면에 붙여 넣으세요.</p>
+        ${who ? `<button class="btn" id="export">${esc(who)}의 기록 코드 복사</button>` : ""}
+        <textarea class="answer" id="code" placeholder="다른 기기에서 복사한 기록 코드를 붙여 넣으세요" style="min-height:90px"></textarea>
+        <button class="btn" id="import">기록 코드 불러오기</button>
+      </div></details>
+  </div>`;
+  const inp = $("#new-name");
+  const add = () => {
+    const name = inp.value.trim().replace(/\s+/g, " ");
+    if (!name) return toast("이름을 입력해 주세요.");
+    if (profiles.some(p => p.name === name)) { loadProfile(name); return go("hub"); }
+    const moved = createProfile(name);
+    toast(moved ? `${name}님, 이전 기록을 옮겨 왔어요!` : `${name}님, 반가워요!`);
+    checkBadges(); save(); go("hub");
+  };
+  $("#add").onclick = add;
+  inp.addEventListener("keydown", e => { if (e.key === "Enter") add(); });
+  if (!profiles.length) inp.focus();
+  $$(".pick").forEach(b => b.onclick = () => { loadProfile(b.dataset.name); subject = "soc"; go("hub"); });
+  $$(".del").forEach(b => b.onclick = () => {
+    if (!b.dataset.armed) {
+      b.dataset.armed = "1"; b.textContent = "한 번 더 누르면 삭제";
+      setTimeout(() => { if (b.isConnected) { delete b.dataset.armed; b.textContent = "지우기"; } }, 3500);
+      return;
+    }
+    deleteProfile(b.dataset.name); toast("기록을 지웠어요."); profile();
+  });
+  if ($("#export")) $("#export").onclick = async () => {
+    const code = b64enc(JSON.stringify({ name: who, db: DB }));
+    const ta = $("#code"); ta.value = code;
+    try { await navigator.clipboard.writeText(code); toast("복사했어요. 다른 기기에 붙여 넣으세요."); }
+    catch (e) { ta.focus(); ta.select(); toast("코드를 길게 눌러 직접 복사해 주세요."); }
+  };
+  $("#import").onclick = () => {
+    let data;
+    try { data = JSON.parse(b64dec($("#code").value)); } catch (e) { return toast("기록 코드가 올바르지 않아요."); }
+    if (!data?.name || !data?.db?.game) return toast("기록 코드가 올바르지 않아요.");
+    if (!profiles.some(p => p.name === data.name)) { profiles.push({ name: data.name, created: Date.now() }); writeJSON(PROFILES_KEY, profiles); }
+    writeJSON(profileKey(data.name), data.db);
+    loadProfile(data.name); toast(`${data.name}님의 기록을 불러왔어요.`); go("hub");
+  };
+}
+
+/* ═════════════ 과목 선택 (첫 화면) ═════════════ */
+function hub() {
+  const lp = levelProgress(G.xp);
+  const streak = dayStreak();
+  const nb = Object.keys(G.badges).length;
+  const socLog = DB.subj.soc?.log || [];
+  const socDone = new Set(socLog.map(e => e.q)).size;
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero"><span class="label">중간고사 준비</span><h1>${esc(who)}, 오늘은 어떤 과목을<br>연습해 볼까?</h1></section>
+    ${storageOK ? "" : `<div class="notice">이 브라우저에서는 기록이 저장되지 않아요. 창을 닫으면 점수와 도장이 사라집니다.</div>`}
+    <section class="sheet player">
+      <div class="medal"><div><small>LEVEL</small>${lp.i + 1}</div></div>
+      <div class="stack" style="gap:8px">
+        <div class="row"><b style="font-size:1.1rem">${esc(lp.name)}</b><span class="spacer"></span><span class="small muted">${G.xp.toLocaleString()}점${lp.toNext ? ` · 다음 레벨까지 ${lp.toNext}점` : ""}</span></div>
+        <div class="bigbar"><i style="width:${lp.frac * 100}%"></i></div>
+        <div class="stats3"><span>연속 공부 <b>${streak}일</b></span><span>최고 콤보 <b>${G.best}</b></span><span>모은 도장 <b>${nb} / ${BADGES.length}</b></span></div>
+      </div>
+    </section>
+    <div class="subjects">
+      ${SUBJECTS.map(s => `<button class="subj ${s.open ? "open" : "soon"}" data-s="${s.code}" style="--c:var(${s.c})">
+        ${s.open ? `<span class="ribbon">열림</span>` : ""}
+        <span class="glyph">${s.g}</span><span class="nm">${s.name}</span>
+        <span class="st">${s.open ? `${socDone} / ${QS.length}문항 풀어 봄` : "준비 중"}</span></button>`).join("")}
+    </div>
+    <p class="small muted" style="margin:0">문제를 맞히면 점수를 얻고, 3문제 연속으로 맞히면 콤보 보너스가 붙어요. 점수를 모으면 레벨이 오르고, 목표를 이루면 도장을 받아요.</p>
+  </div>`;
+  $$(".subj").forEach(b => b.onclick = () => {
+    const s = SUBJECTS.find(x => x.code === b.dataset.s);
+    if (s.open) { subject = s.code; go("home"); } else go("soon", s.code);
+  });
+}
+function soon(code) {
+  const s = SUBJECTS.find(x => x.code === code);
+  app.innerHTML = `<div class="stack">
+    <section class="sheet empty stack" style="justify-items:center">
+      <span class="glyph" style="width:64px;height:64px;border-radius:18px;display:grid;place-items:center;font-family:var(--display);font-size:2rem;color:#fff;background:var(${s.c})">${s.g}</span>
+      <h2>${s.name} 문제는 준비 중이에요</h2>
+      <p style="margin:0">교과서와 지도서를 바탕으로 문제를 만들고 있어요. 지금은 사회를 먼저 연습해 보세요.</p>
+      <div class="row" style="justify-content:center"><button class="btn" id="back">과목 선택으로</button><button class="btn primary" id="to-soc">사회 풀러 가기</button></div>
+    </section></div>`;
+  $("#back").onclick = () => go("hub");
+  $("#to-soc").onclick = () => { subject = "soc"; go("home"); };
+}
+
+/* ═════════════ 사회 첫 화면 ═════════════ */
+let pickUnits = new Set(Object.keys(UNITS)), pickCount = 20, pickLevel = "all";
+function pool() {
+  return QS.filter(q => pickUnits.has(q.u) && (pickLevel === "all" || (pickLevel === "hard" ? isApplied(q) : !isApplied(q))));
+}
+function home() {
+  const s = S();
+  const answered = new Set(s.log.map(e => e.q)).size;
+  const rate = s.log.length ? s.log.reduce((a, e) => a + score(e.r), 0) / s.log.length : null;
+  const wrongN = wrongList(false).length;
+  const weak = groupStats(q => q.tag).filter(t => t.n >= 2 && t.rate < 1).sort((a, b) => a.rate - b.rate || b.n - a.n).slice(0, 5);
+  const counts = Object.fromEntries(Object.keys(UNITS).map(u => [u, QS.filter(q => q.u === u).length]));
+  const cur = s.current;
+  const avail = pool().length;
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero">
+      <span class="label">중학 사회① · 교과서 126~167쪽</span>
+      <h1>사회화부터 민주주의까지</h1>
+      <p>Ⅶ 인간과 사회생활 · Ⅷ 다양한 문화의 이해 · Ⅸ 정치와 민주주의 — ${QS.length}문항 (사례·〈보기〉·서술형 ${QS.filter(isApplied).length}문항)</p>
+    </section>
+    ${cur ? `<div class="resume row"><div><b>풀던 ${MODE[cur.mode]}가 있어요</b><div class="small muted">${Object.keys(cur.ans).length} / ${cur.qids.length}문항 풀었음</div></div><span class="spacer"></span>
+      <button class="btn" id="drop">그만두기</button><button class="btn primary" id="resume">이어서 풀기</button></div>` : ""}
+    <div class="tiles">
+      <div class="tile"><b>${answered}<span class="small"> / ${QS.length}</span></b><span>풀어 본 문항</span></div>
+      <div class="tile"><b>${pct(rate)}</b><span>정답률</span></div>
+      <div class="tile"><b>${wrongN}</b><span>복습할 오답</span></div>
+    </div>
+    <section class="sheet stack">
+      <div class="row"><h2 style="font-size:1.1rem">단원 고르기</h2><span class="spacer"></span>
+        <button class="btn ghost small" id="all">${pickUnits.size === 7 ? "모두 해제" : "모두 선택"}</button></div>
+      <div class="units">
+        ${Object.entries(UNITS).map(([k, u]) => `<button class="unit ${pickUnits.has(k) ? "on" : ""}" data-u="${k}" aria-pressed="${pickUnits.has(k)}">
+          <span class="roman">${u.big}</span><span class="nm">${u.name}</span><span class="pg">${u.pages}쪽<br>${counts[k]}문항</span><span class="box">✓</span></button>`).join("")}
+      </div>
+      <div class="row"><span class="muted small" style="min-width:4em">난이도</span>
+        <div class="seg" role="group" aria-label="난이도">
+          <button data-l="all" class="${pickLevel === "all" ? "on" : ""}">섞어서</button>
+          <button data-l="basic" class="${pickLevel === "basic" ? "on" : ""}">개념 다지기</button>
+          <button data-l="hard" class="${pickLevel === "hard" ? "on" : ""}">실전 응용</button></div></div>
+      <div class="row"><span class="muted small" style="min-width:4em">문항 수</span>
+        <div class="seg" role="group" aria-label="문항 수">${[10, 20, 30].map(n => `<button data-n="${n}" class="${n === pickCount ? "on" : ""}">${n}</button>`).join("")}</div>
+        <span class="spacer"></span>
+        <button class="btn primary big" id="start" ${avail ? "" : "disabled"}>문제 풀기</button></div>
+      <p class="small muted" style="margin:0">‘실전 응용’은 사례 분석, 〈보기〉 고르기, 밑줄 찾기, 서술형처럼 생각해야 하는 문제예요. 지금 조건에 맞는 문제는 ${avail}개예요.</p>
+    </section>
+    <div class="modes">
+      <button class="mode" id="m-wrong"><strong>오답 복습</strong><span>${wrongN ? `틀린 문제 ${wrongN}개를 다시 풀어요. 연속 2번 맞히면 졸업!` : "아직 틀린 문제가 없어요."}</span></button>
+      <button class="mode" id="m-mock"><strong>모의고사</strong><span>실제 시험처럼 25문항을 45분 안에 풀고 100점 만점으로 채점해요.</span></button>
+    </div>
+    ${weak.length ? `<section class="sheet"><h2 style="font-size:1.05rem;margin-bottom:6px">약한 개념 TOP ${weak.length}</h2>
+      <ol style="margin:0;padding-left:1.3em">${weak.map(t => `<li><b>${esc(t.k)}</b> <span class="small muted">정답률 ${pct(t.rate)} · ${t.n}번 풀이</span></li>`).join("")}</ol></section>` : ""}
+  </div>`;
+  $$(".unit").forEach(b => b.onclick = () => { const u = b.dataset.u; pickUnits.has(u) ? pickUnits.delete(u) : pickUnits.add(u); home(); });
+  $("#all").onclick = () => { pickUnits = pickUnits.size === 7 ? new Set() : new Set(Object.keys(UNITS)); home(); };
+  $$("[data-n]").forEach(b => b.onclick = () => { pickCount = +b.dataset.n; home(); });
+  $$("[data-l]").forEach(b => b.onclick = () => { pickLevel = b.dataset.l; home(); });
+  $("#start").onclick = () => {
+    const st = qStats();
+    const p = shuffle(pool()).sort((a, b) => (st[a.id]?.tries || 0) - (st[b.id]?.tries || 0));
+    if (!p.length) return toast("단원을 하나 이상 골라 주세요.");
+    startSession("normal", shuffle(p.slice(0, pickCount)).map(q => q.id));
+  };
+  $("#m-wrong").onclick = () => { const w = wrongList(false); if (!w.length) return toast("복습할 오답이 없어요!"); startSession("wrong", shuffle(w.slice(0, 20).map(x => x.id))); };
+  $("#m-mock").onclick = () => {
+    const ord = { mc: 0, short: 1, essay: 2 };
+    const mcs = QS.filter(q => q.t === "mc");
+    const hard = shuffle(mcs.filter(isApplied)).slice(0, 10), rest = shuffle(mcs.filter(q => !hard.includes(q))).slice(0, 9);
+    const pick = [...hard, ...rest, ...shuffle(QS.filter(q => q.t === "short")).slice(0, 4), ...shuffle(QS.filter(q => q.t === "essay")).slice(0, 2)];
+    startSession("mock", pick.sort((a, b) => ord[a.t] - ord[b.t] || a.id.localeCompare(b.id, "en", { numeric: true })).map(q => q.id));
+  };
+  if (cur) {
+    $("#resume").onclick = () => go("quiz");
+    const d = $("#drop");
+    d.onclick = () => {
+      if (d.dataset.armed) { s.current = null; save(); home(); return; }
+      d.dataset.armed = "1"; d.textContent = "한 번 더 누르면 그만둬요";
+      setTimeout(() => { if (d.isConnected) { delete d.dataset.armed; d.textContent = "그만두기"; } }, 3500);
+    };
+  }
+}
+
+/* ═════════════ 퀴즈 ═════════════ */
+function startSession(mode, qids) {
+  const orders = {};
+  for (const id of qids) { const q = QMAP[id]; if (q.t === "mc") orders[id] = q.fixed ? [1, 2, 3, 4, 5] : shuffle([1, 2, 3, 4, 5]); }
+  S().current = { id: Date.now(), mode, qids, orders, ans: {}, idx: 0, start: Date.now(), limit: mode === "mock" ? MOCK_SEC : null, xp: 0 };
+  G.combo = 0; save(); go("quiz");
+}
+function gradeAuto(q, ua) {
+  if (q.t === "mc") return +ua === q.a ? "correct" : "wrong";
+  if (q.t === "short") { const u = norm(ua); return u && [q.a, ...(q.acc || [])].some(a => norm(a) === u) ? "correct" : "wrong"; }
+  return "pending";
+}
+function qHead(q, n) {
+  return `<div class="row"><span class="qno">${n}</span><span class="tag ${q.t}">${kind(q)}</span>
+    <span class="tag">${esc(UNITS[q.u].name)}</span><span class="spacer"></span><span class="small muted" aria-label="난이도 ${q.d}">${stars(q.d)}</span></div>`;
+}
+function qBody(q) {
+  return (q.ps ? `<div class="passage">${esc(q.ps)}</div>` : "") + `<div class="stem">${esc(q.q)}</div>` +
+    (q.bg ? `<div class="bogi"><span class="bl">보기</span><ul>${q.bg.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : "");
+}
+function answerInput(q, s, a) {
+  const locked = a && a.r !== undefined && s.mode !== "mock";
+  if (q.t === "mc") return `<div class="choices">${s.orders[q.id].map((orig, i) => `<button class="choice ${a && +a.ua === orig ? "sel" : ""}" data-v="${orig}" ${locked ? "disabled" : ""}>
+      <span class="bubble">${i + 1}</span><span>${esc(q.c[orig - 1])}</span></button>`).join("")}</div>`;
+  if (q.t === "short") return `<label class="small muted" for="ans">답</label><input class="answer" id="ans" autocomplete="off" value="${esc(a?.ua || "")}" ${locked ? "disabled" : ""} placeholder="낱말로 쓰세요">`;
+  return `<label class="small muted" for="ans">답안</label><textarea class="answer" id="ans" ${locked ? "disabled" : ""} placeholder="조건에 맞게 문장으로 써 보세요">${esc(a?.ua || "")}</textarea>`;
+}
+function bindChoices(onPick) { $$(".choice").forEach(b => b.onclick = () => { $$(".choice").forEach(x => x.classList.remove("sel")); b.classList.add("sel"); onPick(b.dataset.v); }); }
+function answerText(q, ua, s) {
+  if (!ua) return "(답 없음)";
+  if (q.t === "mc") { const pos = s ? s.orders[q.id].indexOf(+ua) : +ua - 1; return `${NUM[pos] || ""} ${q.c[+ua - 1] || ""}`; }
+  return ua;
+}
+function rightText(q, s) {
+  if (q.t === "mc") { const pos = s ? s.orders[q.id].indexOf(q.a) : q.a - 1; return `${NUM[pos]} ${q.c[q.a - 1]}`; }
+  return q.a;
+}
+
+function quiz() {
+  const s = S().current;
+  if (!s) return go("home");
+  if (s.mode === "mock") return mockView(s);
+  if (s.idx >= s.qids.length) return finish();
+  const qid = s.qids[s.idx], q = QMAP[qid], a = s.ans[qid];
+  app.innerHTML = `
+  <div class="stack">
+    <div class="progress"><div class="bar"><i style="width:${s.idx / s.qids.length * 100}%"></i></div>
+      ${G.combo >= 2 ? `<span class="combo">${G.combo}연속</span>` : ""}<div class="count">${s.idx + 1} / ${s.qids.length}</div></div>
+    <article class="sheet stack qcard" id="card" aria-live="polite">
+      ${qHead(q, s.idx + 1)}${qBody(q)}${answerInput(q, s, a)}
+      <div id="fb"></div>
+      <div class="row" id="act"><span class="spacer"></span><button class="btn primary big" id="submit">제출</button></div>
+    </article>
+    <p class="small muted" style="margin:0">객관식은 키보드 숫자 1~5로도 고를 수 있어요.</p>
+  </div>`;
+  let picked = null;
+  bindChoices(v => { picked = v; });
+  const inp = $(".answer");
+  if (inp && q.t === "short") inp.addEventListener("keydown", e => { if (e.key === "Enter") $("#submit")?.click(); });
+  if (a && a.r !== undefined) return showFeedback(s, q, null);
+  $("#submit").onclick = () => {
+    const ua = q.t === "mc" ? picked : inp.value.trim();
+    if (!ua) return toast(q.t === "mc" ? "답을 골라 주세요." : "답을 써 주세요.");
+    const r = gradeAuto(q, ua);
+    s.ans[qid] = { ua, r };
+    let res = null;
+    if (r !== "pending") { res = record(qid, r); s.xp += res.pts; }
+    save(); showFeedback(s, q, res);
+  };
+}
+
+const PRAISE = ["참 잘했어요", "훌륭해요", "정확해요", "멋져요"];
+function feedbackHtml(q, a, res) {
+  if (q.t === "essay" && a.r === "pending") {
+    return `<div class="fb pending">
+      <div><span class="mark">?</span> <b>모범답안·채점 기준과 비교해서 스스로 채점해 보세요</b></div>
+      <dl class="kv"><dt>모범답안</dt><dd>${esc(q.a)}</dd><dt>채점 기준</dt><dd>${esc(q.rb)}</dd></dl>
+      <div class="self" role="group" aria-label="스스로 채점"><button data-self="correct">O 다 썼어요</button><button data-self="partial">△ 일부만</button><button data-self="wrong">X 못 썼어요</button></div></div>`;
+  }
+  const head = a.r === "correct"
+    ? `<span class="mark">O</span> <b>정답!</b> ${res ? `<span class="gain">+${res.pts}점</span>${res.combo >= 3 ? ` <span class="combo">${res.combo}연속 콤보 보너스!</span>` : ""}` : ""}`
+    : a.r === "partial" ? `<span class="mark">△</span> <b>조금만 더!</b> ${res ? `<span class="gain">+${res.pts}점</span>` : ""}`
+    : `<span class="mark">X</span> <b>아깝다!</b> <span class="small">오답노트에 저장했어요. 해설을 읽으면 다음엔 맞힐 수 있어요.</span> ${res ? `<span class="gain">+${res.pts} 도전 점수</span>` : ""}`;
+  return `<div class="fb ${a.r}">
+    <div>${head}</div>
+    ${q.t !== "mc" ? `<dl class="kv"><dt>${q.t === "essay" ? "모범답안" : "정답"}</dt><dd>${esc(q.a)}</dd>
+      ${q.t === "short" && q.acc?.length ? `<dt>인정 답</dt><dd>${esc(q.acc.join(", "))}</dd>` : ""}
+      ${q.rb ? `<dt>채점 기준</dt><dd>${esc(q.rb)}</dd>` : ""}</dl>` : ""}
+    <div><b>해설</b> ${esc(q.ex)}</div>
+    ${q.t === "short" && a.r === "wrong" && a.ua ? `<div><button class="btn small" id="accept">뜻이 같은 답이면 정답으로 바꾸기</button></div>` : ""}
+  </div>`;
+}
+function showFeedback(s, q, res) {
+  const a = s.ans[q.id];
+  if (q.t === "mc") $$(".choice").forEach(b => {
+    b.disabled = true;
+    if (+b.dataset.v === q.a) b.classList.add("right"); else if (+b.dataset.v === +a.ua) b.classList.add("wrong");
+  });
+  else $(".answer").disabled = true;
+  $("#fb").innerHTML = feedbackHtml(q, a, res);
+  const card = $("#card");
+  $$(".stamp", card).forEach(x => x.remove());
+  if (res) {
+    if (a.r === "correct") {
+      card.insertAdjacentHTML("beforeend", `<div class="stamp" aria-hidden="true">${PRAISE[Math.floor(Math.random() * PRAISE.length)].replace(" ", "<br>")}</div>`);
+      sfx("ok"); if (res.combo >= 3 && res.combo % 3 === 0) confetti();
+    } else if (a.r === "wrong") { sfx("bad"); card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
+    celebrate(res);
+  } else if (a.r === "correct") card.insertAdjacentHTML("beforeend", `<div class="stamp" aria-hidden="true">참<br>잘했어요</div>`);
+  $$("[data-self]").forEach(b => b.onclick = () => { a.r = b.dataset.self; const r2 = record(q.id, a.r); s.xp += r2.pts; save(); showFeedback(s, q, r2); });
+  const acc = $("#accept");
+  if (acc) acc.onclick = () => {
+    a.r = "correct";
+    const log = S().log;
+    for (let i = log.length - 1; i >= 0; i--) if (log[i].q === q.id) { log[i].r = "correct"; break; }
+    const bonus = 10 + (q.d - 1) * 5 - 2; G.xp += bonus; s.xp += bonus;
+    save(); showFeedback(s, q, { pts: bonus, combo: G.combo, up: null, newB: checkBadges() }); toast("정답으로 바꿨어요.");
+  };
+  const last = s.idx === s.qids.length - 1;
+  $("#act").innerHTML = a.r === "pending" ? "" : `<span class="spacer"></span><button class="btn primary big" id="next">${last ? "결과 보기" : "다음 문제"}</button>`;
+  const nx = $("#next");
+  if (nx) { nx.focus({ preventScroll: true }); nx.onclick = () => { s.idx++; save(); if (s.idx >= s.qids.length) finish(); else quiz(); window.scrollTo(0, 0); }; }
+}
+
+/* 모의고사 */
+function mockView(s) {
+  const n = s.qids.length;
+  if (s.idx >= n) s.idx = n - 1;
+  const qid = s.qids[s.idx], q = QMAP[qid];
+  const done = s.qids.filter(id => (s.ans[id]?.ua || "").trim()).length;
+  app.innerHTML = `
+  <div class="stack">
+    <div class="progress"><div class="bar"><i style="width:${done / n * 100}%"></i></div><span class="timer" id="timer"></span></div>
+    <article class="sheet stack">
+      ${qHead(q, s.idx + 1)}${qBody(q)}${answerInput(q, s, s.ans[qid])}
+      <div class="row"><button class="btn" id="prev" ${s.idx === 0 ? "disabled" : ""}>이전</button><span class="spacer"></span>
+        ${s.idx < n - 1 ? `<button class="btn primary" id="next">다음</button>` : ""}</div>
+    </article>
+    <section class="sheet stack">
+      <div class="row"><b>답안지</b><span class="small muted">${done} / ${n} 작성</span></div>
+      <div class="palette">${s.qids.map((id, i) => `<button class="${(s.ans[id]?.ua || "").trim() ? "done" : ""} ${i === s.idx ? "cur" : ""}" data-i="${i}" aria-label="${i + 1}번">${i + 1}</button>`).join("")}</div>
+      <button class="btn primary big block" id="submit-all">제출하고 채점하기</button>
+    </section>
+  </div>`;
+  const put = v => { s.ans[qid] = { ua: v }; save(); };
+  bindChoices(v => { put(v); mockView(s); });
+  const inp = $(".answer");
+  if (inp) inp.addEventListener("input", () => put(inp.value));
+  const moveTo = i => { s.idx = i; save(); mockView(s); window.scrollTo(0, 0); };
+  $("#prev").onclick = () => moveTo(s.idx - 1);
+  if ($("#next")) $("#next").onclick = () => moveTo(s.idx + 1);
+  $$(".palette button").forEach(b => b.onclick = () => moveTo(+b.dataset.i));
+  const sub = $("#submit-all");
+  sub.onclick = () => {
+    const left = n - s.qids.filter(id => (s.ans[id]?.ua || "").trim()).length;
+    if (left && !sub.dataset.armed) { sub.dataset.armed = "1"; sub.textContent = `${left}문항이 비어 있어요. 한 번 더 누르면 제출`; return; }
+    finish();
+  };
+  clearInterval(timerId);
+  const el = $("#timer");
+  const tick = () => {
+    const left = Math.max(0, Math.round(s.limit - (Date.now() - s.start) / 1000));
+    el.textContent = `${String(Math.floor(left / 60)).padStart(2, "0")}:${String(left % 60).padStart(2, "0")}`;
+    el.classList.toggle("low", left <= 300);
+    if (left <= 0) { clearInterval(timerId); toast("시간이 끝나서 자동으로 제출했어요."); finish(); }
+  };
+  tick(); timerId = setInterval(tick, 1000);
+}
+
+function finish() {
+  clearInterval(timerId);
+  const st = S(), s = st.current; if (!s) return go("home");
+  const before = levelOf(G.xp), gotB = [];
+  if (s.mode === "mock") {
+    G.combo = 0;
+    for (const id of s.qids) {
+      const q = QMAP[id], ua = (s.ans[id]?.ua || "").trim();
+      const r = q.t === "essay" ? (ua ? "pending" : "wrong") : gradeAuto(q, ua);
+      s.ans[id] = { ua, r };
+      if (r !== "pending") { const res = record(id, r); s.xp += res.pts; gotB.push(...res.newB); }
+    }
+  } else {
+    for (const id of s.qids) if (!s.ans[id]) { s.ans[id] = { ua: "", r: "wrong" }; const res = record(id, "wrong"); s.xp += res.pts; }
+  }
+  s.end = Date.now();
+  st.sessions.unshift(s); st.sessions = st.sessions.slice(0, 60);
+  st.current = null; save();
+  const up = levelOf(G.xp) > before ? levelOf(G.xp) : null;
+  go("result", s.id);
+  if (up != null || gotB.length) celebrate({ up, newB: gotB });
+}
+
+/* ═════════════ 결과 ═════════════ */
+function sessScore(s) { return s.qids.reduce((a, id) => a + score(s.ans[id]?.r), 0); }
+function result(sid) {
+  const s = S().sessions.find(x => x.id === sid);
+  if (!s) return go("home");
+  const sc = sessScore(s), n = s.qids.length, hundred = Math.round(sc / n * 100);
+  const notRight = s.qids.filter(id => s.ans[id]?.r !== "correct");
+  const pending = s.qids.filter(id => s.ans[id]?.r === "pending").length;
+  if (s.mode === "mock" && !pending) {
+    const extra = []; if (hundred >= 80) extra.push("mock80"); if (hundred === 100) extra.push("mock100");
+    const nb = checkBadges(extra); if (nb.length) { save(); celebrate({ up: null, newB: nb }); }
+  }
+  const msg = hundred >= 90 ? "완벽에 가까워요!" : hundred >= 70 ? "잘했어요! 틀린 것만 다시 보면 돼요." : hundred >= 50 ? "절반 넘게 맞혔어요. 오답을 정리해 봐요." : "해설을 읽고 다시 도전하면 쑥 올라요.";
+  app.innerHTML = `
+  <div class="stack">
+    <section class="sheet score">
+      <span class="label">${MODE[s.mode]} 결과</span>
+      ${s.mode === "mock" ? `<div class="big"><em>${hundred}</em>점</div><div class="muted">${fmtScore(sc)} / ${n}문항</div>` : `<div class="big"><em>${fmtScore(sc)}</em> / ${n}</div>`}
+      <div><b>${msg}</b></div>
+      <div class="muted small">정답률 ${hundred}% · 걸린 시간 ${fmtDur(s.end - s.start)} · 이번에 얻은 점수 <span class="gain">+${s.xp || 0}</span></div>
+      ${pending ? `<div class="notice" style="margin-top:6px">서술형 ${pending}문항은 아래에서 모범답안과 비교해 스스로 채점해 주세요.</div>` : ""}
+      <div class="row" style="justify-content:center;margin-top:8px">
+        ${notRight.length ? `<button class="btn primary" id="retry">틀린 문제 다시 풀기 (${notRight.length})</button>` : ""}
+        <button class="btn" id="to-wrong">오답노트</button><button class="btn" id="to-home">처음으로</button></div>
+    </section>
+    <div class="row"><b>문항별 결과</b><span class="spacer"></span>
+      <label class="small row" style="gap:6px"><input type="checkbox" id="only-wrong"> 틀린 문제만</label></div>
+    <div class="stack" id="items">${s.qids.map((id, i) => itemHtml(QMAP[id], s.ans[id], s, i + 1)).join("")}</div>
+  </div>`;
+  if (s.mode !== "mock" && hundred >= 90 && !pending) confetti();
+  $("#to-home").onclick = () => go("home");
+  $("#to-wrong").onclick = () => go("wrong");
+  if ($("#retry")) $("#retry").onclick = () => startSession("retry", shuffle(notRight));
+  $("#only-wrong").onchange = e => $$(".item").forEach(el => el.hidden = e.target.checked && el.classList.contains("correct"));
+  $$("[data-self]").forEach(b => b.onclick = () => {
+    const id = b.closest("[data-q]").dataset.q;
+    s.ans[id].r = b.dataset.self; const res = record(id, b.dataset.self, { silentCombo: true }); s.xp = (s.xp || 0) + res.pts; save();
+    result(sid); celebrate(res);
+  });
+}
+function itemHtml(q, a, s, n) {
+  a = a || { r: "wrong", ua: "" };
+  return `<article class="sheet item ${a.r} stack" data-q="${q.id}">
+    <div class="row"><span class="ox ${a.r}">${MARK[a.r]}</span><b>${n}번</b><span class="tag ${q.t}">${kind(q)}</span><span class="tag">${esc(q.tag)}</span></div>
+    ${qBody(q)}
+    ${q.t === "mc" ? `<ol class="choice-list">${(s ? s.orders[q.id] : [1, 2, 3, 4, 5]).map((o, i) => `<li class="${o === q.a ? "ans" : ""}">${NUM[i]} ${esc(q.c[o - 1])}</li>`).join("")}</ol>` : ""}
+    <dl class="kv"><dt>내 답</dt><dd>${esc(answerText(q, a.ua, s))}</dd><dt>${q.t === "essay" ? "모범답안" : "정답"}</dt><dd>${esc(rightText(q, s))}</dd>
+      ${q.rb ? `<dt>채점 기준</dt><dd>${esc(q.rb)}</dd>` : ""}</dl>
+    ${a.r === "pending" ? `<div class="self" role="group" aria-label="스스로 채점"><button data-self="correct">O 다 썼어요</button><button data-self="partial">△ 일부만</button><button data-self="wrong">X 못 썼어요</button></div>` : ""}
+    <details ${a.r !== "correct" ? "open" : ""}><summary>해설</summary><p style="margin:0">${esc(q.ex)}</p></details>
+  </article>`;
+}
+
+/* ═════════════ 오답노트 ═════════════ */
+let showMastered = false;
+function wrongView() {
+  const list = wrongList(showMastered);
+  const masteredN = wrongList(true).filter(w => w.mastered).length;
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero"><span class="label">오답노트</span><h1>틀린 문제 모아 보기</h1>
+      <p>연속 2번 맞히면 ‘졸업’해서 목록에서 빠져요. 지금까지 졸업한 문제: <b>${masteredN}개</b></p></section>
+    <div class="row"><label class="small row" style="gap:6px"><input type="checkbox" id="mastered" ${showMastered ? "checked" : ""}> 졸업한 문제도 보기</label>
+      <span class="spacer"></span><button class="btn primary" id="review" ${wrongList(false).length ? "" : "disabled"}>오답 복습 시작</button></div>
+    ${list.length ? list.map(w => {
+      const q = QMAP[w.id];
+      return `<article class="sheet item ${w.mastered ? "correct" : "wrong"} stack">
+        <div class="row"><span class="tag" style="color:var(--bad)">${w.wrong}번 틀림</span>
+          ${w.mastered ? `<span class="tag" style="color:var(--ok)">졸업</span>` : w.streak ? `<span class="tag" style="color:var(--ok)">졸업까지 ${2 - w.streak}번</span>` : ""}
+          <span class="tag ${q.t}">${kind(q)}</span><span class="tag">${esc(q.tag)}</span></div>
+        ${qBody(q)}
+        ${q.t === "mc" ? `<ol class="choice-list">${q.c.map((c, i) => `<li>${NUM[i]} ${esc(c)}</li>`).join("")}</ol>` : ""}
+        <details><summary>정답과 해설</summary>
+          <dl class="kv"><dt>정답</dt><dd>${esc(rightText(q))}</dd>${q.rb ? `<dt>채점 기준</dt><dd>${esc(q.rb)}</dd>` : ""}</dl>
+          <p style="margin:8px 0 0">${esc(q.ex)}</p></details>
+      </article>`;
+    }).join("") : `<div class="sheet empty">틀린 문제가 없어요. 문제를 풀면 여기에 모여요.</div>`}
+  </div>`;
+  $("#mastered").onchange = e => { showMastered = e.target.checked; wrongView(); };
+  $("#review").onclick = () => { const w = wrongList(false); if (w.length) startSession("wrong", shuffle(w.slice(0, 20).map(x => x.id))); };
+}
+
+/* ═════════════ 기록 ═════════════ */
+function records() {
+  const us = Object.fromEntries(groupStats(q => q.u).map(s => [s.k, s]));
+  const ks = groupStats(kind).sort((a, b) => a.rate - b.rate);
+  const tags = groupStats(q => q.tag).sort((a, b) => a.rate - b.rate || b.n - a.n);
+  const sess = S().sessions;
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero"><span class="label">기록</span><h1>얼마나 알고 있을까</h1>
+      <p>이 기기에서 푼 기록이에요. 부모님도 이 화면에서 확인할 수 있어요.</p></section>
+    <section class="sheet stack"><h2 style="font-size:1.05rem">단원별 정답률</h2>
+      <div class="scroll"><table><thead><tr><th>단원</th><th class="num">풀이</th><th class="num">정답률</th><th></th></tr></thead><tbody>
+      ${Object.entries(UNITS).map(([k, u]) => { const s = us[k]; const r = s ? s.rate : null;
+        return `<tr><td>${u.big} ${esc(u.name)}</td><td class="num">${s ? s.n : 0}</td><td class="num">${pct(r)}</td><td style="width:28%"><div class="meter"><i style="width:${r == null ? 0 : r * 100}%"></i></div></td></tr>`; }).join("")}
+      </tbody></table></div></section>
+    ${ks.length ? `<section class="sheet stack"><h2 style="font-size:1.05rem">문제 유형별 정답률</h2>
+      <div class="scroll"><table><thead><tr><th>유형</th><th class="num">풀이</th><th class="num">정답률</th></tr></thead><tbody>
+      ${ks.map(t => `<tr><td>${esc(t.k)}</td><td class="num">${t.n}</td><td class="num">${pct(t.rate)}</td></tr>`).join("")}</tbody></table></div></section>` : ""}
+    ${tags.length ? `<section class="sheet stack"><h2 style="font-size:1.05rem">개념별 정답률 <span class="small muted">낮은 순</span></h2>
+      <div class="scroll"><table><thead><tr><th>개념</th><th class="num">풀이</th><th class="num">정답률</th></tr></thead><tbody>
+      ${tags.slice(0, 12).map(t => `<tr><td>${esc(t.k)}</td><td class="num">${t.n}</td><td class="num">${pct(t.rate)}</td></tr>`).join("")}</tbody></table></div></section>` : ""}
+    <section class="sheet stack"><h2 style="font-size:1.05rem">회차별 점수</h2>
+      ${sess.length ? `<div class="scroll"><table><thead><tr><th>날짜</th><th>종류</th><th class="num">점수</th><th class="num">시간</th><th></th></tr></thead><tbody>
+      ${sess.map(s => `<tr><td>${fmtDate(s.start)}</td><td>${MODE[s.mode]}</td><td class="num"><b>${fmtScore(sessScore(s))}</b> / ${s.qids.length}</td><td class="num">${fmtDur(s.end - s.start)}</td>
+        <td><button class="btn small" data-s="${s.id}">보기</button></td></tr>`).join("")}</tbody></table></div>` : `<p class="muted" style="margin:0">아직 끝낸 회차가 없어요.</p>`}</section>
+    <div class="row"><span class="spacer"></span><button class="btn ghost small" id="reset" style="color:var(--bad)">사회 기록 모두 지우기</button></div>
+  </div>`;
+  $$("[data-s]").forEach(b => b.onclick = () => go("result", +b.dataset.s));
+  const r = $("#reset");
+  r.onclick = () => {
+    if (r.dataset.armed) { DB.subj[subject] = { log: [], sessions: [], current: null }; save(); toast("사회 기록을 지웠어요. 레벨과 도장은 그대로예요."); records(); return; }
+    r.dataset.armed = "1"; r.textContent = "정말 지울까요? 한 번 더 누르세요";
+    setTimeout(() => { if (r.isConnected) { delete r.dataset.armed; r.textContent = "사회 기록 모두 지우기"; } }, 3500);
+  };
+}
+
+/* ═════════════ 도장판 ═════════════ */
+function stamps() {
+  const n = Object.keys(G.badges).length;
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero"><span class="label">도장판</span><h1>${n}개의 도장을 모았어요</h1>
+      <p>목표를 이루면 선생님 채점 도장처럼 쾅! 찍혀요. 남은 도장: ${BADGES.length - n}개</p></section>
+    <section class="sheet"><div class="stamps">
+      ${BADGES.map(b => { const got = G.badges[b.id];
+        return `<div class="badge ${got ? "" : "locked"}"><div class="seal">${got ? b.seal.replace("\n", "<br>") : "?"}</div>
+          <b>${esc(b.name)}</b><span>${esc(b.desc)}</span>${got ? `<span>${fmtDate(got)}</span>` : ""}</div>`; }).join("")}
+    </div></section>
+  </div>`;
+}
+
+/* 객관식 숫자키 1~5 */
+document.addEventListener("keydown", e => {
+  if (view !== "quiz" || e.target.matches("input, textarea")) return;
+  const n = +e.key;
+  if (n >= 1 && n <= 5) { const b = $$(".choice")[n - 1]; if (b && !b.disabled) b.click(); }
+});
+
+if (who) { checkBadges(); save(); }
+render();
+</script>
+
+</body>
+</html>
