@@ -401,7 +401,7 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
 /* ═════════════ 과목 ═════════════ */
 const SUBJECTS = [
   { code: "kor",  name: "국어", g: "국", c: "--s-kor",  open: false },
-  { code: "eng",  name: "영어", g: "영", c: "--s-eng",  open: false },
+  { code: "eng",  name: "영어", g: "영", c: "--s-eng",  open: true, book: "중학 영어 1 (동아출판 윤정미)", range: "교과서 58~91쪽" },
   { code: "math", name: "수학", g: "수", c: "--s-math", open: false },
   { code: "soc",  name: "사회", g: "사", c: "--s-soc",  open: true, book: "중학 사회① (비상교육)", range: "교과서 126~167쪽" },
   { code: "sci",  name: "과학", g: "과", c: "--s-sci",  open: true },
@@ -4508,8 +4508,220 @@ essay: [
 ],
 },
 };
+/* ───────────── 영어: 동아출판 중학 영어 1 (윤정미) 교과서 58~91쪽 · Lesson 4~5 ─────────────
+   단원별 연습 없이 객관식 대비·서술형 대비만 연다 (BANKS.eng.topOnly). */
+const ENG_UNITS = {
+  A: { big: "L4", name: "The Joy of Traveling", pages: "58~75" },
+  B: { big: "L5", name: "Think like Sherlock Holmes", pages: "76~91" },
+};
+const ENG_SUSPECTS = "Suspects\nAndres Lozano  176 cm · long, black hair · brown eyes · Spanish, English\nLarry Johnson  173 cm · long, brown hair · blue eyes · English\nTim Baker      182 cm · long, brown hair · green eyes · English\nLuca Ferez     166 cm · short, gray hair · blue eyes · Spanish";
+TOP.eng = {
+mc: [
+/* ── Lesson 4 The Joy of Traveling ── */
+{ id:"T1", u:"A", t:"mc", tag:"어휘 영영풀이",
+  q:"다음 영어 뜻풀이가 바르지 않은 것은?",
+  c:["cliff: a high, steep side of rock, often near the sea","local: a person who lives in a particular area","fee: money that you pay to enter a place or to do something","narrow: very wide from one side to the other side","explore: to travel around a place to learn about it"], a:4,
+  ex:"narrow는 ‘좁은’이라는 뜻으로, 한쪽에서 다른 쪽까지의 폭이 작다(small in width)는 뜻이다. ‘very wide’는 반대말 wide(넓은)의 뜻풀이이다." },
+{ id:"T2", u:"A", t:"mc", tag:"전치사 숙어",
+  q:"빈칸에 들어갈 말이 나머지 넷과 다른 것은?",
+  c:["Chefchaouen is famous ______ its sunrises.","Thank you very much ______ your support.","Now, I’m on my way ______ a bike rental shop.","I’m looking ______ my cat. I can’t find him.","Walking is good ______ your health."], a:3,
+  ex:"on one’s way to: ~로 가는 길에 → to. 나머지는 모두 for이다: be famous for(~로 유명하다), thank you for, look for(~을 찾다), be good for(~에 좋다)." },
+{ id:"T3", u:"A", t:"mc", tag:"계획 묻고 답하기", fixed:true,
+  ps:"A: ㉠Do you have any plans for this summer vacation?\nB: ㉡Yes. I’m going to travel to Venice with my family.\nA: ㉢That’s awesome! What did you do there?\nB: ㉣A lot of things, but we’re going to ride a gondola for sure.\nA: ㉤Sounds great. Have a good time!",
+  q:"대화의 흐름상 어색한 것은?",
+  c:["㉠","㉡","㉢","㉣","㉤"], a:3,
+  ex:"B는 아직 가지 않은 여행 계획을 말하고 있으므로 과거형 What did you do there?가 아니라 What are you going to do there?로 물어야 한다." },
+{ id:"T4", u:"A", t:"mc", tag:"기대·희망 표현하기",
+  q:"다음 중 나머지 넷과 말하는 사람의 의도가 다른 것은?",
+  c:["I’m looking forward to the trip.","I can’t wait for the trip.","I’m really excited about the trip.","I’m worried about the trip.","I really want to go on the trip soon."], a:4,
+  ex:"①②③⑤는 여행에 대한 기대·희망을 나타낸다. ④는 걱정을 나타내는 말이다." },
+{ id:"T5", u:"A", t:"mc", tag:"대화 순서 배열", fixed:true,
+  ps:"What are you going to do during the winter vacation?\n(A) Really? What are you going to do there?\n(B) I’m going to visit my grandparents in Gangneung.\n(C) Sounds like fun! Have a great time.\n(D) I’m going to go skiing with my cousins. I’m really looking forward to it.",
+  q:"주어진 말에 이어질 대화의 순서로 가장 적절한 것은?",
+  c:["(A) - (B) - (D) - (C)","(B) - (D) - (A) - (C)","(B) - (A) - (D) - (C)","(D) - (A) - (B) - (C)","(B) - (A) - (C) - (D)"], a:3,
+  ex:"계획을 묻는 말 → (B) 강릉에 갈 예정 → (A) 거기서 무엇을 할지 다시 물음 → (D) 스키를 탈 예정이고 기대된다 → (C) 즐거운 시간 보내라." },
+{ id:"T6", u:"A", t:"mc", tag:"동명사와 현재진행형 구별",
+  ps:"<보기> I enjoyed taking pictures of the blue streets.",
+  q:"각 문장의 -ing 형태 가운데 <보기>의 taking과 쓰임이 같은 것은?",
+  c:["Now, I’m drinking mint tea at a tea house.","We’re eating lunch on the terrace of a restaurant.","My hobby is playing tennis with my dad.","I was looking at the Monalisa at that time.","He was standing in front of a wheelchair."], a:3,
+  ex:"<보기>의 taking은 enjoyed의 목적어로 쓰인 동명사(~하는 것)이다. ③ playing은 보어로 쓰인 동명사이다. 나머지는 모두 「be동사+-ing」 진행형이다." },
+{ id:"T7", u:"A", t:"mc", tag:"동명사 어법", fixed:true,
+  ps:"(a) Walking in the rain are a lot of fun.\n(b) He finished washing the dishes.\n(c) I’m looking forward to visit the Lavender Garden.\n(d) Are you good at catching balls?\n(e) My dream is traveling around the world.\n(f) She enjoys to take a walk with her dog.",
+  q:"(a)~(f) 중 어법상 올바른 문장의 개수는?",
+  c:["1개","2개","3개","4개","5개"], a:3,
+  ex:"올바른 문장: (b), (d), (e). (a) 동명사구 주어는 단수 취급 → is. (c) look forward to의 to는 전치사 → visiting. (f) enjoy는 동명사를 목적어로 → enjoys taking." },
+{ id:"T8", u:"A", t:"mc", tag:"be going to 어법", fixed:true,
+  ps:"(a) I’m going to get up early tomorrow.\n(b) We’re going to explore the island by bicycle.\n(c) She is going to visited her aunt next week.\n(d) Is he going to take a cooking class?\n(e) They don’t going to buy any souvenirs.",
+  q:"(a)~(e) 중 어법상 어색한 것끼리 짝 지은 것은?",
+  c:["(a), (c)","(b), (d)","(c), (e)","(a), (e)","(d), (e)"], a:3,
+  ex:"(c) be going to 뒤에는 동사원형 → visit. (e) be going to의 부정은 be동사 뒤에 not → They aren’t going to buy ~." },
+{ id:"T9", u:"A", t:"mc", tag:"단어 배열 (be going to)",
+  ps:"우리는 내일 일찍 일어나서 일출을 볼 예정이다.\n→ (up / to / going / get / are / we / early) tomorrow and see the sunrise.",
+  q:"우리말과 같도록 괄호 안의 단어를 배열할 때, 다섯 번째로 오는 단어는?",
+  c:["to","get","up","going","early"], a:2,
+  ex:"We are going to get up early tomorrow and see the sunrise. → we(1) are(2) going(3) to(4) get(5)." },
+{ id:"T10", u:"A", t:"mc", tag:"본문 내용 일치 (Ronda)",
+  ps:"Hi Sumi,\nYesterday, my family and I came to Ronda in Spain. Most buildings here are white, and they are so beautiful against the blue sky. And the views! Ronda is on cliffs, so the views are fantastic. Now, we’re eating lunch on the terrace of a restaurant. All the food here is great, but I especially like the churros. After lunch, we’re going to visit the Ernest Hemingway Walk. Hemingway loved Ronda and spent many summers here.\nYour friend,\nMinji",
+  q:"윗글의 내용과 일치하는 것은?",
+  c:["Minji is writing to her uncle from Spain.","Most buildings in Ronda are blue like the sky.","Minji’s family visited the Ernest Hemingway Walk before lunch.","Hemingway spent many summers in Ronda.","Minji doesn’t like any food in Ronda except the churros."], a:4,
+  ex:"Hemingway loved Ronda and spent many summers here. ① 친구 Sumi에게 쓴 편지 ② 건물은 하얀색 ③ 산책로는 점심 후에 갈 예정 ⑤ 모든 음식이 훌륭한데 특히 추로스가 좋다고 했다." },
+{ id:"T11", u:"A", t:"mc", tag:"답할 수 없는 질문 (Ronda)",
+  ps:"Hi Sumi,\nYesterday, my family and I came to Ronda in Spain. Most buildings here are white, and they are so beautiful against the blue sky. And the views! Ronda is on cliffs, so the views are fantastic. Now, we’re eating lunch on the terrace of a restaurant. All the food here is great, but I especially like the churros. After lunch, we’re going to visit the Ernest Hemingway Walk. Hemingway loved Ronda and spent many summers here.\nYour friend,\nMinji",
+  q:"윗글을 읽고 답할 수 없는 질문은?",
+  c:["When did Minji’s family come to Ronda?","Why are the views in Ronda fantastic?","What food does Minji especially like?","How long is Minji’s family going to stay in Ronda?","What are Minji and her family going to do after lunch?"], a:4,
+  ex:"론다에 얼마나 머물 예정인지는 글에 나오지 않는다. ① Yesterday ② 절벽 위에 있어서 ③ churros ⑤ Ernest Hemingway 산책로 방문." },
+{ id:"T12", u:"A", t:"mc", tag:"어법 (Chefchaouen)", fixed:true,
+  ps:"Hi Inho,\nI’m in Chefchaouen, the Blue Pearl of Morocco. All day long, I enjoyed ⓐtaking pictures of the blue streets and blue buildings. I also enjoyed ⓑwalk through the narrow streets. They ⓒwere full of interesting shops, and I ⓓbought some souvenirs. Now, I’m drinking mint tea at a tea house, just like the locals. Chefchaouen is famous ⓔfor its sunrises. Tomorrow, I’m going to get up early and enjoy a beautiful sunrise.\nBest,\nUncle Jay",
+  q:"윗글의 밑줄 친 ⓐ~ⓔ 중 어법상 틀린 것은?",
+  c:["ⓐ","ⓑ","ⓒ","ⓓ","ⓔ"], a:2,
+  ex:"enjoy는 동명사를 목적어로 쓰므로 walk → walking. ⓒ 주어 They(= the narrow streets)는 복수, 과거 → were. ⓓ buy의 과거형 bought. ⓔ be famous for." },
+{ id:"T13", u:"A", t:"mc", tag:"본문 이해 (Chefchaouen)", fixed:true,
+  ps:"Hi Inho,\nI’m in Chefchaouen, the Blue Pearl of Morocco. All day long, I enjoyed taking pictures of the blue streets and blue buildings. I also enjoyed walking through the narrow streets. They were full of interesting shops, and I bought some souvenirs. Now, I’m drinking mint tea at a tea house, just like the locals. Chefchaouen is famous for its sunrises. Tomorrow, I’m going to get up early and enjoy a beautiful sunrise.\nBest,\nUncle Jay",
+  q:"윗글의 내용과 일치하는 것만을 <보기>에서 고른 것은?",
+  bg:["ㄱ. Uncle Jay is drinking mint tea like the people who live there.","ㄴ. The streets in Chefchaouen are wide and empty.","ㄷ. Uncle Jay is going to watch the sunrise tomorrow morning.","ㄹ. Uncle Jay didn’t buy anything in the shops."],
+  c:BG4, a:2,
+  ex:"ㄱ just like the locals(현지인처럼), ㄷ get up early and enjoy a beautiful sunrise. ㄴ 길은 좁고(narrow) 가게들로 가득했다. ㄹ 기념품을 몇 개 샀다." },
+{ id:"T14", u:"A", t:"mc", tag:"문장 삽입 (Purple Island)", fixed:true,
+  ps:"Dear Mom,\nI’m on Purple Island in Korea. ( ① ) Almost everything here is purple - the houses, the buses, and even the bridges. ( ② ) Purple is my favorite color, so the island is just perfect for me. ( ③ ) I didn’t even pay the entrance fee to the island. Why? I was wearing a purple T-shirt. ( ④ ) Now, I’m on my way to a bike rental shop. ( ⑤ ) I’m especially looking forward to visiting the Lavender Garden.\nLove,\nAmy",
+  q:"글의 흐름으로 보아, 다음 문장이 들어가기에 가장 적절한 곳은?\nThe island is not big, so I’m going to explore it by bicycle.",
+  c:["①","②","③","④","⑤"], a:5,
+  ex:"자전거 대여소로 가는 중이라는 문장 뒤에, 섬이 크지 않아 자전거로 둘러볼 것이라는 이유가 이어져야 자연스럽다." },
+{ id:"T15", u:"A", t:"mc", tag:"본문 내용 불일치 (Purple Island)",
+  ps:"Dear Mom,\nI’m on Purple Island in Korea. Almost everything here is purple - the houses, the buses, and even the bridges. Purple is my favorite color, so the island is just perfect for me. I didn’t even pay the entrance fee to the island. Why? I was wearing a purple T-shirt. Now, I’m on my way to a bike rental shop. The island is not big, so I’m going to explore it by bicycle. I’m especially looking forward to visiting the Lavender Garden.\nLove,\nAmy",
+  q:"윗글의 내용과 일치하지 않는 것은?",
+  c:["Amy is writing a letter to her mother.","Even the bridges on the island are purple.","Amy paid half of the entrance fee because of her T-shirt.","Amy is going to rent a bike to look around the island.","Amy can’t wait to visit the Lavender Garden."], a:3,
+  ex:"보라색 티셔츠를 입고 있어서 입장료를 아예 내지 않았다(didn’t even pay). 절반을 낸 것이 아니다." },
+{ id:"T16", u:"A", t:"mc", tag:"세 편지 종합 이해",
+  q:"교과서 본문 The Colorful Villages of the World의 세 편지(Minji – Ronda, Uncle Jay – Chefchaouen, Amy – Purple Island)에 대한 설명으로 옳은 것은?",
+  c:["All three writers are traveling in Europe.","Minji and Uncle Jay are eating or drinking something while they are writing.","Amy is writing her letter on the terrace of a restaurant.","Uncle Jay is going to explore Chefchaouen by bicycle.","All three places are famous for their sunrises."], a:2,
+  ex:"Minji는 식당 테라스에서 점심을 먹는 중, Uncle Jay는 찻집에서 민트 차를 마시는 중이다. 론다는 스페인(유럽), 쉐프샤우엔은 모로코(아프리카), 보라섬은 한국이다. 자전거는 Amy의 계획이고, 일출로 유명한 곳은 쉐프샤우엔이다." },
+/* ── Lesson 5 Think like Sherlock Holmes ── */
+{ id:"T17", u:"B", t:"mc", tag:"어휘 영영풀이", fixed:true,
+  ps:"(A) A ______ is a person who protects a building or a museum.\n(B) A ______ is false hair that people wear on their heads.\n(C) A ______ is a person who the police think may have done a crime.",
+  q:"빈칸 (A)~(C)에 들어갈 말이 바르게 짝 지어진 것은?",
+  c:["(A) janitor – (B) wig – (C) suspect","(A) guard – (B) wig – (C) suspect","(A) guard – (B) wig – (C) eyewitness","(A) guard – (B) piece – (C) criminal","(A) janitor – (B) scene – (C) eyewitness"], a:2,
+  ex:"guard(경비원), wig(가발), suspect(용의자). janitor는 청소부·관리인, eyewitness는 목격자이다." },
+{ id:"T18", u:"B", t:"mc", tag:"허락 구하기·금지하기",
+  ps:"B: May I take food into the museum?\nW: No, you may not. You must not bring any food inside.\nB: How about water?\nW: Only bottled water is OK.",
+  q:"대화의 내용과 일치하는 것은?",
+  c:["The boy may bring his sandwich into the museum.","The woman allows all kinds of drinks in the museum.","The boy can bring bottled water into the museum.","The woman says the boy must not drink anything inside.","The boy is asking about taking pictures in the museum."], a:3,
+  ex:"Only bottled water is OK. → 병에 든 물만 가지고 들어갈 수 있다. 음식은 안 되고, 음료도 병에 든 물만 허용된다." },
+{ id:"T19", u:"B", t:"mc", tag:"대화 응답",
+  q:"두 사람의 대화가 자연스럽지 않은 것은?",
+  c:["A: May I use your pen?\nB: Sure. Go ahead.","A: May I sit here?\nB: No, you may not. My friend is sitting here.","A: May I take pictures here?\nB: Yes, you may. But you must not use the flash.","A: May I feed the birds here?\nB: No, you may. You must not feed them.","A: Can I swim here?\nB: I’m sorry, but you must not swim here."], a:4,
+  ex:"허락하지 않는 답은 No, you may not.이다. ‘No, you may.’는 앞뒤가 맞지 않고, 뒤에 금지하는 말이 이어지므로 어색하다." },
+{ id:"T20", u:"B", t:"mc", tag:"대화 빈칸 추론",
+  ps:"M: Everybody, look over here, please. This is Sunflowers by Van Gogh.\nG: Wow, this is my favorite painting. May I take a picture of it?\nM: Yes, you may, but ____________.\nG: Why not? It’s a little dark in here.\nM: I’m sorry, but using the flash can damage paintings.",
+  q:"빈칸에 들어갈 말로 가장 적절한 것은?",
+  c:["you must not use the flash","you may use the flash","you must not take any pictures","you must take a lot of pictures","you must turn on the lights"], a:1,
+  ex:"소녀가 ‘여기 좀 어두운데 왜 안 되나요?’라고 묻고, 남자가 ‘플래시가 그림을 훼손할 수 있다’고 답하므로 플래시 사용을 금지하는 말이 들어가야 한다." },
+{ id:"T21", u:"B", t:"mc", tag:"안내 방송 이해",
+  ps:"M: Welcome to the Dream Zoo. We have three rules for visitors. First, do not feed the animals. Second, you must not touch the animals. Lastly, you must not throw trash at the animals. Thank you.",
+  q:"안내 방송을 들은 방문객 중 규칙을 지킨 사람은?",
+  c:["Jim gave some bread to the monkeys.","Suji touched the baby lion’s head.","Tim threw an empty can at the bears.","Amy took pictures of the giraffes from behind the fence.","Jake fed some carrots to the rabbits."], a:4,
+  ex:"규칙: 먹이 주지 않기, 만지지 않기, 쓰레기 던지지 않기. 사진 찍기는 금지되지 않았다. ①⑤ 먹이 주기 ② 만지기 ③ 쓰레기 던지기." },
+{ id:"T22", u:"B", t:"mc", tag:"비교급·최상급 (표)",
+  ps:"Backpack   Price   Weight\nA          $40     1.2 kg\nB          $25     0.8 kg\nC          $60     1.5 kg\nD          $35     0.9 kg",
+  q:"표의 내용과 일치하지 않는 것은?",
+  c:["A is more expensive than D.","B is the lightest of the four.","C is the heaviest and the most expensive of the four.","D is cheaper than B.","A is heavier than D."], a:4,
+  ex:"D는 $35, B는 $25이므로 D가 B보다 더 비싸다(D is more expensive than B)." },
+{ id:"T23", u:"B", t:"mc", tag:"비교급·최상급 어법", fixed:true,
+  ps:"(a) He was a little taller than me.\n(b) This is the most small cake in the bakery.\n(c) Math is more difficult than science for me.\n(d) Jeju-do is the larger island in Korea.\n(e) He was more faster than Carlos.\n(f) Mr. Kim is famouser than Ms. Brown.",
+  q:"(a)~(f) 중 어법상 올바른 문장의 개수는?",
+  c:["1개","2개","3개","4개","5개"], a:2,
+  ex:"올바른 것: (a), (c). (b) the smallest (d) the largest (e) faster (f) more famous. 3음절 이상(famous는 2음절이지만 more를 씀)·긴 형용사는 more/most를 붙인다." },
+{ id:"T24", u:"B", t:"mc", tag:"There is/are (과거)",
+  q:"빈칸에 들어갈 말이 나머지 넷과 다른 것은?",
+  c:["There ______ pieces of cake all over the painting.","There ______ four eyewitnesses last Saturday.","There ______ a wheelchair near the painting.","There ______ a lot of different cakes in the bakery yesterday.","______ there any guests at the party last night?"], a:3,
+  ex:"There 구문은 be동사 뒤의 명사에 수를 맞춘다. ③ a wheelchair(단수) → was, 나머지는 복수 → were (⑤는 Were)." },
+{ id:"T25", u:"B", t:"mc", tag:"최상급 of / in",
+  q:"빈칸에 of가 들어갈 수 없는 것은?",
+  c:["Rex is the tallest ______ the four robots.","This book is the most expensive ______ all.","Emma is the fastest student ______ her class.","The blue skirt is the most expensive ______ the three.","The gym is the biggest ______ all the rooms."], a:3,
+  ex:"최상급 뒤에 비교 대상(복수명사·all)이 오면 of, 장소나 집단(her class)이 오면 in을 쓴다." },
+{ id:"T26", u:"B", t:"mc", tag:"본문 내용 일치 (목격자 진술)",
+  ps:"Ann Jones, a visitor\nI was looking at the Monalisa, and someone threw a cake at the painting. I turned around and saw an old man. He was standing in front of a wheelchair. I’m about 170 cm tall, and he was a little taller than me.\n\nCarlos Diaz, a janitor\nAn old man with gray hair was running away, and something fell off his head. It was his wig. I ran after him, but I couldn’t catch him. He was faster than me. In fact, the old man was not old. He was a young man with long brown hair.",
+  q:"윗글의 내용과 일치하는 것은?",
+  c:["Ann was looking at a different painting at that time.","The old man was sitting in a wheelchair when Ann turned around.","Carlos caught the man and took off his wig.","The man ran faster than Carlos.","The man’s real hair was short and gray."], a:4,
+  ex:"He was faster than me.(Carlos) ② 휠체어 앞에 서 있었다 ③ 잡지 못했다 ⑤ 진짜 머리는 긴 갈색 머리였다." },
+{ id:"T27", u:"B", t:"mc", tag:"세부 정보 (빵집 주인)",
+  ps:"Camila Santos, the owner of Camila’s Bakery\nLast Friday, a young man came in. I spoke to him in Spanish, but he didn’t understand me. He spoke only English. We had a lot of different cakes, but he just wanted the smallest one. We sold only one cake that day, so I remember him clearly. Oh, he had blue eyes.",
+  q:"Camila가 그 남자를 분명히 기억하는 이유로 가장 적절한 것은?",
+  c:["He spoke Spanish very well.","He bought the biggest cake in the bakery.","She sold only one cake that day.","He came to the bakery last Saturday.","He had brown eyes and long black hair."], a:3,
+  ex:"We sold only one cake that day, so I remember him clearly. → 그날 케이크를 하나만 팔았기 때문이다." },
+{ id:"T28", u:"B", t:"mc", tag:"추론 (용의자)", fixed:true,
+  ps:ENG_SUSPECTS + "\n\n• 목격자: 범인은 170 cm보다 조금 크고, 긴 갈색 머리이다.\n• 빵집 주인: 범인은 스페인어를 이해하지 못하고 영어만 했다.",
+  q:"빵집 주인이 “Oh, he had blue eyes.”라는 말을 하지 않았다면, 위 정보만으로 범인 후보로 남는 사람을 모두 고른 것은?",
+  c:["Larry Johnson","Larry Johnson, Tim Baker","Andres Lozano, Larry Johnson","Tim Baker, Luca Ferez","Andres Lozano, Larry Johnson, Tim Baker"], a:2,
+  ex:"170 cm보다 큼 → Luca 제외. 갈색 머리 → Andres 제외. 영어만 함 → Andres 제외. 남는 사람은 Larry(173 cm)와 Tim(182 cm)이다. 눈 색(파란색) 정보가 있어야 Larry로 좁혀진다." },
+{ id:"T29", u:"B", t:"mc", tag:"추론",
+  q:"교과서 본문 Who Threw a Cake at the Monalisa?의 내용을 바탕으로 추론한 것으로 적절하지 않은 것은?",
+  c:["The criminal wore a wig to look like an old man.","The criminal probably used the wheelchair to hide his real age.","The criminal bought the cake the day before the crime.","The criminal threw the cake on Friday at the museum.","The criminal didn’t understand Spanish."], a:4,
+  ex:"사건은 지난 토요일(Last Saturday)에 일어났고, 케이크는 금요일(Last Friday)에 샀다. 따라서 금요일에 케이크를 던졌다는 것은 틀렸다." },
+{ id:"T30", u:"B", t:"mc", tag:"사건 순서", fixed:true,
+  ps:"(a) A young man bought the smallest cake at Camila’s Bakery.\n(b) Someone threw a cake at the Monalisa.\n(c) The man’s wig fell off while he was running away.\n(d) Diego found a cake box next to the wheelchair.",
+  q:"본문의 사건이 일어난 순서대로 바르게 배열한 것은?",
+  c:["(b) - (a) - (c) - (d)","(a) - (c) - (b) - (d)","(b) - (c) - (d) - (a)","(a) - (b) - (c) - (d)","(d) - (b) - (a) - (c)"], a:4,
+  ex:"금요일에 케이크 구입 (a) → 토요일 케이크 투척 (b) → 도망치다 가발이 떨어짐 (c) → 경비원이 범죄 현장에서 케이크 상자 발견 (d)." },
+{ id:"T31", u:"B", t:"mc", tag:"제목 (헤드라인)",
+  q:"교과서 본문 Who Threw a Cake at the Monalisa?의 사건을 다룬 뉴스 헤드라인으로 가장 적절한 것은?",
+  c:["Bakery Owner Sells the Biggest Cake","Young Man Dressed as an Old Man Damages Painting","Old Man in Wheelchair Steals the Monalisa","Guard Catches Criminal Inside the Museum","Four Eyewitnesses Saw Nothing at the Museum"], a:2,
+  ex:"노인으로 변장한(가발, 휠체어) 젊은 남자가 그림에 케이크를 던져 훼손한 사건이다. 그림을 훔치거나 범인이 잡힌 것이 아니다." },
+],
+essay: [
+{ id:"W1", u:"A", t:"essay", tag:"조건 영작 (be going to·동명사)",
+  q:"다음 우리말을 <조건>에 맞게 영어로 쓰시오.\n(1) 나는 이번 주말에 수영 수업을 들을 예정이다.\n(2) 그녀는 사진 찍는 것을 즐긴다.\n<조건> (1)은 be going to와 take swimming lessons를, (2)는 enjoy와 take pictures를 알맞은 형태로 쓸 것",
+  a:"(1) I’m going to take swimming lessons this weekend.\n(2) She enjoys taking pictures.",
+  kw:[["(1) be going to + take swimming lessons", ["goingtotakeswimminglessons"]], ["(1) this weekend", ["thisweekend"]], ["(2) enjoys taking pictures (3인칭 단수 -s + 동명사)", ["sheenjoystakingpictures"]]],
+  ex:"be going to 뒤에는 동사원형, enjoy 뒤에는 동명사(-ing)를 쓴다. 주어 She는 3인칭 단수이므로 enjoys." },
+{ id:"W2", u:"A", t:"essay", tag:"어법 오류 수정 (Ronda)",
+  ps:"Hi Sumi,\nYesterday, my family and I come to Ronda in Spain. Most buildings here is white, and they are so beautiful against the blue sky. Ronda is on cliffs, so the views are fantastic. After lunch, we’re going to visiting the Ernest Hemingway Walk.",
+  q:"윗글에서 어법상 틀린 부분이 있는 문장 세 개를 찾아, 바르게 고친 문장 전체를 영어로 쓰시오.",
+  a:"Yesterday, my family and I came to Ronda in Spain.\nMost buildings here are white.\nAfter lunch, we’re going to visit the Ernest Hemingway Walk.",
+  kw:[["Yesterday → 과거형 came", ["myfamilyandicame"]], ["Most buildings(복수) → are", ["mostbuildingshereare"]], ["be going to + 동사원형 visit", ["goingtovisitthe"]]],
+  ex:"Yesterday가 있으므로 과거형 came, 주어 Most buildings는 복수이므로 are, be going to 뒤에는 동사원형 visit을 쓴다." },
+{ id:"W3", u:"A", t:"essay", tag:"본문 질문에 영어로 답하기 (Purple Island)",
+  q:"Purple Island에 관한 본문 내용을 바탕으로 다음 두 질문에 완전한 영어 문장으로 답하시오.\n(1) Why didn’t Amy pay the entrance fee to the island?\n(2) Why is Amy going to explore the island by bicycle?",
+  a:"(1) Because she was wearing a purple T-shirt.\n(2) Because the island is not big.",
+  kw:[["(1) 보라색 티셔츠를 입고 있었다", ["waswearingapurpletshirt","woreapurpletshirt","wearingapurpletshirt","worepurple","wearingpurple"]], ["(1) 주어+동사가 있는 문장 (She was wearing ~)", ["shewaswearing","shewore","becauseshewas","becausesheis"]], ["(2) 섬이 크지 않다", ["isnotbig","isntbig","issmall","isnotlarge","isntlarge","isnotverybig"]]],
+  ex:"I didn’t even pay the entrance fee to the island. Why? I was wearing a purple T-shirt. / The island is not big, so I’m going to explore it by bicycle." },
+{ id:"W4", u:"A", t:"essay", tag:"대화 완성 (계획·기대)",
+  ps:"A: What are you going to do this summer?\nB: (가) ________________________ (나는 가족과 함께 제주도에 갈 예정이야.)\nA: What are you going to do there?\nB: (나) ________________________ (우리는 올레길을 걸을 예정이야.)\nA: Sounds great!\nB: (다) ________________________ (나는 그게 정말 기대돼.)",
+  q:"우리말과 같도록 (가)~(다)에 알맞은 영어 문장을 쓰시오. (단, (다)는 look forward를 알맞은 형태로 쓸 것)",
+  a:"(가) I’m going to go to Jeju-do with my family.\n(나) We’re going to walk the Olle trails.\n(다) I’m really looking forward to it.",
+  kw:[["(가) going to go to Jeju-do with my family", ["goingtogotojejudowithmyfamily","goingtogotojejuwithmyfamily"]], ["(나) We’re going to walk the Olle trails", ["goingtowalktheolle","goingtowalkontheolle","goingtowalkalongtheolle"]], ["(다) looking forward to it", ["lookingforwardtoit"]]],
+  ex:"계획은 be going to + 동사원형, 기대는 I’m looking forward to it.으로 나타낸다." },
+{ id:"W5", u:"A", t:"essay", tag:"동명사 문장 만들기",
+  q:"주어진 말을 알맞은 형태로 바꾸어 문장을 완성하시오. (필요하면 단어를 추가하거나 형태를 바꿀 것)\n(1) my sister / be good at / draw cartoons\n(2) learn new languages / be / exciting\n(3) I / finish / do my homework (과거)",
+  a:"(1) My sister is good at drawing cartoons.\n(2) Learning new languages is exciting.\n(3) I finished doing my homework.",
+  kw:[["(1) is good at drawing cartoons (전치사 뒤 동명사)", ["isgoodatdrawingcartoons"]], ["(2) Learning new languages is (동명사 주어, 단수)", ["learningnewlanguagesis"]], ["(3) finished doing (finish + 동명사, 과거)", ["finisheddoingmyhomework"]]],
+  ex:"전치사(at)의 목적어, 문장의 주어, finish의 목적어 자리에는 동명사를 쓴다. 동명사 주어는 단수 취급하므로 is." },
+{ id:"W6", u:"B", t:"essay", tag:"허락·금지 표현",
+  q:"미술관 직원이 되어 관람객의 질문에 <조건>에 맞게 영어로 답하시오.\n(1) Visitor: May I touch this painting? (거절하고, 그림을 만지면 안 된다고 말할 것)\n(2) Visitor: May I take pictures of this painting? (허락하되, 플래시를 쓰면 안 된다고 말할 것)\n<조건> may와 must not을 사용할 것",
+  a:"(1) No, you may not. You must not touch this painting.\n(2) Yes, you may, but you must not use the flash.",
+  kw:[["(1) No, you may not.", ["noyoumaynot"]], ["(1) You must not touch this painting.", ["mustnottouch"]], ["(2) Yes, you may.", ["yesyoumay"]], ["(2) You must not use the flash.", ["mustnotusetheflash","mustnotuseflash","mustnotuseaflash"]]],
+  ex:"허락: Yes, you may. / 거절: No, you may not. / 금지: You must not + 동사원형." },
+{ id:"W7", u:"B", t:"essay", tag:"비교급·최상급 영작",
+  ps:"Mountain     Height\nHallasan     1,947 m\nJirisan      1,915 m\nSeoraksan    1,708 m",
+  q:"표를 보고 <조건>에 맞게 영어 문장 두 개를 쓰시오.\n(1) Jirisan과 Seoraksan의 높이를 비교할 것 (tall 사용)\n(2) 세 산 중에서 가장 높은 산을 쓸 것 (tall과 of the three 사용)",
+  a:"(1) Jirisan is taller than Seoraksan.\n(2) Hallasan is the tallest of the three.",
+  kw:[["(1) Jirisan is taller than Seoraksan.", ["jirisanistallerthanseoraksan"]], ["(2) Hallasan is the tallest", ["hallasanisthetallest"]], ["(2) of the three", ["ofthethree"]]],
+  ex:"비교급: tall-taller + than. 최상급: the tallest + of + 복수 비교 대상." },
+{ id:"W8", u:"B", t:"essay", tag:"근거를 들어 범인 추론하기",
+  ps:ENG_SUSPECTS,
+  q:"교과서 본문의 목격자 진술을 바탕으로, 범인이 Larry Johnson인 이유를 영어로 쓰시오. (키, 머리 색, 눈 색, 사용하는 언어를 모두 포함할 것)",
+  a:"According to the eyewitnesses, the criminal is taller than 170 cm. He has brown hair and blue eyes. He speaks only English. So the criminal is Larry Johnson.",
+  kw:[["키: 170 cm보다 크다", ["tallerthan170"]], ["머리: 갈색 머리", ["brownhair"]], ["눈: 파란 눈", ["blueeyes"]], ["언어: 영어만 한다", ["onlyenglish","speaksenglish","notspanish","dontunderstandspanish","didntunderstandspanish","cantspeakspanish","doesntspeakspanish","doesntunderstandspanish"]]],
+  ex:"Ann: 170 cm보다 조금 컸다. Carlos: 긴 갈색 머리. Camila: 영어만 했고 파란 눈이었다. 네 가지를 모두 만족하는 사람은 Larry Johnson뿐이다." },
+{ id:"W9", u:"B", t:"essay", tag:"There is/are·최상급 오류 수정",
+  ps:"Minho’s house has three floors. On the first floor, there are a living room. On the second floor, there is two bedrooms. Lastly, on the third floor, there is a gym. It is the most big of all the rooms.",
+  q:"윗글에서 어법상 틀린 부분이 있는 문장 세 개를 찾아, 바르게 고친 문장 전체를 영어로 쓰시오.",
+  a:"On the first floor, there is a living room.\nOn the second floor, there are two bedrooms.\nIt is the biggest of all the rooms.",
+  kw:[["there is a living room (단수)", ["thereisalivingroom"]], ["there are two bedrooms (복수)", ["therearetwobedrooms"]], ["the biggest (big-bigger-biggest)", ["isthebiggest"]]],
+  ex:"There is + 단수명사, There are + 복수명사. big의 최상급은 자음을 한 번 더 쓰고 -est를 붙인 biggest이다." },
+],
+};
 /* 최상위 문제 표시: 난이도 3 · 'top' 꼬리표 · 쪽수는 단원 범위로 · 서술형 채점 기준 글 */
-Object.entries({ soc: SOC_UNITS, sci: SCI_UNITS, eth: ETH_UNITS }).forEach(([code, units]) => [...TOP[code].mc, ...TOP[code].essay].forEach(q => {
+Object.entries({ soc: SOC_UNITS, sci: SCI_UNITS, eth: ETH_UNITS, eng: ENG_UNITS }).forEach(([code, units]) => [...TOP[code].mc, ...TOP[code].essay].forEach(q => {
   q.d = 3; q.top = true; q.p = units[q.u].pages;
   q.ex = (q.ex.replace(/\s*\(교과서 [^)]*\)$/, "") + ` (교과서 ${q.p}쪽)`).trim();
   if (q.kw && !q.rb) q.rb = "핵심 내용이 모두 들어가면 정답, 절반 이상이면 부분 정답\n" + q.kw.map(([k], i) => `${"①②③④⑤"[i]} ${k}`).join("\n");
@@ -4517,6 +4729,8 @@ Object.entries({ soc: SOC_UNITS, sci: SCI_UNITS, eth: ETH_UNITS }).forEach(([cod
 
 /* ═════════════ 과목별 문제은행 ═════════════ */
 const BANKS = {
+  eng: { name: "영어", units: ENG_UNITS, qs: [], topOnly: true, label: "중학 영어 1 (동아출판) · 교과서 58~91쪽", title: "Lesson 4·5 중간고사 실전 대비",
+    sub: "Lesson 4 The Joy of Traveling · Lesson 5 Think like Sherlock Holmes" },
   soc: { name: "사회", units: SOC_UNITS, qs: SOC_QS, label: "중학 사회① · 교과서 126~167쪽", title: "사회화부터 민주주의까지",
     sub: "Ⅶ 인간과 사회생활 · Ⅷ 다양한 문화의 이해 · Ⅸ 정치와 민주주의" },
   sci: { name: "과학", units: SCI_UNITS, qs: SCI_QS, label: "중학 과학 · 교과서 86~145쪽", title: "비열·열팽창부터 상태 변화와 열에너지까지",
@@ -4730,8 +4944,8 @@ function checkBadges(extra = []) {
   if (log.filter(e => e.r === "correct" && QMAP[e.q] && (QMAP[e.q].bg || QMAP[e.q].ps)).length >= 20) give("bogi10");
   if (log.filter(e => e.r === "correct" && QMAP[e.q]?.t === "essay").length >= 5) give("essay5");
   if (wrongList(true).filter(w => w.mastered).length >= 10) give("redeem10");
-  if (Object.keys(UNITS).some(u => QS.filter(q => q.u === u).every(q => st[q.id]?.correct))) give("unit");
-  if (QS.every(q => st[q.id])) give("all");
+  if (Object.keys(UNITS).some(u => QS.some(q => q.u === u) && QS.filter(q => q.u === u).every(q => st[q.id]?.correct))) give("unit");
+  if (QS.length && QS.every(q => st[q.id])) give("all");
   if (dayStreak() >= 3) give("days3");
   if (dayStreak() >= 7) give("days7");
   extra.forEach(give);
@@ -4773,7 +4987,7 @@ function summary(db, name) {
   }
   return { name, xp: g.xp || 0, week_xp: g.week && g.week.id === weekId() ? g.week.xp : 0, level: levelOf(g.xp || 0) + 1,
     solved, accuracy: n ? c / n : null, streak: streakOf(g.days),
-    progress: Object.fromEntries(Object.keys(BANKS).map(code => { const p = progressOf(code, db); return [code, { tried: p.tried, right: p.right, total: p.total, units: p.units }]; })) };
+    progress: Object.fromEntries(Object.keys(BANKS).filter(code => BANKS[code].qs.length).map(code => { const p = progressOf(code, db); return [code, { tried: p.tried, right: p.right, total: p.total, units: p.units }]; })) };
 }
 function localBoard() { return profiles.map(p => p.name === who ? summary(DB, who) : summary(readJSON(profileKey(p.name), freshDB()), p.name)); }
 
@@ -5034,7 +5248,7 @@ function hub() {
       ${SUBJECTS.map(s => `<button class="subj ${s.open ? "open" : "soon"}" data-s="${s.code}" style="--c:var(${s.c})">
         ${s.open ? `<span class="ribbon">열림</span>` : ""}
         <span class="glyph">${s.g}</span><span class="nm">${s.name}</span>
-        <span class="st">${s.open ? (p => `진도 ${Math.round(p.tried / p.total * 100)}% · ${p.tried}/${p.total}${progBar(p.tried, p.right, p.total)}`)(progressOf(s.code)) : "준비 중"}</span></button>`).join("")}
+        <span class="st">${BANKS[s.code]?.topOnly ? "객관식 대비 · 서술형 대비" : s.open ? (p => `진도 ${Math.round(p.tried / p.total * 100)}% · ${p.tried}/${p.total}${progBar(p.tried, p.right, p.total)}`)(progressOf(s.code)) : "준비 중"}</span></button>`).join("")}
     </div>
     <p class="small muted" style="margin:0">문제를 맞히면 점수를 얻고, 3문제 연속으로 맞히면 콤보 보너스가 붙어요. 점수를 모으면 레벨이 오르고, 목표를 이루면 도장을 받아요.</p>
   </div>`;
@@ -5167,6 +5381,7 @@ function pool() {
   return QS.filter(q => pickUnits.has(q.u) && (pickLevel === "all" || (pickLevel === "hard" ? isApplied(q) : !isApplied(q))));
 }
 function home() {
+  if (BANKS[subject].topOnly) return topHome();
   const s = S();
   const answered = new Set(s.log.map(e => e.q)).size;
   const rate = s.log.length ? s.log.reduce((a, e) => a + score(e.r), 0) / s.log.length : null;
@@ -5258,6 +5473,31 @@ function home() {
   }
 }
 
+/* 단원 연습 없이 최상위 대비만 있는 과목(영어)의 첫 화면 */
+function topHome() {
+  const cur = S().current, b = BANKS[subject];
+  app.innerHTML = `
+  <div class="stack">
+    <section class="hero"><span class="label">${b.label}</span><h1>${b.title}</h1><p>${b.sub}</p></section>
+    ${cur ? `<div class="resume row"><div><b>풀던 ${MODE[cur.mode]}가 있어요</b><div class="small muted">${Object.keys(cur.ans).length} / ${cur.qids.length}문항 풀었음</div></div><span class="spacer"></span>
+      <button class="btn" id="drop">그만두기</button><button class="btn primary" id="resume">이어서 풀기</button></div>` : ""}
+    <div class="modes">
+      <button class="mode top" id="m-top"><strong>객관식 대비</strong><span>최상위 난이도 객관식 25문항을 40분 안에 풀고 100점 만점으로 채점해요.</span></button>
+      <button class="mode top" id="m-topw"><strong>서술형 대비</strong><span>최상위 서술형 5문항을 30분 안에 써요. 조건에 맞는 핵심 표현이 모두 들어가면 정답!</span></button>
+    </div>
+  </div>`;
+  $("#m-top").onclick = () => startSession("top", topPick(TOP[subject].mc, 25));
+  $("#m-topw").onclick = () => startSession("topw", topPick(TOP[subject].essay, 5));
+  if (cur) {
+    $("#resume").onclick = () => go("quiz");
+    const d = $("#drop");
+    d.onclick = () => {
+      if (d.dataset.armed) { S().current = null; save(); topHome(); return; }
+      d.dataset.armed = "1"; d.textContent = "한 번 더 누르면 그만둬요";
+      setTimeout(() => { if (d.isConnected) { delete d.dataset.armed; d.textContent = "그만두기"; } }, 3500);
+    };
+  }
+}
 /* 최상위 대비: 덜 풀어 본 문제부터 n개를 골라 단원 순서로 */
 function topPick(list, n) {
   const st = qStats();
